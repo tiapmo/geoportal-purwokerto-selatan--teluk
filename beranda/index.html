@@ -505,14 +505,15 @@
     <div class="bubble" style="width: 80px; height: 80px; top: 60%; right: 8%; animation-delay: 2s;"></div>
     <div class="bubble" style="width: 150px; height: 150px; bottom: 20%; left: 10%; animation-delay: 4s;"></div>
 
-    <!-- HEADER WITH 4 BUTTONS - DIREKTORI DIUPDATE -->
+    <!-- HEADER WITH CORRECT NAVIGATION FOR BERANDA -->
     <header class="header">
         <div class="logo">
             <i class="fas fa-map-marked-alt"></i>
             <h1>Geoportal Imut</h1>
         </div>
         <nav class="nav">
-            <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
+            <!-- NAVIGASI UNTUK BERANDA: ./ = folder beranda, ../ = ke root -->
+            <a href="./"><i class="fas fa-home"></i> Beranda</a>
             <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
             <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
             <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
@@ -580,12 +581,12 @@
         </div>
     </section>
 
-    <!-- FOOTER - DIREKTORI DIUPDATE -->
+    <!-- FOOTER -->
     <footer class="footer">
         <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> menggunakan teknologi QGIS & Leaflet</p>
         <p>© <span id="current-year">2025</span> Geoportal Imut. Semua hak dilindungi.</p>
         <div class="footer-links">
-            <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="https://github.com/tiapmo" target="_blank"><i class="fab fa-github"></i> GitHub</a>
             <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Email</a>
             <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
         </div>
@@ -626,16 +627,24 @@
             }, 2000);
         });
         
-        // Highlight current page in navigation
+        // Highlight current page in navigation (for Beranda)
         const currentPage = window.location.pathname;
         const navLinks = document.querySelectorAll('.nav a');
+        
         navLinks.forEach(link => {
-            const linkPath = link.getAttribute('href');
-            if (currentPage.includes(linkPath) || 
-                (currentPage.endsWith('/beranda/') && linkPath === '../beranda/') ||
-                (currentPage.endsWith('/') && linkPath === '../beranda/')) {
+            // Remove trailing slash for comparison
+            const linkHref = link.getAttribute('href').replace(/\/$/, '');
+            const currentPath = currentPage.replace(/\/$/, '');
+            
+            // Check if current page matches link
+            if ((linkHref === '.' && (currentPath.endsWith('/beranda') || currentPath.endsWith('/beranda/index') || currentPath === '')) ||
+                (linkHref === '../pwtslt' && currentPath.includes('/pwtslt')) ||
+                (linkHref === '../teluk' && currentPath.includes('/teluk')) ||
+                (linkHref === '../tentang' && currentPath.includes('/tentang'))) {
+                
                 link.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.8)';
                 link.style.transform = 'scale(1.05)';
+                link.style.fontWeight = '800';
             }
         });
     </script>

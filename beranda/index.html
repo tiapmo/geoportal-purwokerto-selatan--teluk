@@ -1,1 +1,369 @@
-bla bla bla
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geoportal Imut - Satu Peta untuk Data Spasial Terpadu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES & RESET ===== */
+        :root {
+            --pink: #FFB8D0;
+            --blue: #A6D1FF;
+            --yellow: #FFE6A6;
+            --green: #B8E8D3;
+            --purple: #E6D4FF;
+            --text: #5A5A78;
+            --white: #FFFFFF;
+            --radius: 20px;
+            --shadow: 0 8px 20px rgba(255, 184, 208, 0.25);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #fff9f9 0%, #f0f9ff 100%);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(to right, var(--pink), var(--blue));
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--white);
+            text-shadow: 2px 2px 4px rgba(90, 90, 120, 0.3);
+        }
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--white);
+            text-shadow: 1px 1px 3px rgba(90, 90, 120, 0.2);
+        }
+        .nav a {
+            margin-left: 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .nav a:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            line-height: 1.2;
+        }
+        .hero h2 span {
+            background: linear-gradient(to right, var(--pink), var(--blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            color: #777;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--green), var(--purple));
+            color: var(--text);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.7);
+        }
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 12px 25px rgba(255, 184, 208, 0.4);
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--radius);
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            box-shadow: var(--shadow);
+        }
+        .features h3 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 6px 15px rgba(166, 209, 255, 0.2);
+            border-top: 6px solid var(--pink);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        .feature-card i {
+            font-size: 2.8rem;
+            color: var(--pink);
+            margin-bottom: 1rem;
+        }
+        .feature-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text);
+        }
+        .feature-card p {
+            color: #777;
+            font-size: 1rem;
+        }
+
+        /* ===== MAP PREVIEW SECTION ===== */
+        .map-preview {
+            padding: 3rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+        .map-preview h3 {
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .map-container {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 3px dashed var(--blue);
+            transition: all 0.3s ease;
+        }
+        .map-container:hover {
+            border-style: solid;
+            transform: scale(1.02);
+        }
+        .map-thumbnail {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e6f7ff, #ffe6f2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .map-thumbnail::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(45deg, var(--pink) 0, var(--pink) 10px, transparent 10px, transparent 20px);
+            opacity: 0.1;
+            animation: slide 20s linear infinite;
+        }
+        @keyframes slide {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-50%) translateY(-50%); }
+        }
+        .map-thumbnail i {
+            font-size: 5rem;
+            color: var(--blue);
+            z-index: 2;
+        }
+        .map-thumbnail-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            z-index: 2;
+        }
+        .map-button {
+            display: inline-block;
+            background: linear-gradient(to right, var(--blue), var(--purple));
+            color: var(--white);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 6px 15px rgba(166, 209, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        .map-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(166, 209, 255, 0.7);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: linear-gradient(to right, var(--pink), var(--blue));
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+            box-shadow: 0 -5px 15px rgba(255, 184, 208, 0.3);
+        }
+        .footer p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        .footer-links a {
+            color: var(--white);
+            margin: 0 1rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+        .footer-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 1rem; }
+            .nav a { margin: 0.5rem; display: inline-block; }
+            .hero h2 { font-size: 2.2rem; }
+            .features-grid { grid-template-columns: 1fr; }
+            .map-thumbnail { height: 300px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-map-marked-alt"></i>
+            <h1>Geoportal <span>Imut</span></h1>
+        </div>
+        <nav class="nav">
+            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
+            <a href="peta.html"><i class="fas fa-map"></i> Peta Interaktif</a>
+            <a href="tentang.html"><i class="fas fa-info-circle"></i> Tentang</a>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h2>Satu Peta untuk <span>Data Spasial Terpadu</span></h2>
+        <p>Portal ini menyajikan peta interaktif dan data geospasial wilayah Bumiayu dan Pruwatan untuk perencanaan dan pengembangan wilayah. Jelajahi, analisis, dan unduh data dengan mudah!</p>
+        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Jelajahi Peta Sekarang</a>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <h3><i class="fas fa-star"></i> Fitur Unggulan</h3>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-layer-group"></i>
+                <h4>Layers Berlapis</h4>
+                <p>Tampilkan lapisan peta seperti batas administrasi, jalan, dan penggunaan lahan. Sesuaikan tampilan sesuai kebutuhan Anda.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-download"></i>
+                <h4>Unduh Data</h4>
+                <p>Data geospasial tersedia dalam format Shapefile, GeoJSON, atau KML. Siap untuk diolah lebih lanjut.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-search-location"></i>
+                <h4>Pencarian Lokasi</h4>
+                <p>Cari lokasi berdasarkan nama desa, kecamatan, atau koordinat. Temukan tempat yang Anda cari dengan cepat.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt"></i>
+                <h4>Akses Responsif</h4>
+                <p>Dapat diakses dari berbagai perangkat: desktop, tablet, atau ponsel. Pengalaman yang optimal di mana saja.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP PREVIEW SECTION -->
+    <section class="map-preview" id="peta">
+        <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
+        <div class="map-container">
+            <div class="map-thumbnail">
+                <i class="fas fa-globe-americas"></i>
+                <div class="map-thumbnail-text">Peta Wilayah Bumiayu & Pruwatan</div>
+            </div>
+            <p>Klik tombol di bawah untuk membuka peta penuh dengan semua fitur interaktif. Anda dapat mengubah layer, melakukan zoom, dan melihat informasi detail.</p>
+            <a href="peta.html" class="map-button"><i class="fas fa-external-link-alt"></i> Buka Peta Lengkap</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> menggunakan QGIS & Leaflet</p>
+        <p>© 2025 Geoportal Imut. Hak Cipta Dilindungi.</p>
+        <div class="footer-links">
+            <a href="#"><i class="fab fa-github"></i> GitHub</a>
+            <a href="#"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="#"><i class="fas fa-question-circle"></i> Bantuan</a>
+        </div>
+    </footer>
+
+    <script>
+        // Animasi sederhana untuk tombol
+        document.querySelectorAll('.cta-button, .map-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        // Menambahkan tahun dinamis di footer (opsional)
+        document.querySelector('footer p:nth-child(2)').innerHTML = `© ${new Date().getFullYear()} Geoportal Imut. Hak Cipta Dilindungi.`;
+    </script>
+</body>
+</html>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geoportal Imut - Satu Peta untuk Data Spasial Terpadu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
@@ -16,8 +16,9 @@
             --purple: #E6D4FF;
             --text: #5A5A78;
             --white: #FFFFFF;
-            --radius: 20px;
-            --shadow: 0 8px 20px rgba(255, 184, 208, 0.25);
+            --radius: 25px;
+            --shadow-soft: 0 8px 25px rgba(255, 184, 208, 0.25);
+            --shadow-bold: 0 12px 35px rgba(166, 209, 255, 0.35);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -28,342 +29,615 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== ANIMATED BACKGROUND ELEMENTS ===== */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 184, 208, 0.15);
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        /* ===== UNIQUE HEADER DESIGN ===== */
         .header {
-            background: linear-gradient(to right, var(--pink), var(--blue));
-            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, var(--pink), var(--blue));
+            padding: 1.8rem 2.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-bold);
+            border-radius: 0 0 var(--radius) var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: movePattern 20s linear infinite;
+            z-index: 0;
+        }
+        @keyframes movePattern {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 18px;
+            z-index: 1;
         }
         .logo i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             color: var(--white);
-            text-shadow: 2px 2px 4px rgba(90, 90, 120, 0.3);
+            text-shadow: 3px 3px 0px rgba(90, 90, 120, 0.2);
+            animation: bounce 2s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
         .logo h1 {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Comic Neue', cursive;
             font-weight: 700;
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             color: var(--white);
-            text-shadow: 1px 1px 3px rgba(90, 90, 120, 0.2);
+            text-shadow: 2px 2px 0px rgba(90, 90, 120, 0.3);
+            letter-spacing: 0.5px;
+        }
+        .nav {
+            display: flex;
+            gap: 15px;
+            z-index: 1;
         }
         .nav a {
-            margin-left: 1.5rem;
-            color: var(--white);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.2);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .nav a:nth-child(1) { 
+            background: linear-gradient(135deg, var(--yellow), #FFD166); 
+            color: #8B6B00;
+        }
+        .nav a:nth-child(2) { 
+            background: linear-gradient(135deg, var(--green), #8DE4A7); 
+            color: #0A5C36;
+        }
+        .nav a:nth-child(3) { 
+            background: linear-gradient(135deg, var(--purple), #C8B6FF); 
+            color: #4B2E83;
+        }
+        .nav a:nth-child(4) { 
+            background: linear-gradient(135deg, #FFB8D0, #FF8BA7); 
+            color: #7A003C;
+        }
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+        }
+        .nav a:hover::before {
+            left: 100%;
         }
         .nav a:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-3px);
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
         }
 
-        /* ===== HERO SECTION ===== */
+        /* ===== HERO SECTION WITH CARTOON STYLE ===== */
         .hero {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             text-align: center;
-            max-width: 900px;
-            margin: 0 auto;
+            max-width: 1000px;
+            margin: 3rem auto;
+            position: relative;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-soft);
+            border: 8px double var(--pink);
+            overflow: hidden;
+        }
+        .hero::after {
+            content: "✧･ﾟ:*✧･ﾟ:* *:･ﾟ✧*:･ﾟ✧";
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            color: var(--pink);
+            font-size: 1.5rem;
+            opacity: 0.7;
         }
         .hero h2 {
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
+            font-family: 'Comic Neue', cursive;
+            font-size: 3.2rem;
+            margin-bottom: 1.8rem;
             color: var(--text);
             line-height: 1.2;
+            text-shadow: 3px 3px 0px rgba(255, 184, 208, 0.3);
         }
         .hero h2 span {
-            background: linear-gradient(to right, var(--pink), var(--blue));
+            background: linear-gradient(to right, var(--pink), var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s infinite alternate;
+        }
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(30deg); }
+        }
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            color: #666;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--green), var(--blue));
+            color: var(--white);
+            padding: 1.2rem 3rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.3rem;
+            box-shadow: 0 10px 25px rgba(166, 209, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Comic Neue', cursive;
+            letter-spacing: 1px;
+        }
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: translateX(-100%) rotate(45deg);
+        }
+        .cta-button:hover::after {
+            animation: shine 0.8s;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+        .cta-button:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(166, 209, 255, 0.7);
+            letter-spacing: 2px;
+        }
+
+        /* ===== FEATURE CARDS WITH 3D EFFECT ===== */
+        .features {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto 5rem;
+        }
+        .features h3 {
+            text-align: center;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .features h3 i {
+            color: var(--pink);
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+        .feature-card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 25px rgba(166, 209, 255, 0.25);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+            border: 3px solid transparent;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateX(5deg);
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: -10px;
+            background: linear-gradient(135deg, var(--pink), var(--blue));
+            border-radius: var(--radius);
+            z-index: -1;
+            opacity: 0.5;
+            filter: blur(10px);
+            transition: all 0.5s;
+        }
+        .feature-card:hover {
+            transform: perspective(1000px) rotateX(0deg) translateY(-20px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(166, 209, 255, 0.4);
+            border-color: var(--pink);
+        }
+        .feature-card:hover::before {
+            bottom: -20px;
+            opacity: 0.8;
+        }
+        .feature-card i {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--pink), var(--blue));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            color: #777;
-        }
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(to right, var(--green), var(--purple));
-            color: var(--text);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-            border: 3px solid rgba(255, 255, 255, 0.7);
-        }
-        .cta-button:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 12px 25px rgba(255, 184, 208, 0.4);
-        }
-
-        /* ===== FEATURES SECTION ===== */
-        .features {
-            padding: 3rem 2rem;
-            background: rgba(255, 255, 255, 0.7);
-            border-radius: var(--radius);
-            max-width: 1100px;
-            margin: 0 auto 3rem;
-            box-shadow: var(--shadow);
-        }
-        .features h3 {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 2.5rem;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        .feature-card {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: var(--radius);
-            box-shadow: 0 6px 15px rgba(166, 209, 255, 0.2);
-            border-top: 6px solid var(--pink);
-            transition: transform 0.3s ease;
-            text-align: center;
-        }
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        .feature-card i {
-            font-size: 2.8rem;
-            color: var(--pink);
-            margin-bottom: 1rem;
-        }
         .feature-card h4 {
-            font-size: 1.5rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.7rem;
+            margin-bottom: 1rem;
             color: var(--text);
+            font-family: 'Comic Neue', cursive;
         }
         .feature-card p {
             color: #777;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
-        /* ===== MAP PREVIEW SECTION ===== */
+        /* ===== MAP PREVIEW WITH INTERACTIVE ELEMENTS ===== */
         .map-preview {
-            padding: 3rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto 4rem;
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto 6rem;
             text-align: center;
         }
         .map-preview h3 {
-            font-size: 2.2rem;
-            margin-bottom: 2rem;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 2.5rem;
             color: var(--text);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
         }
         .map-container {
             background: var(--white);
             border-radius: var(--radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            border: 3px dashed var(--blue);
-            transition: all 0.3s ease;
+            padding: 3rem;
+            box-shadow: var(--shadow-bold);
+            border: 5px dotted var(--blue);
+            transition: all 0.5s;
+            position: relative;
+            overflow: hidden;
         }
         .map-container:hover {
             border-style: solid;
             transform: scale(1.02);
+            box-shadow: 0 25px 50px rgba(166, 209, 255, 0.4);
+        }
+        .map-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0 3rem;
+            flex-wrap: wrap;
+        }
+        .map-option {
+            background: linear-gradient(135deg, var(--yellow), var(--green));
+            padding: 1.5rem 2.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.3rem;
+            transition: all 0.4s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 8px 20px rgba(255, 230, 166, 0.4);
+            border: 3px solid white;
+        }
+        .map-option:nth-child(2) {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+        }
+        .map-option:hover {
+            transform: translateY(-10px) rotate(3deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
         .map-thumbnail {
             width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, #e6f7ff, #ffe6f2);
-            border-radius: 15px;
+            height: 350px;
+            background: linear-gradient(135deg, #e6f7ff, #ffe6f2, #f0e6ff);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin: 2rem auto;
             position: relative;
             overflow: hidden;
+            border: 5px solid white;
         }
         .map-thumbnail::before {
-            content: '';
+            content: '🗺️ ✨ 🗺️ ✨ 🗺️ ✨';
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: repeating-linear-gradient(45deg, var(--pink) 0, var(--pink) 10px, transparent 10px, transparent 20px);
-            opacity: 0.1;
-            animation: slide 20s linear infinite;
+            font-size: 3rem;
+            white-space: nowrap;
+            animation: scroll 20s linear infinite;
         }
-        @keyframes slide {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(-50%) translateY(-50%); }
-        }
-        .map-thumbnail i {
-            font-size: 5rem;
-            color: var(--blue);
-            z-index: 2;
+        @keyframes scroll {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         .map-thumbnail-text {
-            font-size: 1.5rem;
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.2rem;
             font-weight: 700;
             color: var(--text);
             z-index: 2;
-        }
-        .map-button {
-            display: inline-block;
-            background: linear-gradient(to right, var(--blue), var(--purple));
-            color: var(--white);
-            padding: 1rem 3rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: 0 6px 15px rgba(166, 209, 255, 0.5);
-            transition: all 0.3s ease;
-        }
-        .map-button:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(166, 209, 255, 0.7);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            border: 3px dashed var(--pink);
         }
 
-        /* ===== FOOTER ===== */
+        /* ===== UNIQUE FOOTER DESIGN ===== */
         .footer {
-            background: linear-gradient(to right, var(--pink), var(--blue));
+            background: linear-gradient(135deg, var(--pink), var(--blue));
             color: var(--white);
             text-align: center;
-            padding: 2rem;
+            padding: 2.5rem;
             margin-top: auto;
-            box-shadow: 0 -5px 15px rgba(255, 184, 208, 0.3);
+            box-shadow: 0 -10px 30px rgba(255, 184, 208, 0.4);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '❤️';
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            animation: fall 10s linear infinite;
+        }
+        .footer::after {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            right: 10%;
+            animation: fall 8s linear infinite 2s;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
         .footer p {
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
         .footer-links a {
             color: var(--white);
-            margin: 0 1rem;
             text-decoration: none;
             font-weight: 600;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.15);
         }
         .footer-links a:hover {
-            opacity: 0.8;
-            text-decoration: underline;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
+            .nav { flex-wrap: wrap; justify-content: center; }
+            .hero h2 { font-size: 2.5rem; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .map-options { flex-direction: column; align-items: center; }
+            .map-option { width: 90%; }
+        }
         @media (max-width: 768px) {
-            .header { flex-direction: column; gap: 1rem; }
-            .nav a { margin: 0.5rem; display: inline-block; }
-            .hero h2 { font-size: 2.2rem; }
+            .hero h2 { font-size: 2rem; }
             .features-grid { grid-template-columns: 1fr; }
-            .map-thumbnail { height: 300px; }
+            .nav a { padding: 0.7rem 1.5rem; font-size: 1rem; }
+            .logo h1 { font-size: 1.8rem; }
+            .logo i { font-size: 2.5rem; }
+            .map-thumbnail { height: 250px; }
+            .map-thumbnail-text { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER -->
+    <!-- ANIMATED BACKGROUND BUBBLES -->
+    <div class="bubble" style="width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="bubble" style="width: 80px; height: 80px; top: 60%; right: 8%; animation-delay: 2s;"></div>
+    <div class="bubble" style="width: 150px; height: 150px; bottom: 20%; left: 10%; animation-delay: 4s;"></div>
+
+    <!-- HEADER WITH 4 BUTTONS - DIREKTORI DIUPDATE -->
     <header class="header">
         <div class="logo">
             <i class="fas fa-map-marked-alt"></i>
-            <h1>Geoportal <span>Imut</span></h1>
+            <h1>Geoportal Imut</h1>
         </div>
         <nav class="nav">
-            <a href="index.html"><i class="fas fa-home"></i> Beranda</a>
-            <a href="peta.html"><i class="fas fa-map"></i> Peta Interaktif</a>
-            <a href="tentang.html"><i class="fas fa-info-circle"></i> Tentang</a>
+            <a href="./beranda/"><i class="fas fa-home"></i> Beranda</a>
+            <a href="./pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
+            <a href="./teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
+            <a href="./tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
         </nav>
     </header>
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <h2>Satu Peta untuk <span>Data Spasial Terpadu</span></h2>
-        <p>Portal ini menyajikan peta interaktif dan data geospasial wilayah Bumiayu dan Pruwatan untuk perencanaan dan pengembangan wilayah. Jelajahi, analisis, dan unduh data dengan mudah!</p>
-        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Jelajahi Peta Sekarang</a>
+        <h2>Jelajahi Dunia <span>Spasial</span> dengan Cara yang <span>Imut</span>!</h2>
+        <p>Portal imut ini menyajikan peta interaktif dan data geospasial dengan desain yang menyenangkan. Temukan keindahan geografi dalam balutan warna-warna pastel yang cerah!</p>
+        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Mulai Petualangan</a>
     </section>
 
     <!-- FEATURES SECTION -->
     <section class="features">
-        <h3><i class="fas fa-star"></i> Fitur Unggulan</h3>
+        <h3><i class="fas fa-magic"></i> Keistimewaan Portal Imut</h3>
         <div class="features-grid">
             <div class="feature-card">
                 <i class="fas fa-layer-group"></i>
-                <h4>Layers Berlapis</h4>
-                <p>Tampilkan lapisan peta seperti batas administrasi, jalan, dan penggunaan lahan. Sesuaikan tampilan sesuai kebutuhan Anda.</p>
+                <h4>Lapisan Ajaib</h4>
+                <p>Atur lapisan peta seperti bermain puzzle. Sembunyikan atau tampilkan sesuai keinginanmu!</p>
             </div>
             <div class="feature-card">
-                <i class="fas fa-download"></i>
-                <h4>Unduh Data</h4>
-                <p>Data geospasial tersedia dalam format Shapefile, GeoJSON, atau KML. Siap untuk diolah lebih lanjut.</p>
+                <i class="fas fa-palette"></i>
+                <h4>Warna Imut</h4>
+                <p>Palet warna pastel yang cerah dan menyenangkan untuk pengalaman melihat yang lebih seru.</p>
             </div>
             <div class="feature-card">
                 <i class="fas fa-search-location"></i>
-                <h4>Pencarian Lokasi</h4>
-                <p>Cari lokasi berdasarkan nama desa, kecamatan, atau koordinat. Temukan tempat yang Anda cari dengan cepat.</p>
+                <h4>Pencarian Ceria</h4>
+                <p>Temukan lokasi dengan mudah menggunakan pencarian yang dihiasi ikon-ikon menggemaskan.</p>
             </div>
             <div class="feature-card">
                 <i class="fas fa-mobile-alt"></i>
-                <h4>Akses Responsif</h4>
-                <p>Dapat diakses dari berbagai perangkat: desktop, tablet, atau ponsel. Pengalaman yang optimal di mana saja.</p>
+                <h4>Ramah Gadget</h4>
+                <p>Akses dari mana saja dengan desain responsif yang tetap imut di semua perangkat.</p>
             </div>
         </div>
     </section>
 
     <!-- MAP PREVIEW SECTION -->
     <section class="map-preview" id="peta">
-        <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
+        <h3><i class="fas fa-map-signs"></i> Peta Imut Pilihan</h3>
         <div class="map-container">
-            <div class="map-thumbnail">
-                <i class="fas fa-globe-americas"></i>
-                <div class="map-thumbnail-text">Peta Wilayah Bumiayu & Pruwatan</div>
+            <div class="map-options">
+                <a href="./pwtslt/" class="map-option">
+                    <i class="fas fa-mountain"></i>
+                    <div>
+                        <strong>Purwokerto Selatan</strong>
+                        <p>Wilayah pegunungan dan perbukitan</p>
+                    </div>
+                </a>
+                <a href="./teluk/" class="map-option">
+                    <i class="fas fa-water"></i>
+                    <div>
+                        <strong>Kawasan Teluk</strong>
+                        <p>Pesisir pantai dan ekosistem laut</p>
+                    </div>
+                </a>
             </div>
-            <p>Klik tombol di bawah untuk membuka peta penuh dengan semua fitur interaktif. Anda dapat mengubah layer, melakukan zoom, dan melihat informasi detail.</p>
-            <a href="peta.html" class="map-button"><i class="fas fa-external-link-alt"></i> Buka Peta Lengkap</a>
+            <div class="map-thumbnail">
+                <div class="map-thumbnail-text">Pilih Peta di Atas untuk Memulai!</div>
+            </div>
+            <p>Setiap peta memiliki karakteristik unik dengan simbol-simbol khusus yang dibuat dengan cinta ❤️</p>
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER - DIREKTORI DIUPDATE -->
     <footer class="footer">
-        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> menggunakan QGIS & Leaflet</p>
-        <p>© 2025 Geoportal Imut. Hak Cipta Dilindungi.</p>
+        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> menggunakan teknologi QGIS & Leaflet</p>
+        <p>© <span id="current-year">2025</span> Geoportal Imut. Semua hak dilindungi.</p>
         <div class="footer-links">
-            <a href="#"><i class="fab fa-github"></i> GitHub</a>
-            <a href="#"><i class="fas fa-envelope"></i> Kontak</a>
-            <a href="#"><i class="fas fa-question-circle"></i> Bantuan</a>
+            <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Email</a>
+            <a href="./tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
         </div>
     </footer>
 
     <script>
-        // Animasi sederhana untuk tombol
-        document.querySelectorAll('.cta-button, .map-button').forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.05)';
+        // Dynamic year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Add interaction to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0deg) translateY(-25px) scale(1.08)';
             });
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(5deg) translateY(0) scale(1)';
             });
         });
-        // Menambahkan tahun dinamis di footer (opsional)
-        document.querySelector('footer p:nth-child(2)').innerHTML = `© ${new Date().getFullYear()} Geoportal Imut. Hak Cipta Dilindungi.`;
+        
+        // Add floating effect to map options
+        const mapOptions = document.querySelectorAll('.map-option');
+        mapOptions.forEach((option, index) => {
+            option.style.animationDelay = `${index * 0.3}s`;
+        });
+        
+        // Bubble animation on click
+        document.addEventListener('click', function(e) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.width = bubble.style.height = `${Math.random() * 60 + 40}px`;
+            bubble.style.left = `${e.clientX - 50}px`;
+            bubble.style.top = `${e.clientY - 50}px`;
+            bubble.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
+            document.body.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, 2000);
+        });
+        
+        // Highlight current page in navigation
+        const currentPage = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav a');
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            if (currentPage.includes(linkPath) || 
+                (currentPage.endsWith('/beranda/') && linkPath === './beranda/') ||
+                (currentPage.endsWith('/') && linkPath === './beranda/')) {
+                link.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.8)';
+                link.style.transform = 'scale(1.05)';
+            }
+        });
     </script>
 </body>
 </html>

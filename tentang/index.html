@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Saya - Geoportal Imut</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES & RESET ===== */
+        :root {
+            --pink: #FFB8D0;
+            --blue: #A6D1FF;
+            --yellow: #FFE6A6;
+            --green: #B8E8D3;
+            --purple: #E6D4FF;
+            --text: #5A5A78;
+            --white: #FFFFFF;
+            --radius: 25px;
+            --shadow-soft: 0 8px 25px rgba(255, 184, 208, 0.25);
+            --shadow-bold: 0 12px 35px rgba(166, 209, 255, 0.35);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #fff9f9 0%, #f0f9ff 100%);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* ===== ANIMATED BACKGROUND ELEMENTS ===== */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 184, 208, 0.15);
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        /* ===== UNIQUE HEADER DESIGN ===== */
+        .header {
+            background: linear-gradient(135deg, var(--pink), var(--blue));
+            padding: 1.8rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-bold);
+            border-radius: 0 0 var(--radius) var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: movePattern 20s linear infinite;
+            z-index: 0;
+        }
+        @keyframes movePattern {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            z-index: 1;
+        }
+        .logo i {
+            font-size: 3rem;
+            color: var(--white);
+            text-shadow: 3px 3px 0px rgba(90, 90, 120, 0.2);
+            animation: bounce 2s infinite alternate;
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        .logo h1 {
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: var(--white);
+            text-shadow: 2px 2px 0px rgba(90, 90, 120, 0.3);
+            letter-spacing: 0.5px;
+        }
+        .nav {
+            display: flex;
+            gap: 15px;
+            z-index: 1;
+        }
+        .nav a {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .nav a:nth-child(1) { 
+            background: linear-gradient(135deg, var(--yellow), #FFD166); 
+            color: #8B6B00;
+        }
+        .nav a:nth-child(2) { 
+            background: linear-gradient(135deg, var(--green), #8DE4A7); 
+            color: #0A5C36;
+        }
+        .nav a:nth-child(3) { 
+            background: linear-gradient(135deg, var(--purple), #C8B6FF); 
+            color: #4B2E83;
+        }
+        .nav a:nth-child(4) { 
+            background: linear-gradient(135deg, #FFB8D0, #FF8BA7); 
+            color: #7A003C;
+        }
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+        }
+        .nav a:hover::before {
+            left: 100%;
+        }
+        .nav a:hover {
+            transform: translateY(-8px) scale(1.08);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        /* ===== HERO ABOUT SECTION ===== */
+        .about-hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .about-hero h2 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            line-height: 1.2;
+            text-shadow: 3px 3px 0px rgba(255, 184, 208, 0.3);
+        }
+        .about-hero h2 span {
+            background: linear-gradient(to right, var(--pink), var(--blue), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: rainbow 3s infinite alternate;
+        }
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(30deg); }
+        }
+        .about-hero p {
+            font-size: 1.3rem;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ===== PROFILE SECTION ===== */
+        .profile-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: flex-start;
+            margin-bottom: 4rem;
+        }
+        .profile-card {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-bold);
+            border: 5px solid var(--pink);
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 184, 208, 0.4);
+        }
+        .profile-card::before {
+            content: '✨';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            opacity: 0.7;
+        }
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--pink), var(--blue));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 5px solid var(--white);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .profile-img i {
+            font-size: 5rem;
+            color: var(--white);
+        }
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-card h3 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        .profile-card .title {
+            font-size: 1.2rem;
+            color: var(--pink);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+        .profile-card .bio {
+            text-align: left;
+            margin-bottom: 2rem;
+            color: #666;
+            line-height: 1.8;
+        }
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .stat {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+        .stat-number {
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--blue);
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        /* ===== BIO CONTENT ===== */
+        .bio-content {
+            flex: 2;
+            min-width: 300px;
+        }
+        .bio-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-soft);
+            border-left: 8px solid var(--green);
+            transition: all 0.3s ease;
+        }
+        .bio-section:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 35px rgba(166, 209, 255, 0.3);
+        }
+        .bio-section:nth-child(2) {
+            border-left-color: var(--purple);
+        }
+        .bio-section:nth-child(3) {
+            border-left-color: var(--yellow);
+        }
+        .bio-section h3 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .bio-section p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .skill-tag {
+            background: linear-gradient(135deg, var(--pink), var(--blue));
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .skill-tag:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-bold);
+            text-align: center;
+            margin-bottom: 4rem;
+            border: 5px dotted var(--blue);
+        }
+        .contact-section h3 {
+            font-family: 'Comic Neue', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+            color: var(--text);
+        }
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--yellow), var(--green));
+            color: var(--text);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 230, 166, 0.4);
+        }
+        .contact-link:nth-child(2) {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+        }
+        .contact-link:nth-child(3) {
+            background: linear-gradient(135deg, var(--blue), var(--green));
+        }
+        .contact-link:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .contact-note {
+            font-style: italic;
+            color: #777;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px dashed var(--pink);
+        }
+
+        /* ===== UNIQUE FOOTER DESIGN ===== */
+        .footer {
+            background: linear-gradient(135deg, var(--pink), var(--blue));
+            color: var(--white);
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: auto;
+            box-shadow: 0 -10px 30px rgba(255, 184, 208, 0.4);
+            border-radius: var(--radius) var(--radius) 0 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .footer::before {
+            content: '❤️';
+            position: absolute;
+            top: 10px;
+            left: 5%;
+            animation: fall 10s linear infinite;
+        }
+        .footer::after {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            right: 10%;
+            animation: fall 8s linear infinite 2s;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        .footer p {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.15);
+        }
+        .footer-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 992px) {
+            .header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
+            .nav { flex-wrap: wrap; justify-content: center; }
+            .profile-section { flex-direction: column; }
+            .profile-card, .bio-content { width: 100%; }
+            .contact-links { flex-direction: column; align-items: center; }
+            .contact-link { width: 90%; }
+        }
+        @media (max-width: 768px) {
+            .about-hero h2 { font-size: 2.5rem; }
+            .profile-img { width: 150px; height: 150px; }
+            .profile-img i { font-size: 4rem; }
+            .profile-card h3 { font-size: 1.8rem; }
+            .bio-section h3 { font-size: 1.6rem; }
+            .nav a { padding: 0.7rem 1.5rem; font-size: 1rem; }
+            .logo h1 { font-size: 1.8rem; }
+            .logo i { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ANIMATED BACKGROUND BUBBLES -->
+    <div class="bubble" style="width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="bubble" style="width: 80px; height: 80px; top: 60%; right: 8%; animation-delay: 2s;"></div>
+    <div class="bubble" style="width: 150px; height: 150px; bottom: 20%; left: 10%; animation-delay: 4s;"></div>
+
+    <!-- HEADER WITH 4 BUTTONS -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-user-circle"></i>
+            <h1>Tentang Saya</h1>
+        </div>
+        <nav class="nav">
+            <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
+            <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
+            <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
+            <a href="./"><i class="fas fa-user-circle"></i> Tentang Saya</a>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        <!-- HERO SECTION -->
+        <section class="about-hero">
+            <h2>Halo! Saya <span>Eka Setia Wati</span> 👋</h2>
+            <p>Pengembang GIS dan pembuat portal imut ini yang menyukai pemetaan digital dan desain yang menyenangkan!</p>
+        </section>
+
+        <!-- PROFILE SECTION -->
+        <section class="profile-section">
+            <!-- PROFILE CARD -->
+            <div class="profile-card">
+                <div class="profile-img">
+                    <!-- Ganti dengan foto Anda, atau gunakan ikon default -->
+                    <!-- <img src="foto-anda.jpg" alt="Foto [Nama Anda]"> -->
+                    <i class="fas fa-user"></i>
+                </div>
+                <h3>Eka Setia Wati</h3>
+                <div class="title">Pengembang GIS & Desainer Web</div>
+                <div class="bio">
+                    <p>Saya seorang pengembang yang bersemangat menciptakan solusi geospasial dengan pendekatan yang kreatif dan menyenangkan.</p>
+                </div>
+                
+                <div class="profile-stats">
+                    <div class="stat">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Tahun Pengalaman</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Proyek GIS</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Portal Dibuat</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BIO CONTENT -->
+            <div class="bio-content">
+                <div class="bio-section">
+                    <h3><i class="fas fa-graduation-cap"></i> Latar Belakang</h3>
+                    <p>Saya memiliki latar belakang pendidikan di bidang Geografi dan Sistem Informasi Geografis. Sejak awal, saya tertarik bagaimana data spasial dapat divisualisasikan dengan cara yang menarik dan mudah dipahami.</p>
+                    <p>Pengalaman saya mencakup pengembangan aplikasi berbasis peta menggunakan QGIS, Leaflet, dan berbagai teknologi web modern.</p>
+                </div>
+
+                <div class="bio-section">
+                    <h3><i class="fas fa-bullseye"></i> Misi & Visi</h3>
+                    <p>Misi saya adalah membuat data geospasial lebih mudah diakses dan dipahami oleh semua orang, dengan pendekatan visual yang menyenangkan dan interaktif.</p>
+                    <p>Saya percaya bahwa peta tidak harus terlihat membosankan - dengan warna-warna cerah dan desain yang imut, kita dapat membuat pengalaman eksplorasi geografis menjadi lebih menarik!</p>
+                </div>
+
+                <div class="bio-section">
+                    <h3><i class="fas fa-code"></i> Keahlian Teknis</h3>
+                    <div class="skills">
+                        <span class="skill-tag">QGIS</span>
+                        <span class="skill-tag">Leaflet.js</span>
+                        <span class="skill-tag">HTML/CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Web Design</span>
+                        <span class="skill-tag">GIS Analysis</span>
+                        <span class="skill-tag">Data Visualization</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section class="contact-section">
+            <h3><i class="fas fa-envelope"></i> Mari Terhubung!</h3>
+            <div class="contact-links">
+                <a href="mailto:emailanda@contoh.com" class="contact-link">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email: ekasetiawati36579@gmail.com</span>
+                </a>
+                <a href="https://github.com/usernameanda" target="_blank" class="contact-link">
+                    <i class="fab fa-github"></i>
+                    <span>GitHub: usernameanda</span>
+                </a>
+                <a href="https://linkedin.com/in/usernameanda" target="_blank" class="contact-link">
+                    <i class="fab fa-linkedin"></i>
+                    <span>LinkedIn: usernameanda</span>
+                </a>
+            </div>
+            <p class="contact-note">
+                Saya selalu terbuka untuk berkolaborasi dalam proyek GIS yang kreatif atau sekadar berdiskusi tentang pemetaan digital!
+            </p>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> oleh [Nama Anda]</p>
+        <p>© <span id="current-year">2025</span> Geoportal Imut. Semua hak dilindungi.</p>
+        <div class="footer-links">
+            <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
+            <a href="mailto:emailanda@contoh.com"><i class="fas fa-envelope"></i> Hubungi Saya</a>
+            <a href="https://github.com/usernameanda" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        </div>
+    </footer>
+
+    <script>
+        // Dynamic year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // Highlight current page in navigation
+        document.querySelectorAll('.nav a').forEach(link => {
+            if (link.getAttribute('href') === './' || link.textContent.includes('Tentang')) {
+                link.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.8)';
+                link.style.transform = 'scale(1.05)';
+            }
+        });
+        
+        // Bubble animation on click
+        document.addEventListener('click', function(e) {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.style.width = bubble.style.height = `${Math.random() * 60 + 40}px`;
+            bubble.style.left = `${e.clientX - 50}px`;
+            bubble.style.top = `${e.clientY - 50}px`;
+            bubble.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
+            document.body.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, 2000);
+        });
+        
+        // Animate skill tags on hover
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.15) rotate(5deg)';
+            });
+            tag.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+        
+        // Typewriter effect for hero (optional)
+        const heroTitle = document.querySelector('.about-hero h2');
+        const originalText = heroTitle.innerHTML;
+        heroTitle.innerHTML = '';
+        let i = 0;
+        const typeWriter = () => {
+            if (i < originalText.length) {
+                heroTitle.innerHTML += originalText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        // Uncomment untuk efek ketik otomatis
+        // setTimeout(typeWriter, 1000);
+    </script>
+</body>
+</html>

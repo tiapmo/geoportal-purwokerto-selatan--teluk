@@ -512,10 +512,10 @@
             <h1>Geoportal Imut</h1>
         </div>
         <nav class="nav">
-            <a href="./beranda/"><i class="fas fa-home"></i> Beranda</a>
-            <a href="./pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
-            <a href="./teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
-            <a href="./tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
+            <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
+            <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
+            <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
+            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
         </nav>
     </header>
 
@@ -558,14 +558,14 @@
         <h3><i class="fas fa-map-signs"></i> Peta Imut Pilihan</h3>
         <div class="map-container">
             <div class="map-options">
-                <a href="./pwtslt/" class="map-option">
+                <a href="../pwtslt/" class="map-option">
                     <i class="fas fa-mountain"></i>
                     <div>
                         <strong>Purwokerto Selatan</strong>
                         <p>Wilayah pegunungan dan perbukitan</p>
                     </div>
                 </a>
-                <a href="./teluk/" class="map-option">
+                <a href="../teluk/" class="map-option">
                     <i class="fas fa-water"></i>
                     <div>
                         <strong>Kawasan Teluk</strong>
@@ -587,7 +587,7 @@
         <div class="footer-links">
             <a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a>
             <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Email</a>
-            <a href="./tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
+            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
         </div>
     </footer>
 
@@ -632,8 +632,8 @@
         navLinks.forEach(link => {
             const linkPath = link.getAttribute('href');
             if (currentPage.includes(linkPath) || 
-                (currentPage.endsWith('/beranda/') && linkPath === './beranda/') ||
-                (currentPage.endsWith('/') && linkPath === './beranda/')) {
+                (currentPage.endsWith('/beranda/') && linkPath === '../beranda/') ||
+                (currentPage.endsWith('/') && linkPath === '../beranda/')) {
                 link.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.8)';
                 link.style.transform = 'scale(1.05)';
             }

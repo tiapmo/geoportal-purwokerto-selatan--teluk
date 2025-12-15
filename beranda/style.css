@@ -40,13 +40,12 @@ body {
     top: 0;
     z-index: 100;
 }
-.logo-img {
-            height: 50px; /* Sesuaikan tinggi logo */
-            width: auto; /* Lebar menyesuaikan proporsi */
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            margin-right: 10px;
-        }
+
+.logo { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+}
 
 .logo h1 { 
     font-family: 'Poppins', sans-serif; 

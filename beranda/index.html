@@ -40,7 +40,7 @@
             flex-direction: column;
         }
 
-        /* ===== HEADER MINIMALIS DENGAN LOGO KECAMATAN ===== */
+        /* ===== HEADER DENGAN LOGO TERINTEGRASI ===== */
         .header {
             background-color: var(--light-card);
             padding: 1.2rem 2rem;
@@ -60,47 +60,58 @@
             gap: 20px;
         }
         
-        .logo-kecamatan {
+        /* LOGO KECAMATAN YANG DIPERBARUI */
+        .logo-unified {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: var(--light-gray);
-            padding: 8px 16px;
+            gap: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 10px 20px;
             border-radius: var(--border-radius);
-            border: 1px solid var(--medium-gray);
+            box-shadow: var(--shadow-subtle);
+            border-left: 4px solid var(--secondary);
+            transition: all 0.3s ease;
         }
         
-        .logo-kecamatan-img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 8px;
+        .logo-unified:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            border-left-color: var(--accent);
         }
         
-        .logo-kecamatan-text {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--primary);
-        }
-        
-        .logo {
+        .logo-icon {
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 10px;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
         }
         
-        .logo i {
-            font-size: 2.2rem;
-            color: var(--secondary);
+        .logo-text {
+            display: flex;
+            flex-direction: column;
         }
         
-        .logo h1 {
+        .logo-main {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.8rem;
+            font-weight: 700;
+            font-size: 1.5rem;
             color: var(--primary);
             letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        .logo-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-top: 2px;
         }
         
         .nav {
@@ -498,21 +509,18 @@
                 font-size: 0.95rem; 
             }
             
-            .logo h1 { 
-                font-size: 1.6rem; 
+            .logo-main { 
+                font-size: 1.3rem; 
             }
             
-            .logo i { 
-                font-size: 2rem; 
+            .logo-subtitle {
+                font-size: 0.8rem;
             }
             
-            .logo-kecamatan-text {
-                font-size: 0.9rem;
-            }
-            
-            .logo-kecamatan-img {
-                width: 35px;
-                height: 35px;
+            .logo-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
             }
             
             .map-thumbnail { 
@@ -527,19 +535,16 @@
     </style>
 </head>
 <body>
-    <!-- HEADER DENGAN LOGO KECAMATAN -->
+    <!-- HEADER DENGAN LOGO TERINTEGRASI -->
     <header class="header">
-        <div class="logo-container">
-            <!-- LOGO KECAMATAN PURWOKERTO SELATAN -->
-            <div class="logo-kecamatan">
-                <img class="logo-kecamatan-img" src="../logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
-                <div class="logo-kecamatan-text">Kec. Purwokerto Selatan</div>
+        <!-- LOGO UNIFIED YANG LEBIH PROFESIONAL -->
+        <div class="logo-unified">
+            <div class="logo-icon">
+                <i class="fas fa-landmark"></i>
             </div>
-            
-            <!-- LOGO GEOPORTAL -->
-            <div class="logo">
-                <i class="fas fa-map-marked-alt"></i>
-                <h1>Geoportal</h1>
+            <div class="logo-text">
+                <div class="logo-main">Geoportal</div>
+                <div class="logo-subtitle">Kecamatan Purwokerto Selatan</div>
             </div>
         </div>
         

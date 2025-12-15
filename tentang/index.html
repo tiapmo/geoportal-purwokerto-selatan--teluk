@@ -3,151 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Saya</title>
+    <title>Tentang - Geoportal Kecamatan Purwokerto Selatan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
-            --pink: #FFB8D0;
-            --blue: #A6D1FF;
-            --yellow: #FFE6A6;
-            --green: #B8E8D3;
-            --purple: #E6D4FF;
-            --text: #5A5A78;
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #1ABC9C;
+            --light-bg: #F8F9FA;
+            --light-card: #FFFFFF;
+            --light-gray: #ECF0F1;
+            --medium-gray: #BDC3C7;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
             --white: #FFFFFF;
-            --radius: 25px;
-            --shadow-soft: 0 8px 25px rgba(255, 184, 208, 0.25);
-            --shadow-bold: 0 12px 35px rgba(166, 209, 255, 0.35);
+            --border-radius: 12px;
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
         body {
             font-family: 'Nunito', sans-serif;
-            color: var(--text);
-            background: linear-gradient(135deg, #fff9f9 0%, #f0f9ff 100%);
+            color: var(--text-dark);
+            background-color: var(--light-bg);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
-        /* ===== ANIMATED BACKGROUND ELEMENTS ===== */
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 184, 208, 0.15);
-            z-index: -1;
-            animation: float 15s infinite ease-in-out;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
-        }
-
-        /* ===== UNIQUE HEADER DESIGN ===== */
+        /* ===== HEADER MINIMALIS DENGAN LOGO KECAMATAN ===== */
         .header {
-            background: linear-gradient(135deg, var(--pink), var(--blue));
-            padding: 1.8rem 2.5rem;
+            background-color: var(--light-card);
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow-bold);
-            border-radius: 0 0 var(--radius) var(--radius);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .header::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 30px 30px;
-            animation: movePattern 20s linear infinite;
-            z-index: 0;
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
-        @keyframes movePattern {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .logo-kecamatan {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--light-gray);
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--medium-gray);
         }
+        
+        .logo-kecamatan-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .logo-kecamatan-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        
         .logo {
             display: flex;
             align-items: center;
-            gap: 18px;
-            z-index: 1;
+            gap: 12px;
         }
+        
         .logo i {
-            font-size: 3rem;
-            color: var(--white);
-            text-shadow: 3px 3px 0px rgba(90, 90, 120, 0.2);
-            animation: bounce 2s infinite alternate;
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-        .logo h1 {
-            font-family: 'Comic Neue', cursive;
-            font-weight: 700;
             font-size: 2.2rem;
-            color: var(--white);
-            text-shadow: 2px 2px 0px rgba(90, 90, 120, 0.3);
-            letter-spacing: 0.5px;
+            color: var(--secondary);
         }
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        
         .nav {
             display: flex;
-            gap: 15px;
-            z-index: 1;
+            gap: 10px;
         }
+        
         .nav a {
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            gap: 8px;
+            color: var(--text-dark);
+            background-color: transparent;
+            border: 1px solid var(--medium-gray);
         }
-        .nav a:nth-child(1) { 
-            background: linear-gradient(135deg, var(--yellow), #FFD166); 
-            color: #8B6B00;
-        }
-        .nav a:nth-child(2) { 
-            background: linear-gradient(135deg, var(--green), #8DE4A7); 
-            color: #0A5C36;
-        }
-        .nav a:nth-child(3) { 
-            background: linear-gradient(135deg, var(--purple), #C8B6FF); 
-            color: #4B2E83;
-        }
-        .nav a:nth-child(4) { 
-            background: linear-gradient(135deg, #FFB8D0, #FF8BA7); 
-            color: #7A003C;
-        }
-        .nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-        }
-        .nav a:hover::before {
-            left: 100%;
-        }
+        
         .nav a:hover {
-            transform: translateY(-8px) scale(1.08);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+        
+        .nav a i {
+            font-size: 1.1rem;
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -162,28 +147,23 @@
             text-align: center;
             margin-bottom: 4rem;
         }
+        
         .about-hero h2 {
-            font-family: 'Comic Neue', cursive;
-            font-size: 3.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2.8rem;
             margin-bottom: 1.5rem;
-            color: var(--text);
+            color: var(--primary);
             line-height: 1.2;
-            text-shadow: 3px 3px 0px rgba(255, 184, 208, 0.3);
         }
+        
         .about-hero h2 span {
-            background: linear-gradient(to right, var(--pink), var(--blue), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: rainbow 3s infinite alternate;
+            color: var(--secondary);
         }
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(30deg); }
-        }
+        
         .about-hero p {
             font-size: 1.3rem;
-            color: #666;
+            color: var(--text-light);
             max-width: 800px;
             margin: 0 auto;
         }
@@ -196,71 +176,73 @@
             align-items: flex-start;
             margin-bottom: 4rem;
         }
+        
         .profile-card {
             flex: 1;
             min-width: 300px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius);
+            background: var(--light-card);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
-            box-shadow: var(--shadow-bold);
-            border: 5px solid var(--pink);
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--light-gray);
             text-align: center;
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             position: relative;
-            overflow: hidden;
         }
+        
         .profile-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(255, 184, 208, 0.4);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
         }
-        .profile-card::before {
-            content: '✨';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 1.5rem;
-            opacity: 0.7;
-        }
+        
         .profile-img {
             width: 200px;
             height: 200px;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--pink), var(--blue));
+            background: var(--light-gray);
             display: flex;
             align-items: center;
             justify-content: center;
             border: 5px solid var(--white);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-subtle);
             overflow: hidden;
         }
+        
         .profile-img i {
             font-size: 5rem;
-            color: var(--white);
+            color: var(--secondary);
         }
+        
         .profile-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+        
         .profile-card h3 {
-            font-family: 'Comic Neue', cursive;
-            font-size: 2.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
-            color: var(--text);
+            color: var(--primary);
         }
+        
         .profile-card .title {
             font-size: 1.2rem;
-            color: var(--pink);
+            color: var(--secondary);
             margin-bottom: 1.5rem;
-            font-weight: 600;
+            font-weight: 500;
         }
+        
         .profile-card .bio {
             text-align: left;
             margin-bottom: 2rem;
-            color: #666;
+            color: var(--text-light);
             line-height: 1.8;
         }
+        
         .profile-stats {
             display: flex;
             justify-content: space-around;
@@ -268,21 +250,24 @@
             flex-wrap: wrap;
             gap: 1rem;
         }
+        
         .stat {
             text-align: center;
             flex: 1;
             min-width: 100px;
         }
+        
         .stat-number {
-            font-family: 'Comic Neue', cursive;
-            font-size: 2.5rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--blue);
+            color: var(--secondary);
             display: block;
         }
+        
         .stat-label {
             font-size: 0.9rem;
-            color: #777;
+            color: var(--text-light);
         }
 
         /* ===== BIO CONTENT ===== */
@@ -290,74 +275,95 @@
             flex: 2;
             min-width: 300px;
         }
+        
         .bio-section {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius);
+            background: var(--light-card);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
             margin-bottom: 2rem;
-            box-shadow: var(--shadow-soft);
-            border-left: 8px solid var(--green);
+            box-shadow: var(--shadow-subtle);
+            border-left: 4px solid var(--accent);
             transition: all 0.3s ease;
         }
+        
         .bio-section:hover {
-            transform: translateX(10px);
-            box-shadow: 0 15px 35px rgba(166, 209, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
+        
         .bio-section:nth-child(2) {
-            border-left-color: var(--purple);
+            border-left-color: var(--secondary);
         }
+        
         .bio-section:nth-child(3) {
-            border-left-color: var(--yellow);
+            border-left-color: var(--accent);
         }
+        
         .bio-section h3 {
-            font-family: 'Comic Neue', cursive;
-            font-size: 1.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.6rem;
             margin-bottom: 1.2rem;
-            color: var(--text);
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 10px;
         }
+        
         .bio-section p {
-            color: #666;
+            color: var(--text-light);
             margin-bottom: 1rem;
             line-height: 1.8;
         }
+        
         .skills {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             margin-top: 1.5rem;
         }
+        
         .skill-tag {
-            background: linear-gradient(135deg, var(--pink), var(--blue));
-            color: var(--white);
+            background: var(--light-gray);
+            color: var(--text-dark);
             padding: 0.6rem 1.2rem;
             border-radius: 30px;
             font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.3s ease;
+            border: 1px solid var(--medium-gray);
         }
+        
         .skill-tag:hover {
-            transform: scale(1.1) rotate(5deg);
+            background: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            transform: translateY(-3px);
         }
 
         /* ===== CONTACT SECTION ===== */
         .contact-section {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: var(--radius);
+            background: var(--light-card);
+            border-radius: var(--border-radius);
             padding: 2.5rem;
-            box-shadow: var(--shadow-bold);
+            box-shadow: var(--shadow-subtle);
             text-align: center;
             margin-bottom: 4rem;
-            border: 5px dotted var(--blue);
+            border: 1px solid var(--light-gray);
         }
+        
         .contact-section h3 {
-            font-family: 'Comic Neue', cursive;
-            font-size: 2.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
             margin-bottom: 2rem;
-            color: var(--text);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
+        
         .contact-links {
             display: flex;
             justify-content: center;
@@ -365,133 +371,191 @@
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
+        
         .contact-link {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: linear-gradient(135deg, var(--yellow), var(--green));
-            color: var(--text);
+            background: var(--light-card);
+            color: var(--text-dark);
             padding: 1rem 2rem;
-            border-radius: 50px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(255, 230, 166, 0.4);
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--light-gray);
         }
-        .contact-link:nth-child(2) {
-            background: linear-gradient(135deg, var(--purple), var(--pink));
-        }
-        .contact-link:nth-child(3) {
-            background: linear-gradient(135deg, var(--blue), var(--green));
-        }
+        
         .contact-link:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
+        
         .contact-note {
             font-style: italic;
-            color: #777;
+            color: var(--text-light);
             margin-top: 2rem;
             padding-top: 1.5rem;
-            border-top: 2px dashed var(--pink);
+            border-top: 1px solid var(--light-gray);
         }
 
-        /* ===== UNIQUE FOOTER DESIGN ===== */
+        /* ===== FOOTER MINIMALIS ===== */
         .footer {
-            background: linear-gradient(135deg, var(--pink), var(--blue));
+            background-color: var(--primary);
             color: var(--white);
             text-align: center;
-            padding: 2.5rem;
+            padding: 2rem;
             margin-top: auto;
-            box-shadow: 0 -10px 30px rgba(255, 184, 208, 0.4);
-            border-radius: var(--radius) var(--radius) 0 0;
-            position: relative;
-            overflow: hidden;
+            border-top: 1px solid var(--light-gray);
         }
-        .footer::before {
-            content: '❤️';
-            position: absolute;
-            top: 10px;
-            left: 5%;
-            animation: fall 10s linear infinite;
-        }
-        .footer::after {
-            content: '✨';
-            position: absolute;
-            top: 20px;
-            right: 10%;
-            animation: fall 8s linear infinite 2s;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
+        
         .footer p {
             margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
         }
+        
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2.5rem;
+            gap: 2rem;
             margin-top: 1.5rem;
             flex-wrap: wrap;
         }
+        
         .footer-links a {
-            color: var(--white);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s;
             padding: 0.5rem 1rem;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        
         .footer-links a:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer-links a i {
+            font-size: 1.1rem;
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 992px) {
-            .header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
-            .nav { flex-wrap: wrap; justify-content: center; }
-            .profile-section { flex-direction: column; }
-            .profile-card, .bio-content { width: 100%; }
-            .contact-links { flex-direction: column; align-items: center; }
-            .contact-link { width: 90%; }
+            .header { 
+                flex-direction: column; 
+                gap: 1.2rem; 
+                padding: 1.2rem; 
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav { 
+                flex-wrap: wrap; 
+                justify-content: center; 
+            }
+            
+            .profile-section { 
+                flex-direction: column; 
+            }
+            
+            .profile-card, .bio-content { 
+                width: 100%; 
+            }
+            
+            .contact-links { 
+                flex-direction: column; 
+                align-items: center; 
+            }
+            
+            .contact-link { 
+                width: 100%; 
+                max-width: 400px; 
+            }
         }
+        
         @media (max-width: 768px) {
-            .about-hero h2 { font-size: 2.5rem; }
-            .profile-img { width: 150px; height: 150px; }
-            .profile-img i { font-size: 4rem; }
-            .profile-card h3 { font-size: 1.8rem; }
-            .bio-section h3 { font-size: 1.6rem; }
-            .nav a { padding: 0.7rem 1.5rem; font-size: 1rem; }
-            .logo h1 { font-size: 1.8rem; }
-            .logo i { font-size: 2.5rem; }
+            .about-hero h2 { 
+                font-size: 2.2rem; 
+            }
+            
+            .profile-img { 
+                width: 150px; 
+                height: 150px; 
+            }
+            
+            .profile-img i { 
+                font-size: 4rem; 
+            }
+            
+            .profile-card h3 { 
+                font-size: 1.8rem; 
+            }
+            
+            .bio-section h3 { 
+                font-size: 1.4rem; 
+            }
+            
+            .nav a { 
+                padding: 0.6rem 1.2rem; 
+                font-size: 0.95rem; 
+            }
+            
+            .logo h1 { 
+                font-size: 1.6rem; 
+            }
+            
+            .logo i { 
+                font-size: 2rem; 
+            }
+            
+            .logo-kecamatan-text {
+                font-size: 0.9rem;
+            }
+            
+            .logo-kecamatan-img {
+                width: 35px;
+                height: 35px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- ANIMATED BACKGROUND BUBBLES -->
-    <div class="bubble" style="width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s;"></div>
-    <div class="bubble" style="width: 80px; height: 80px; top: 60%; right: 8%; animation-delay: 2s;"></div>
-    <div class="bubble" style="width: 150px; height: 150px; bottom: 20%; left: 10%; animation-delay: 4s;"></div>
-
-    <!-- HEADER WITH 4 BUTTONS -->
+    <!-- HEADER DENGAN LOGO KECAMATAN -->
     <header class="header">
-        <div class="logo">
-            <i class="fas fa-user-circle"></i>
-            <h1>Tentang Saya</h1>
+        <div class="logo-container">
+            <!-- LOGO KECAMATAN PURWOKERTO SELATAN -->
+            <div class="logo-kecamatan">
+                <img class="logo-kecamatan-img" src="../OIP-removebg-preview.png" alt="Logo Kecamatan Purwokerto Selatan">
+                <div class="logo-kecamatan-text">Kec. Purwokerto Selatan</div>
+            </div>
+            
+            <!-- LOGO GEOPORTAL -->
+            <div class="logo">
+                <i class="fas fa-user-circle"></i>
+                <h1>Tentang</h1>
+            </div>
         </div>
+        
+        <!-- NAVIGASI -->
         <nav class="nav">
             <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
             <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
             <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
-            <a href="./"><i class="fas fa-user-circle"></i> Tentang Saya</a>
+            <a href="./"><i class="fas fa-user-circle"></i> Tentang</a>
         </nav>
     </header>
 
@@ -500,7 +564,7 @@
         <!-- HERO SECTION -->
         <section class="about-hero">
             <h2>Halo! Saya <span>Eka Setia Wati</span> 👋</h2>
-            <p>Pengembang GIS dan pembuat portal imut ini yang menyukai pemetaan digital dan desain yang menyenangkan!</p>
+            <p>Pengembang GIS dan pembuat portal ini yang berdedikasi pada pemetaan digital dan visualisasi data spasial.</p>
         </section>
 
         <!-- PROFILE SECTION -->
@@ -508,42 +572,26 @@
             <!-- PROFILE CARD -->
             <div class="profile-card">
                 <div class="profile-img">
-                   <img src="./profil saya.png" alt="Foto Nama Anda">
+                    <img src="./profil saya.png" alt="Foto Eka Setia Wati">
                 </div>
                 <h3>Eka Setia Wati</h3>
-                <div class="title">Pengembang GIS & Desainer Web</div>
+                <div class="title">Pengembang GIS & Analis Geospasial</div>
                 <div class="bio">
-                    <p>Saya seorang pengembang yang bersemangat menciptakan solusi geospasial dengan pendekatan yang kreatif dan menyenangkan.</p>
+                    <p>Saya seorang profesional di bidang Sistem Informasi Geografis dengan pengalaman dalam pengembangan aplikasi web GIS, analisis data spasial, dan visualisasi data geografis.</p>
                 </div>
-                
-                <div class="profile-stats">
-                    <div class="stat">
-                        <span class="stat-number">3+</span>
-                        <span class="stat-label">Tahun Pengalaman</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">50+</span>
-                        <span class="stat-label">Proyek GIS</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">10+</span>
-                        <span class="stat-label">Portal Dibuat</span>
-                    </div>
-                </div>
-            </div>
 
             <!-- BIO CONTENT -->
             <div class="bio-content">
                 <div class="bio-section">
                     <h3><i class="fas fa-graduation-cap"></i> Latar Belakang</h3>
-                    <p>Saya memiliki latar belakang pendidikan di bidang Geografi dan Sistem Informasi Geografis. Sejak awal, saya tertarik bagaimana data spasial dapat divisualisasikan dengan cara yang menarik dan mudah dipahami.</p>
-                    <p>Pengalaman saya mencakup pengembangan aplikasi berbasis peta menggunakan QGIS, Leaflet, dan berbagai teknologi web modern.</p>
+                    <p>Saya memiliki latar belakang pendidikan di bidang Geografi dan Sistem Informasi Geografis. Sejak awal, saya tertarik bagaimana data spasial dapat divisualisasikan dengan cara yang menarik dan mudah dipahami oleh berbagai kalangan.</p>
+                    <p>Pengalaman profesional saya mencakup pengembangan aplikasi berbasis peta menggunakan QGIS, Leaflet, Mapbox, dan berbagai teknologi web modern untuk menciptakan solusi geospasial yang inovatif.</p>
                 </div>
 
                 <div class="bio-section">
                     <h3><i class="fas fa-bullseye"></i> Misi & Visi</h3>
-                    <p>Misi saya adalah membuat data geospasial lebih mudah diakses dan dipahami oleh semua orang, dengan pendekatan visual yang menyenangkan dan interaktif.</p>
-                    <p>Saya percaya bahwa peta tidak harus terlihat membosankan - dengan warna-warna cerah dan desain yang imut, kita dapat membuat pengalaman eksplorasi geografis menjadi lebih menarik!</p>
+                    <p>Misi saya adalah mendemokratisasi akses data geospasial melalui pengembangan portal yang user-friendly, informatif, dan estetis. Saya percaya bahwa data spasial seharusnya dapat diakses oleh semua orang, bukan hanya ahli GIS.</p>
+                    <p>Visi saya adalah menciptakan ekosistem data spasial yang terintegrasi untuk mendukung perencanaan wilayah, pengambilan keputusan, dan penelitian ilmiah di Kecamatan Purwokerto Selatan dan sekitarnya.</p>
                 </div>
 
                 <div class="bio-section">
@@ -556,7 +604,7 @@
                         <span class="skill-tag">Web Design</span>
                         <span class="skill-tag">GIS Analysis</span>
                         <span class="skill-tag">Data Visualization</span>
-                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">PostgreSQL/PostGIS</span>
                     </div>
                 </div>
             </div>
@@ -566,25 +614,24 @@
         <section class="contact-section">
             <h3><i class="fas fa-envelope"></i> Mari Terhubung!</h3>
             <div class="contact-links">
-                <a href="mailto:emailanda@contoh.com" class="contact-link">
+                <a href="mailto:ekasetiawati36579@gmail.com" class="contact-link">
                     <i class="fas fa-envelope"></i>
                     <span>Email: ekasetiawati36579@gmail.com</span>
                 </a>
             </div>
             <p class="contact-note">
-                Saya selalu terbuka untuk berkolaborasi dalam proyek GIS yang kreatif atau sekadar berdiskusi tentang pemetaan digital!
+                Saya selalu terbuka untuk berkolaborasi dalam proyek GIS yang kreatif, konsultasi pengembangan portal geospasial, atau sekadar berdiskusi tentang inovasi dalam pemetaan digital!
             </p>
         </section>
     </div>
 
     <!-- FOOTER -->
     <footer class="footer">
-        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> oleh [Nama Anda]</p>
-        <p>© <span id="current-year">2025</span> Geoportal Imut. Semua hak dilindungi.</p>
+        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> oleh Eka Setia Wati</p>
+        <p>© <span id="current-year">2025</span> Geoportal Kecamatan Purwokerto Selatan</p>
         <div class="footer-links">
             <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
-            <a href="mailto:emailanda@contoh.com"><i class="fas fa-envelope"></i> Hubungi Saya</a>
-            <a href="https://github.com/usernameanda" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="mailto:ekasetiawati36579@gmail.com"><i class="fas fa-envelope"></i> Hubungi Saya</a>
         </div>
     </footer>
 
@@ -593,52 +640,36 @@
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
         // Highlight current page in navigation
-        document.querySelectorAll('.nav a').forEach(link => {
-            if (link.getAttribute('href') === './' || link.textContent.includes('Tentang')) {
-                link.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.8)';
-                link.style.transform = 'scale(1.05)';
+        const currentPage = window.location.pathname;
+        const navLinks = document.querySelectorAll('.nav a');
+        
+        navLinks.forEach(link => {
+            const linkPath = link.getAttribute('href');
+            
+            // Remove ../ and ./ for comparison
+            const cleanLinkPath = linkPath.replace('../', '').replace('./', '');
+            const cleanCurrentPath = currentPage.replace('/geoportal-purwokerto-selatan--teluk/', '');
+            
+            if (cleanCurrentPath.includes(cleanLinkPath) || 
+                (cleanCurrentPath === '' && linkPath === './') ||
+                (cleanCurrentPath.endsWith('/tentang') && linkPath === './')) {
+                
+                link.style.backgroundColor = 'var(--secondary)';
+                link.style.color = 'var(--white)';
+                link.style.borderColor = 'var(--secondary)';
+                link.style.fontWeight = '600';
             }
         });
         
-        // Bubble animation on click
-        document.addEventListener('click', function(e) {
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.style.width = bubble.style.height = `${Math.random() * 60 + 40}px`;
-            bubble.style.left = `${e.clientX - 50}px`;
-            bubble.style.top = `${e.clientY - 50}px`;
-            bubble.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
-            document.body.appendChild(bubble);
-            
-            setTimeout(() => {
-                bubble.remove();
-            }, 2000);
-        });
-        
-        // Animate skill tags on hover
+        // Simple hover effect for skill tags
         document.querySelectorAll('.skill-tag').forEach(tag => {
             tag.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.15) rotate(5deg)';
+                this.style.transform = 'translateY(-3px)';
             });
             tag.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1) rotate(0deg)';
+                this.style.transform = 'translateY(0)';
             });
         });
-        
-        // Typewriter effect for hero (optional)
-        const heroTitle = document.querySelector('.about-hero h2');
-        const originalText = heroTitle.innerHTML;
-        heroTitle.innerHTML = '';
-        let i = 0;
-        const typeWriter = () => {
-            if (i < originalText.length) {
-                heroTitle.innerHTML += originalText.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
-        };
-        // Uncomment untuk efek ketik otomatis
-        // setTimeout(typeWriter, 1000);
     </script>
 </body>
 </html>

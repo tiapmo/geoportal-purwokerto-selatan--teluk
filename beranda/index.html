@@ -5,23 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geoportal Kecamatan Purwokerto Selatan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
             --primary: #2C3E50;
             --secondary: #3498DB;
             --accent: #1ABC9C;
+            --accent-light: #4ECDC4;
             --light-bg: #F8F9FA;
             --light-card: #FFFFFF;
             --light-gray: #ECF0F1;
             --medium-gray: #BDC3C7;
+            --dark-gray: #7F8C8D;
             --text-dark: #2C3E50;
             --text-light: #7F8C8D;
             --white: #FFFFFF;
             --border-radius: 12px;
+            --border-radius-sm: 8px;
             --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --shadow-medium: 0 6px 18px rgba(0, 0, 0, 0.12);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.4s ease;
         }
         
         * { 
@@ -40,78 +47,173 @@
             flex-direction: column;
         }
 
-        /* ===== HEADER DENGAN LOGO TERINTEGRASI ===== */
+        /* ===== HEADER DENGAN LOGO GAMBAR ASLI ===== */
         .header {
             background-color: var(--light-card);
-            padding: 1.2rem 2rem;
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid var(--light-gray);
+            box-shadow: var(--shadow-subtle);
+            border-bottom: 2px solid var(--light-gray);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.98);
         }
         
         .logo-container {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
         }
         
-        /* LOGO KECAMATAN YANG DIPERBARUI */
-        .logo-unified {
+        /* CONTAINER UNTUK LOGO KECAMATAN DENGAN GAMBAR */
+        .logo-kecamatan {
             display: flex;
             align-items: center;
             gap: 15px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(26, 188, 156, 0.08));
             padding: 10px 20px;
             border-radius: var(--border-radius);
+            border: 2px solid var(--light-gray);
             box-shadow: var(--shadow-subtle);
-            border-left: 4px solid var(--secondary);
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
         }
         
-        .logo-unified:hover {
+        .logo-kecamatan::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .logo-kecamatan:hover::before {
+            left: 100%;
+        }
+        
+        .logo-kecamatan:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-            border-left-color: var(--accent);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--secondary);
         }
         
-        .logo-icon {
+        /* GAMBAR LOGO KECAMATAN */
+        .logo-kecamatan-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: var(--border-radius-sm);
+            border: 2px solid var(--white);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--white);
+            padding: 4px;
+            transition: transform var(--transition-normal);
+        }
+        
+        .logo-kecamatan:hover .logo-kecamatan-img {
+            transform: scale(1.05);
+        }
+        
+        .logo-kecamatan-text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        
+        .logo-kecamatan-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+            letter-spacing: -0.3px;
+        }
+        
+        .logo-kecamatan-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .logo-kecamatan-subtitle::before {
+            content: '';
+            display: block;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+        }
+        
+        /* LOGO GEOPORTAL */
+        .logo-geoportal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.8));
+            border-radius: var(--border-radius);
+            border: 2px solid var(--light-gray);
+            box-shadow: var(--shadow-subtle);
+            transition: all var(--transition-normal);
+        }
+        
+        .logo-geoportal:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--accent);
+        }
+        
+        .logo-geoportal-icon {
             width: 50px;
             height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 10px;
-            color: white;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.2);
+            border-radius: var(--border-radius-sm);
+            color: var(--white);
+            font-size: 1.8rem;
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.25);
+            transition: transform var(--transition-normal);
         }
         
-        .logo-text {
+        .logo-geoportal:hover .logo-geoportal-icon {
+            transform: rotate(-5deg) scale(1.05);
+        }
+        
+        .logo-geoportal-text {
             display: flex;
             flex-direction: column;
+            gap: 2px;
         }
         
-        .logo-main {
+        .logo-geoportal-main {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--primary);
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: -0.5px;
-            line-height: 1.2;
         }
         
-        .logo-subtitle {
+        .logo-geoportal-tagline {
             font-family: 'Poppins', sans-serif;
             font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--secondary);
-            margin-top: 2px;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
         }
         
         .nav {
@@ -120,104 +222,165 @@
         }
         
         .nav a {
-            padding: 0.7rem 1.5rem;
+            padding: 0.8rem 1.8rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             color: var(--text-dark);
             background-color: transparent;
-            border: 1px solid var(--medium-gray);
+            border: 2px solid var(--medium-gray);
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .nav a:hover::before {
+            left: 100%;
         }
         
         .nav a:hover {
             background-color: var(--secondary);
             color: var(--white);
             border-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .nav a.active {
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
         }
         
         .nav a i {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
-        /* ===== HERO SECTION MINIMALIS ===== */
+        /* ===== HERO SECTION ===== */
         .hero {
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
             text-align: center;
-            max-width: 900px;
+            max-width: 1000px;
             margin: 2rem auto;
-            background-color: var(--light-card);
+            background: linear-gradient(135deg, var(--light-card) 0%, #FDFEFE 100%);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
+            border: 2px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent), var(--secondary));
         }
         
         .hero h2 {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2.5rem;
-            margin-bottom: 1.2rem;
+            font-weight: 700;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
             color: var(--primary);
-            line-height: 1.3;
+            line-height: 1.2;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .hero h2 span {
-            color: var(--secondary);
+            color: var(--accent);
+            -webkit-text-fill-color: var(--accent);
         }
         
         .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
             color: var(--text-light);
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            line-height: 1.8;
         }
         
         .cta-button {
             display: inline-block;
-            background-color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
             color: var(--white);
-            padding: 1rem 2.5rem;
+            padding: 1.2rem 3rem;
             border-radius: 30px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
+            font-weight: 700;
+            font-size: 1.2rem;
             box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
             border: none;
             font-family: 'Poppins', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
         }
         
         .cta-button:hover {
-            background-color: #16A085;
+            background: linear-gradient(135deg, #16A085, #1ABC9C);
             transform: translateY(-3px);
             box-shadow: var(--shadow-hover);
         }
         
         .cta-button i {
-            margin-right: 8px;
+            margin-right: 10px;
+            font-size: 1.3rem;
         }
 
-        /* ===== FEATURE CARDS MINIMALIS ===== */
+        /* ===== FEATURE CARDS ===== */
         .features {
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             max-width: 1200px;
-            margin: 0 auto 4rem;
+            margin: 0 auto 5rem;
         }
         
         .features h3 {
             text-align: center;
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2rem;
-            margin-bottom: 2.5rem;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -227,63 +390,88 @@
         
         .features h3 i {
             color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
         }
         
         .feature-card {
             background: var(--white);
-            padding: 2rem 1.8rem;
+            padding: 2.5rem 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
             text-align: center;
-            border: 1px solid var(--light-gray);
+            border: 2px solid var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.05), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
         }
         
         .feature-card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-hover);
             border-color: var(--secondary);
         }
         
         .feature-card i {
-            font-size: 2.8rem;
-            margin-bottom: 1.2rem;
-            color: var(--secondary);
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
         }
         
         .feature-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
             color: var(--primary);
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+            font-weight: 700;
         }
         
         .feature-card p {
             color: var(--text-light);
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 1.05rem;
+            line-height: 1.7;
         }
 
-        /* ===== MAP PREVIEW MINIMALIS ===== */
+        /* ===== MAP PREVIEW ===== */
         .map-preview {
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             max-width: 1200px;
-            margin: 0 auto 5rem;
+            margin: 0 auto 6rem;
             text-align: center;
         }
         
         .map-preview h3 {
             font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
             color: var(--primary);
             display: flex;
             align-items: center;
@@ -293,45 +481,66 @@
         
         .map-preview h3 i {
             color: var(--accent);
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .map-container {
             background: var(--white);
             border-radius: var(--border-radius);
-            padding: 2.5rem;
+            padding: 3rem;
             box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
-            transition: all 0.3s ease;
+            border: 2px solid var(--light-gray);
+            transition: all var(--transition-normal);
         }
         
         .map-container:hover {
-            box-shadow: var(--shadow-hover);
+            box-shadow: var(--shadow-medium);
             border-color: var(--medium-gray);
         }
         
         .map-options {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0 2.5rem;
+            gap: 2rem;
+            margin: 2.5rem 0 3rem;
             flex-wrap: wrap;
         }
         
         .map-option {
             background-color: var(--white);
-            padding: 1.2rem 2rem;
+            padding: 1.5rem 2.5rem;
             border-radius: var(--border-radius);
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 600;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: all var(--transition-normal);
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
-            width: 280px;
+            border: 2px solid var(--light-gray);
+            width: 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.05), transparent);
+            transition: left var(--transition-slow);
+        }
+        
+        .map-option:hover::before {
+            left: 100%;
         }
         
         .map-option:hover {
@@ -342,8 +551,11 @@
         }
         
         .map-option i {
-            font-size: 1.8rem;
-            color: var(--secondary);
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         .map-option div {
@@ -352,29 +564,24 @@
         
         .map-option strong {
             display: block;
-            font-size: 1.2rem;
-            margin-bottom: 4px;
+            font-size: 1.3rem;
+            margin-bottom: 5px;
             color: var(--primary);
-        }
-        
-        .map-option p {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            font-weight: 400;
+            font-weight: 700;
         }
         
         .map-thumbnail {
             width: 100%;
-            height: 300px;
-            background-color: var(--light-bg);
+            height: 350px;
+            background: linear-gradient(135deg, #F8F9FA, #EFF8FF);
             border-radius: var(--border-radius);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 2rem auto;
+            margin: 3rem auto;
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--light-gray);
+            border: 2px solid var(--light-gray);
         }
         
         .map-thumbnail::before {
@@ -384,9 +591,9 @@
             height: 100%;
             background: linear-gradient(90deg, 
                 transparent 0%, 
-                rgba(52, 152, 219, 0.05) 50%, 
+                rgba(52, 152, 219, 0.08) 50%, 
                 transparent 100%);
-            animation: shimmer 2s infinite;
+            animation: shimmer 2.5s infinite;
         }
         
         @keyframes shimmer {
@@ -396,92 +603,132 @@
         
         .map-thumbnail-text {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 600;
+            font-size: 2rem;
+            font-weight: 700;
             color: var(--text-light);
             z-index: 2;
             background: rgba(255, 255, 255, 0.9);
-            padding: 1rem 2rem;
+            padding: 1.5rem 3rem;
             border-radius: var(--border-radius);
-            border: 1px solid var(--light-gray);
+            border: 2px solid var(--light-gray);
+            box-shadow: var(--shadow-subtle);
         }
         
         .map-container > p {
             color: var(--text-light);
-            font-size: 1rem;
-            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            font-style: italic;
         }
 
-        /* ===== FOOTER MINIMALIS ===== */
+        /* ===== FOOTER ===== */
         .footer {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #1A252F);
             color: var(--white);
             text-align: center;
-            padding: 2rem;
+            padding: 3rem 2rem;
             margin-top: auto;
-            border-top: 1px solid var(--light-gray);
+            border-top: 2px solid var(--secondary);
         }
         
         .footer p {
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
             flex-wrap: wrap;
         }
         
         .footer-links a {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            font-weight: 600;
+            transition: all var(--transition-normal);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
             background: rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
         }
         
         .footer-links a:hover {
             color: var(--white);
             background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
         
         .footer-links a i {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1100px) {
+            .logo-container {
+                gap: 20px;
+            }
+            
+            .logo-kecamatan {
+                padding: 8px 16px;
+            }
+            
+            .logo-geoportal {
+                padding: 8px 16px;
+            }
+        }
+        
         @media (max-width: 992px) {
             .header { 
                 flex-direction: column; 
-                gap: 1.2rem; 
-                padding: 1.2rem; 
+                gap: 1.5rem; 
+                padding: 1.5rem; 
             }
             
             .logo-container {
                 flex-direction: column;
-                gap: 15px;
+                gap: 20px;
+                width: 100%;
+            }
+            
+            .logo-kecamatan, 
+            .logo-geoportal {
+                width: 100%;
+                justify-content: center;
             }
             
             .nav { 
                 flex-wrap: wrap; 
                 justify-content: center; 
+                width: 100%;
             }
             
             .hero h2 { 
-                font-size: 2rem; 
+                font-size: 2.3rem; 
             }
             
             .features-grid { 
                 grid-template-columns: repeat(2, 1fr); 
+                gap: 2rem;
             }
             
             .map-options { 
@@ -491,66 +738,149 @@
             
             .map-option { 
                 width: 100%; 
-                max-width: 400px; 
+                max-width: 450px; 
             }
         }
         
         @media (max-width: 768px) {
+            .hero {
+                padding: 4rem 1.5rem;
+            }
+            
             .hero h2 { 
-                font-size: 1.8rem; 
+                font-size: 2rem; 
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
             }
             
             .features-grid { 
                 grid-template-columns: 1fr; 
+                gap: 1.5rem;
             }
             
             .nav a { 
-                padding: 0.6rem 1.2rem; 
+                padding: 0.7rem 1.5rem; 
                 font-size: 0.95rem; 
             }
             
-            .logo-main { 
-                font-size: 1.3rem; 
+            .logo-kecamatan-img {
+                width: 45px;
+                height: 45px;
             }
             
-            .logo-subtitle {
-                font-size: 0.8rem;
+            .logo-kecamatan-title {
+                font-size: 1.1rem;
             }
             
-            .logo-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.2rem;
+            .logo-geoportal-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.6rem;
+            }
+            
+            .logo-geoportal-main {
+                font-size: 1.6rem;
             }
             
             .map-thumbnail { 
-                height: 200px; 
+                height: 250px; 
             }
             
             .map-thumbnail-text { 
-                font-size: 1.4rem; 
-                padding: 0.8rem 1.5rem; 
+                font-size: 1.6rem; 
+                padding: 1.2rem 2rem; 
+            }
+            
+            .features h3,
+            .map-preview h3 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 1rem;
+            }
+            
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 1.1rem;
+            }
+            
+            .map-container {
+                padding: 2rem 1.5rem;
+            }
+            
+            .map-option {
+                padding: 1.2rem 1.5rem;
+            }
+            
+            .map-thumbnail {
+                height: 200px;
+            }
+            
+            .map-thumbnail-text {
+                font-size: 1.4rem;
+                padding: 1rem 1.5rem;
+            }
+            
+            .logo-kecamatan,
+            .logo-geoportal {
+                padding: 8px 12px;
+            }
+            
+            .logo-kecamatan-img {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .logo-geoportal-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER DENGAN LOGO TERINTEGRASI -->
+    <!-- HEADER DENGAN LOGO GAMBAR ASLI -->
     <header class="header">
-        <!-- LOGO UNIFIED YANG LEBIH PROFESIONAL -->
-        <div class="logo-unified">
-            <div class="logo-icon">
-                <i class="fas fa-landmark"></i>
+        <div class="logo-container">
+            <!-- LOGO KECAMATAN DENGAN GAMBAR ASLI -->
+            <div class="logo-kecamatan">
+                <img src="../logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan" 
+                     class="logo-kecamatan-img">
+                <div class="logo-kecamatan-text">
+                    <div class="logo-kecamatan-title">Kec. Purwokerto Selatan</div>
+                    <div class="logo-kecamatan-subtitle">Kabupaten Banyumas</div>
+                </div>
             </div>
-            <div class="logo-text">
-                <div class="logo-main">Geoportal</div>
-                <div class="logo-subtitle">Kecamatan Purwokerto Selatan</div>
+            
+            <!-- LOGO GEOPORTAL -->
+            <div class="logo-geoportal">
+                <div class="logo-geoportal-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <div class="logo-geoportal-text">
+                    <div class="logo-geoportal-main">Geoportal</div>
+                    <div class="logo-geoportal-tagline">Data Spasial Digital</div>
+                </div>
             </div>
         </div>
         
         <!-- NAVIGASI -->
         <nav class="nav">
-            <a href="./"><i class="fas fa-home"></i> Beranda</a>
+            <a href="./" class="active"><i class="fas fa-home"></i> Beranda</a>
             <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
             <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
             <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Kami</a>
@@ -631,16 +961,6 @@
         // Dynamic year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
-        // Simple hover effect for feature cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-8px)';
-            });
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-        
         // Highlight current page in navigation
         const currentPage = window.location.pathname;
         const navLinks = document.querySelectorAll('.nav a');
@@ -656,11 +976,26 @@
                 (cleanCurrentPath === '' && linkPath === './') ||
                 (cleanCurrentPath.endsWith('/beranda') && linkPath === './')) {
                 
-                link.style.backgroundColor = 'var(--secondary)';
-                link.style.color = 'var(--white)';
-                link.style.borderColor = 'var(--secondary)';
-                link.style.fontWeight = '600';
+                link.classList.add('active');
             }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
         });
     </script>
 </body>

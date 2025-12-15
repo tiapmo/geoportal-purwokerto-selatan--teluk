@@ -3,560 +3,592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geoportal Imut - Satu Peta untuk Data Spasial Terpadu</title>
+    <title>Geoportal Kecamatan Purwokerto Selatan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* ===== VARIABLES & RESET ===== */
         :root {
-            --pink: #FFB8D0;
-            --blue: #A6D1FF;
-            --yellow: #FFE6A6;
-            --green: #B8E8D3;
-            --purple: #E6D4FF;
-            --text: #5A5A78;
+            --primary: #2C3E50;
+            --secondary: #3498DB;
+            --accent: #1ABC9C;
+            --light-bg: #F8F9FA;
+            --light-card: #FFFFFF;
+            --light-gray: #ECF0F1;
+            --medium-gray: #BDC3C7;
+            --text-dark: #2C3E50;
+            --text-light: #7F8C8D;
             --white: #FFFFFF;
-            --radius: 25px;
-            --shadow-soft: 0 8px 25px rgba(255, 184, 208, 0.25);
-            --shadow-bold: 0 12px 35px rgba(166, 209, 255, 0.35);
+            --border-radius: 12px;
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
         body {
             font-family: 'Nunito', sans-serif;
-            color: var(--text);
-            background: linear-gradient(135deg, #fff9f9 0%, #f0f9ff 100%);
+            color: var(--text-dark);
+            background-color: var(--light-bg);
             line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
-        /* ===== ANIMATED BACKGROUND ELEMENTS ===== */
-        .bubble {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 184, 208, 0.15);
-            z-index: -1;
-            animation: float 15s infinite ease-in-out;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
-        }
-
-        /* ===== UNIQUE HEADER DESIGN ===== */
+        /* ===== HEADER MINIMALIS DENGAN LOGO KECAMATAN ===== */
         .header {
-            background: linear-gradient(135deg, var(--pink), var(--blue));
-            padding: 1.8rem 2.5rem;
+            background-color: var(--light-card);
+            padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: var(--shadow-bold);
-            border-radius: 0 0 var(--radius) var(--radius);
-            position: relative;
-            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .header::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 30px 30px;
-            animation: movePattern 20s linear infinite;
-            z-index: 0;
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
-        @keyframes movePattern {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .logo-kecamatan {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--light-gray);
+            padding: 8px 16px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--medium-gray);
         }
+        
+        .logo-kecamatan-img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        .logo-kecamatan-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        
         .logo {
             display: flex;
             align-items: center;
-            gap: 18px;
-            z-index: 1;
+            gap: 12px;
         }
+        
         .logo i {
-            font-size: 3rem;
-            color: var(--white);
-            text-shadow: 3px 3px 0px rgba(90, 90, 120, 0.2);
-            animation: bounce 2s infinite alternate;
-        }
-        @keyframes bounce {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-10px); }
-        }
-        .logo h1 {
-            font-family: 'Comic Neue', cursive;
-            font-weight: 700;
             font-size: 2.2rem;
-            color: var(--white);
-            text-shadow: 2px 2px 0px rgba(90, 90, 120, 0.3);
-            letter-spacing: 0.5px;
+            color: var(--secondary);
         }
+        
+        .logo h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+        
         .nav {
             display: flex;
-            gap: 15px;
-            z-index: 1;
+            gap: 10px;
         }
+        
         .nav a {
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            gap: 8px;
+            color: var(--text-dark);
+            background-color: transparent;
+            border: 1px solid var(--medium-gray);
         }
-        .nav a:nth-child(1) { 
-            background: linear-gradient(135deg, var(--yellow), #FFD166); 
-            color: #8B6B00;
-        }
-        .nav a:nth-child(2) { 
-            background: linear-gradient(135deg, var(--green), #8DE4A7); 
-            color: #0A5C36;
-        }
-        .nav a:nth-child(3) { 
-            background: linear-gradient(135deg, var(--purple), #C8B6FF); 
-            color: #4B2E83;
-        }
-        .nav a:nth-child(4) { 
-            background: linear-gradient(135deg, #FFB8D0, #FF8BA7); 
-            color: #7A003C;
-        }
-        .nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-        }
-        .nav a:hover::before {
-            left: 100%;
-        }
+        
         .nav a:hover {
-            transform: translateY(-8px) scale(1.08);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+        
+        .nav a i {
+            font-size: 1.1rem;
         }
 
-        /* ===== HERO SECTION WITH CARTOON STYLE ===== */
+        /* ===== HERO SECTION MINIMALIS ===== */
         .hero {
-            padding: 5rem 2rem;
+            padding: 4rem 2rem;
             text-align: center;
-            max-width: 1000px;
-            margin: 3rem auto;
-            position: relative;
-            background: rgba(255, 255, 255, 0.85);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-soft);
-            border: 8px double var(--pink);
-            overflow: hidden;
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: var(--light-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--light-gray);
         }
-        .hero::after {
-            content: "✧･ﾟ:*✧･ﾟ:* *:･ﾟ✧*:･ﾟ✧";
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            right: 0;
-            color: var(--pink);
-            font-size: 1.5rem;
-            opacity: 0.7;
-        }
+        
         .hero h2 {
-            font-family: 'Comic Neue', cursive;
-            font-size: 3.2rem;
-            margin-bottom: 1.8rem;
-            color: var(--text);
-            line-height: 1.2;
-            text-shadow: 3px 3px 0px rgba(255, 184, 208, 0.3);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            line-height: 1.3;
         }
+        
         .hero h2 span {
-            background: linear-gradient(to right, var(--pink), var(--blue), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: rainbow 3s infinite alternate;
+            color: var(--secondary);
         }
-        @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(30deg); }
-        }
+        
         .hero p {
-            font-size: 1.3rem;
-            margin-bottom: 3rem;
-            color: #666;
-            max-width: 800px;
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            color: var(--text-light);
+            max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            padding: 0 1rem;
         }
+        
         .cta-button {
             display: inline-block;
-            background: linear-gradient(135deg, var(--green), var(--blue));
+            background-color: var(--accent);
             color: var(--white);
-            padding: 1.2rem 3rem;
-            border-radius: 60px;
+            padding: 1rem 2.5rem;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: 800;
-            font-size: 1.3rem;
-            box-shadow: 0 10px 25px rgba(166, 209, 255, 0.5);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 4px solid rgba(255, 255, 255, 0.9);
-            position: relative;
-            overflow: hidden;
-            font-family: 'Comic Neue', cursive;
-            letter-spacing: 1px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.3s ease;
+            border: none;
+            font-family: 'Poppins', sans-serif;
         }
-        .cta-button::after {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: translateX(-100%) rotate(45deg);
-        }
-        .cta-button:hover::after {
-            animation: shine 0.8s;
-        }
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) rotate(45deg); }
-        }
+        
         .cta-button:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 15px 35px rgba(166, 209, 255, 0.7);
-            letter-spacing: 2px;
+            background-color: #16A085;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .cta-button i {
+            margin-right: 8px;
         }
 
-        /* ===== FEATURE CARDS WITH 3D EFFECT ===== */
+        /* ===== FEATURE CARDS MINIMALIS ===== */
         .features {
-            padding: 4rem 2rem;
+            padding: 3rem 2rem;
             max-width: 1200px;
-            margin: 0 auto 5rem;
+            margin: 0 auto 4rem;
         }
+        
         .features h3 {
             text-align: center;
-            font-family: 'Comic Neue', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 2.5rem;
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
         }
+        
         .features h3 i {
-            color: var(--pink);
-            animation: spin 10s linear infinite;
+            color: var(--accent);
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
         }
+        
         .feature-card {
             background: var(--white);
-            padding: 2.5rem 2rem;
-            border-radius: var(--radius);
-            box-shadow: 0 10px 25px rgba(166, 209, 255, 0.25);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            padding: 2rem 1.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.3s ease;
             text-align: center;
-            border: 3px solid transparent;
-            position: relative;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateX(5deg);
+            border: 1px solid var(--light-gray);
         }
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: -10px;
-            background: linear-gradient(135deg, var(--pink), var(--blue));
-            border-radius: var(--radius);
-            z-index: -1;
-            opacity: 0.5;
-            filter: blur(10px);
-            transition: all 0.5s;
-        }
+        
         .feature-card:hover {
-            transform: perspective(1000px) rotateX(0deg) translateY(-20px) scale(1.05);
-            box-shadow: 0 20px 40px rgba(166, 209, 255, 0.4);
-            border-color: var(--pink);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
         }
-        .feature-card:hover::before {
-            bottom: -20px;
-            opacity: 0.8;
-        }
+        
         .feature-card i {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--pink), var(--blue));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.8rem;
+            margin-bottom: 1.2rem;
+            color: var(--secondary);
         }
+        
         .feature-card h4 {
-            font-size: 1.7rem;
-            margin-bottom: 1rem;
-            color: var(--text);
-            font-family: 'Comic Neue', cursive;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
+        
         .feature-card p {
-            color: #777;
-            font-size: 1.1rem;
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
-        /* ===== MAP PREVIEW WITH INTERACTIVE ELEMENTS ===== */
+        /* ===== MAP PREVIEW MINIMALIS ===== */
         .map-preview {
-            padding: 4rem 2rem;
+            padding: 3rem 2rem;
             max-width: 1200px;
-            margin: 0 auto 6rem;
+            margin: 0 auto 5rem;
             text-align: center;
         }
+        
         .map-preview h3 {
-            font-family: 'Comic Neue', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 2.5rem;
-            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
         }
+        
+        .map-preview h3 i {
+            color: var(--accent);
+        }
+        
         .map-container {
             background: var(--white);
-            border-radius: var(--radius);
-            padding: 3rem;
-            box-shadow: var(--shadow-bold);
-            border: 5px dotted var(--blue);
-            transition: all 0.5s;
-            position: relative;
-            overflow: hidden;
+            border-radius: var(--border-radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--light-gray);
+            transition: all 0.3s ease;
         }
+        
         .map-container:hover {
-            border-style: solid;
-            transform: scale(1.02);
-            box-shadow: 0 25px 50px rgba(166, 209, 255, 0.4);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--medium-gray);
         }
+        
         .map-options {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0 3rem;
+            gap: 1.5rem;
+            margin: 2rem 0 2.5rem;
             flex-wrap: wrap;
         }
+        
         .map-option {
-            background: linear-gradient(135deg, var(--yellow), var(--green));
-            padding: 1.5rem 2.5rem;
-            border-radius: 20px;
+            background-color: var(--white);
+            padding: 1.2rem 2rem;
+            border-radius: var(--border-radius);
             text-decoration: none;
-            color: var(--text);
-            font-weight: 700;
-            font-size: 1.3rem;
-            transition: all 0.4s;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 8px 20px rgba(255, 230, 166, 0.4);
-            border: 3px solid white;
+            gap: 12px;
+            box-shadow: var(--shadow-subtle);
+            border: 1px solid var(--light-gray);
+            width: 280px;
         }
-        .map-option:nth-child(2) {
-            background: linear-gradient(135deg, var(--purple), var(--pink));
-        }
+        
         .map-option:hover {
-            transform: translateY(-10px) rotate(3deg);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
+            background-color: var(--light-bg);
         }
+        
+        .map-option i {
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+        
+        .map-option div {
+            text-align: left;
+        }
+        
+        .map-option strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+        
+        .map-option p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+        
         .map-thumbnail {
             width: 100%;
-            height: 350px;
-            background: linear-gradient(135deg, #e6f7ff, #ffe6f2, #f0e6ff);
-            border-radius: 20px;
+            height: 300px;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 2rem auto;
             position: relative;
             overflow: hidden;
-            border: 5px solid white;
+            border: 1px solid var(--light-gray);
         }
+        
         .map-thumbnail::before {
-            content: '🗺️ ✨ 🗺️ ✨ 🗺️ ✨';
+            content: '';
             position: absolute;
-            font-size: 3rem;
-            white-space: nowrap;
-            animation: scroll 20s linear infinite;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(52, 152, 219, 0.05) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
         }
-        @keyframes scroll {
+        
+        @keyframes shimmer {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
+        
         .map-thumbnail-text {
-            font-family: 'Comic Neue', cursive;
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-light);
             z-index: 2;
             background: rgba(255, 255, 255, 0.9);
             padding: 1rem 2rem;
-            border-radius: 20px;
-            border: 3px dashed var(--pink);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--light-gray);
+        }
+        
+        .map-container > p {
+            color: var(--text-light);
+            font-size: 1rem;
+            margin-top: 1.5rem;
         }
 
-        /* ===== UNIQUE FOOTER DESIGN ===== */
+        /* ===== FOOTER MINIMALIS ===== */
         .footer {
-            background: linear-gradient(135deg, var(--pink), var(--blue));
+            background-color: var(--primary);
             color: var(--white);
             text-align: center;
-            padding: 2.5rem;
+            padding: 2rem;
             margin-top: auto;
-            box-shadow: 0 -10px 30px rgba(255, 184, 208, 0.4);
-            border-radius: var(--radius) var(--radius) 0 0;
-            position: relative;
-            overflow: hidden;
+            border-top: 1px solid var(--light-gray);
         }
-        .footer::before {
-            content: '❤️';
-            position: absolute;
-            top: 10px;
-            left: 5%;
-            animation: fall 10s linear infinite;
-        }
-        .footer::after {
-            content: '✨';
-            position: absolute;
-            top: 20px;
-            right: 10%;
-            animation: fall 8s linear infinite 2s;
-        }
-        @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-        }
+        
         .footer p {
             margin-bottom: 0.8rem;
-            font-size: 1.1rem;
-            position: relative;
-            z-index: 1;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
         }
+        
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2.5rem;
+            gap: 2rem;
             margin-top: 1.5rem;
             flex-wrap: wrap;
         }
+        
         .footer-links a {
-            color: var(--white);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 500;
             transition: all 0.3s;
             padding: 0.5rem 1rem;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+        
         .footer-links a:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .footer-links a i {
+            font-size: 1.1rem;
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 992px) {
-            .header { flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
-            .nav { flex-wrap: wrap; justify-content: center; }
-            .hero h2 { font-size: 2.5rem; }
-            .features-grid { grid-template-columns: repeat(2, 1fr); }
-            .map-options { flex-direction: column; align-items: center; }
-            .map-option { width: 90%; }
+            .header { 
+                flex-direction: column; 
+                gap: 1.2rem; 
+                padding: 1.2rem; 
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav { 
+                flex-wrap: wrap; 
+                justify-content: center; 
+            }
+            
+            .hero h2 { 
+                font-size: 2rem; 
+            }
+            
+            .features-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+            }
+            
+            .map-options { 
+                flex-direction: column; 
+                align-items: center; 
+            }
+            
+            .map-option { 
+                width: 100%; 
+                max-width: 400px; 
+            }
         }
+        
         @media (max-width: 768px) {
-            .hero h2 { font-size: 2rem; }
-            .features-grid { grid-template-columns: 1fr; }
-            .nav a { padding: 0.7rem 1.5rem; font-size: 1rem; }
-            .logo h1 { font-size: 1.8rem; }
-            .logo i { font-size: 2.5rem; }
-            .map-thumbnail { height: 250px; }
-            .map-thumbnail-text { font-size: 1.8rem; }
+            .hero h2 { 
+                font-size: 1.8rem; 
+            }
+            
+            .features-grid { 
+                grid-template-columns: 1fr; 
+            }
+            
+            .nav a { 
+                padding: 0.6rem 1.2rem; 
+                font-size: 0.95rem; 
+            }
+            
+            .logo h1 { 
+                font-size: 1.6rem; 
+            }
+            
+            .logo i { 
+                font-size: 2rem; 
+            }
+            
+            .logo-kecamatan-text {
+                font-size: 0.9rem;
+            }
+            
+            .logo-kecamatan-img {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .map-thumbnail { 
+                height: 200px; 
+            }
+            
+            .map-thumbnail-text { 
+                font-size: 1.4rem; 
+                padding: 0.8rem 1.5rem; 
+            }
         }
     </style>
 </head>
 <body>
-    <!-- ANIMATED BACKGROUND BUBBLES -->
-    <div class="bubble" style="width: 120px; height: 120px; top: 10%; left: 5%; animation-delay: 0s;"></div>
-    <div class="bubble" style="width: 80px; height: 80px; top: 60%; right: 8%; animation-delay: 2s;"></div>
-    <div class="bubble" style="width: 150px; height: 150px; bottom: 20%; left: 10%; animation-delay: 4s;"></div>
-
-    <!-- HEADER WITH CORRECT NAVIGATION FOR BERANDA -->
+    <!-- HEADER DENGAN LOGO KECAMATAN -->
     <header class="header">
-        <div class="logo">
-            <i class="fas fa-map-marked-alt"></i>
-            <h1>Geoportal Imut</h1>
+        <div class="logo-container">
+            <!-- LOGO KECAMATAN PURWOKERTO SELATAN -->
+            <div class="logo-kecamatan">
+                <img class="logo-kecamatan-img" src=".OIP-removebg-preview.png" alt="Logo Kecamatan Purwokerto Selatan">
+                <div class="logo-kecamatan-text">Kec. Purwokerto Selatan</div>
+            </div>
+            
+            <!-- LOGO GEOPORTAL -->
+            <div class="logo">
+                <i class="fas fa-map-marked-alt"></i>
+                <h1>Geoportal</h1>
+            </div>
         </div>
+        
+        <!-- NAVIGASI -->
         <nav class="nav">
-            <!-- NAVIGASI UNTUK BERANDA: ./ = folder beranda, ../ = ke root -->
             <a href="./"><i class="fas fa-home"></i> Beranda</a>
             <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
             <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
-            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
+            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang</a>
         </nav>
     </header>
 
     <!-- HERO SECTION -->
     <section class="hero">
-        <h2>Jelajahi Dunia <span>Spasial</span> dengan Cara yang <span>Imut</span>!</h2>
-        <p>Portal imut ini menyajikan peta interaktif dan data geospasial dengan desain yang menyenangkan. Temukan keindahan geografi dalam balutan warna-warna pastel yang cerah!</p>
-        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Mulai Petualangan</a>
+        <h2>Portal <span>Data Spasial</span> Terpadu</h2>
+        <p>Portal ini menyajikan peta interaktif dan data geospasial wilayah Kecamatan Purwokerto Selatan untuk perencanaan dan pengembangan wilayah. Jelajahi, analisis, dan akses data dengan mudah!</p>
+        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Jelajahi Peta</a>
     </section>
 
     <!-- FEATURES SECTION -->
     <section class="features">
-        <h3><i class="fas fa-magic"></i> Keistimewaan Portal Imut</h3>
+        <h3><i class="fas fa-star"></i> Fitur Unggulan</h3>
         <div class="features-grid">
             <div class="feature-card">
                 <i class="fas fa-layer-group"></i>
-                <h4>Lapisan Ajaib</h4>
-                <p>Atur lapisan peta seperti bermain puzzle. Sembunyikan atau tampilkan sesuai keinginanmu!</p>
+                <h4>Layers Berlapis</h4>
+                <p>Tampilkan lapisan peta seperti batas administrasi, jalan, dan penggunaan lahan. Sesuaikan tampilan sesuai kebutuhan Anda.</p>
             </div>
             <div class="feature-card">
-                <i class="fas fa-palette"></i>
-                <h4>Warna Imut</h4>
-                <p>Palet warna pastel yang cerah dan menyenangkan untuk pengalaman melihat yang lebih seru.</p>
+                <i class="fas fa-download"></i>
+                <h4>Unduh Data</h4>
+                <p>Data geospasial tersedia dalam format Shapefile, GeoJSON, atau KML. Siap untuk diolah lebih lanjut.</p>
             </div>
             <div class="feature-card">
                 <i class="fas fa-search-location"></i>
-                <h4>Pencarian Ceria</h4>
-                <p>Temukan lokasi dengan mudah menggunakan pencarian yang dihiasi ikon-ikon menggemaskan.</p>
+                <h4>Pencarian Lokasi</h4>
+                <p>Cari lokasi berdasarkan nama desa, kecamatan, atau koordinat. Temukan tempat yang Anda cari dengan cepat.</p>
             </div>
             <div class="feature-card">
                 <i class="fas fa-mobile-alt"></i>
-                <h4>Ramah Gadget</h4>
-                <p>Akses dari mana saja dengan desain responsif yang tetap imut di semua perangkat.</p>
+                <h4>Akses Responsif</h4>
+                <p>Dapat diakses dari berbagai perangkat: desktop, tablet, atau ponsel. Pengalaman yang optimal di mana saja.</p>
             </div>
         </div>
     </section>
 
     <!-- MAP PREVIEW SECTION -->
     <section class="map-preview" id="peta">
-        <h3><i class="fas fa-map-signs"></i> Peta Imut Pilihan</h3>
+        <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
         <div class="map-container">
             <div class="map-options">
                 <a href="../pwtslt/" class="map-option">
@@ -577,18 +609,18 @@
             <div class="map-thumbnail">
                 <div class="map-thumbnail-text">Pilih Peta di Atas untuk Memulai!</div>
             </div>
-            <p>Setiap peta memiliki karakteristik unik dengan simbol-simbol khusus yang dibuat dengan cinta ❤️</p>
+            <p>Klik pada pilihan peta di atas untuk membuka peta interaktif dengan semua fitur lengkap.</p>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer class="footer">
-        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> menggunakan teknologi QGIS & Leaflet</p>
-        <p>© <span id="current-year">2025</span> Geoportal Imut. Semua hak dilindungi.</p>
+        <p>Dibuat dengan <i class="fas fa-heart" style="color:#ff6b8b;"></i> menggunakan QGIS & Leaflet</p>
+        <p>© <span id="current-year">2025</span> Geoportal Kecamatan Purwokerto Selatan</p>
         <div class="footer-links">
             <a href="https://github.com/tiapmo" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-            <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Email</a>
-            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Saya</a>
+            <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang</a>
         </div>
     </footer>
 
@@ -596,55 +628,35 @@
         // Dynamic year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
         
-        // Add interaction to feature cards
+        // Simple hover effect for feature cards
         document.querySelectorAll('.feature-card').forEach(card => {
             card.addEventListener('mouseenter', function() {
-                this.style.transform = 'perspective(1000px) rotateX(0deg) translateY(-25px) scale(1.08)';
+                this.style.transform = 'translateY(-8px)';
             });
             card.addEventListener('mouseleave', function() {
-                this.style.transform = 'perspective(1000px) rotateX(5deg) translateY(0) scale(1)';
+                this.style.transform = 'translateY(0)';
             });
         });
         
-        // Add floating effect to map options
-        const mapOptions = document.querySelectorAll('.map-option');
-        mapOptions.forEach((option, index) => {
-            option.style.animationDelay = `${index * 0.3}s`;
-        });
-        
-        // Bubble animation on click
-        document.addEventListener('click', function(e) {
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.style.width = bubble.style.height = `${Math.random() * 60 + 40}px`;
-            bubble.style.left = `${e.clientX - 50}px`;
-            bubble.style.top = `${e.clientY - 50}px`;
-            bubble.style.background = `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.2)`;
-            document.body.appendChild(bubble);
-            
-            setTimeout(() => {
-                bubble.remove();
-            }, 2000);
-        });
-        
-        // Highlight current page in navigation (for Beranda)
+        // Highlight current page in navigation
         const currentPage = window.location.pathname;
         const navLinks = document.querySelectorAll('.nav a');
         
         navLinks.forEach(link => {
-            // Remove trailing slash for comparison
-            const linkHref = link.getAttribute('href').replace(/\/$/, '');
-            const currentPath = currentPage.replace(/\/$/, '');
+            const linkPath = link.getAttribute('href');
             
-            // Check if current page matches link
-            if ((linkHref === '.' && (currentPath.endsWith('/beranda') || currentPath.endsWith('/beranda/index') || currentPath === '')) ||
-                (linkHref === '../pwtslt' && currentPath.includes('/pwtslt')) ||
-                (linkHref === '../teluk' && currentPath.includes('/teluk')) ||
-                (linkHref === '../tentang' && currentPath.includes('/tentang'))) {
+            // Remove ../ and ./ for comparison
+            const cleanLinkPath = linkPath.replace('../', '').replace('./', '');
+            const cleanCurrentPath = currentPage.replace('/geoportal-purwokerto-selatan--teluk/', '');
+            
+            if (cleanCurrentPath.includes(cleanLinkPath) || 
+                (cleanCurrentPath === '' && linkPath === './') ||
+                (cleanCurrentPath.endsWith('/beranda') && linkPath === './')) {
                 
-                link.style.boxShadow = '0 0 0 3px rgba(255,255,255,0.8)';
-                link.style.transform = 'scale(1.05)';
-                link.style.fontWeight = '800';
+                link.style.backgroundColor = 'var(--secondary)';
+                link.style.color = 'var(--white)';
+                link.style.borderColor = 'var(--secondary)';
+                link.style.fontWeight = '600';
             }
         });
     </script>

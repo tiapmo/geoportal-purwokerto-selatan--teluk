@@ -3,926 +3,323 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geoportal Kecamatan Purwokerto Selatan</title>
-    
-    <!-- Leaflet CSS & JS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Peta Interaktif</title>
     <style>
-        /* Root Variables */
-        :root {
-            --primary: #1A5276;
-            --secondary: #3498DB;
-            --accent: #2ECC71;
-            --warning: #E74C3C;
-            --light-bg: #F8F9FA;
-            --light-card: #FFFFFF;
-            --text-dark: #2C3E50;
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-dark);
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, var(--primary), #154360);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--secondary));
-        }
-        
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
+            font-family: 'Arial', sans-serif;
             display: flex;
-            align-items: center;
             justify-content: center;
-            gap: 15px;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
         }
-        
-        .header h1 i {
-            color: var(--accent);
-            animation: spin-slow 20s linear infinite;
-        }
-        
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        /* Main Container */
+
         .container {
-            display: flex;
-            min-height: calc(100vh - 140px);
-            padding: 20px;
-            gap: 20px;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-        
-        /* Sidebar Menu */
-        .sidebar {
-            width: 320px;
-            background: var(--light-card);
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            padding: 25px;
-            position: sticky;
-            top: 20px;
-            height: fit-content;
-            border: 2px solid rgba(52, 152, 219, 0.1);
-        }
-        
-        .menu-title {
-            color: var(--primary);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 3px solid var(--secondary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .menu-title i {
-            color: var(--secondary);
-        }
-        
-        .menu-list {
-            list-style: none;
-        }
-        
-        .menu-item {
-            margin: 12px 0;
-        }
-        
-        .menu-btn {
-            width: 100%;
-            padding: 18px 20px;
-            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(240, 247, 255, 0.9));
-            border: 2px solid rgba(52, 152, 219, 0.2);
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 15px;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .menu-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.15);
-            border-color: var(--secondary);
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(26, 82, 118, 0.05));
-        }
-        
-        .menu-btn.active {
-            background: linear-gradient(135deg, var(--secondary), #2980B9);
-            color: white;
-            border-color: var(--secondary);
-            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.25);
-        }
-        
-        .menu-btn i {
-            font-size: 1.3rem;
-            width: 30px;
-            text-align: center;
-        }
-        
-        .menu-btn.active i {
-            animation: bounce 0.5s;
-        }
-        
-        .menu-btn::after {
-            content: '→';
-            position: absolute;
-            right: 20px;
-            opacity: 0;
-            transition: all 0.3s;
-        }
-        
-        .menu-btn:hover::after {
-            opacity: 1;
-            right: 15px;
-        }
-        
-        .menu-btn.active::after {
-            content: '✓';
-            opacity: 1;
-            right: 20px;
-        }
-        
-        /* Map Container */
-        .map-container {
-            flex: 1;
-            background: var(--light-card);
+            width: 100%;
+            max-width: 1200px;
+            height: 700px;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            border: 2px solid rgba(52, 152, 219, 0.1);
+            box-shadow: 
+                0 10px 30px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 255, 255, 0.1);
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
         }
-        
-        .map-header {
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(26, 82, 118, 0.05), rgba(52, 152, 219, 0.05));
-            border-bottom: 2px solid rgba(52, 152, 219, 0.1);
+
+        .container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(255, 255, 255, 0.2);
         }
-        
-        .map-header h2 {
-            color: var(--primary);
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .map-header p {
-            color: var(--text-dark);
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-        
-        #map {
-            flex: 1;
-            min-height: 500px;
-            background: #e8f4f8;
-        }
-        
-        /* Loading Overlay */
-        .loading-overlay {
+
+        .map-background {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            /* GANTI URL DI BAWAH INI DENGAN GAMBAR PETA PNG ANDA */
+            background-image: url('https://cdn.pixabay.com/photo/2017/06/12/17/54/world-map-2395511_1280.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 1;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* Overlay untuk meningkatkan kontras teks */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                rgba(0, 0, 0, 0.3) 0%,
+                rgba(0, 0, 0, 0.1) 50%,
+                rgba(0, 0, 0, 0.3) 100%
+            );
+            z-index: 2;
+        }
+
+        .text-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
-            transition: opacity 0.5s;
-        }
-        
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(52, 152, 219, 0.2);
-            border-top: 5px solid var(--secondary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        
-        .loading-text {
-            color: var(--primary);
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-        
-        /* Info Panel */
-        .info-panel {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            z-index: 1000;
-            max-width: 300px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(52, 152, 219, 0.2);
-            transform: translateX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .info-panel.hidden {
-            transform: translateX(120%);
-        }
-        
-        .info-title {
-            color: var(--primary);
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(52, 152, 219, 0.2);
-        }
-        
-        .info-content {
-            line-height: 1.6;
-        }
-        
-        .info-item {
-            margin: 12px 0;
-            padding: 10px;
-            background: rgba(52, 152, 219, 0.08);
-            border-radius: 8px;
-            border-left: 4px solid var(--secondary);
-        }
-        
-        /* Legend */
-        .legend {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 18px;
-            border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-            z-index: 1000;
-            max-width: 250px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(52, 152, 219, 0.2);
-        }
-        
-        .legend-title {
-            color: var(--primary);
-            font-weight: 600;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .legend-item {
-            display: flex;
-            align-items: center;
-            margin: 8px 0;
-            gap: 10px;
-        }
-        
-        .legend-color {
-            width: 22px;
-            height: 22px;
-            border-radius: 5px;
-            border: 2px solid white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .legend-label {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-        }
-        
-        /* Controls */
-        .map-controls {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid rgba(52, 152, 219, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: var(--primary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        
-        .control-btn:hover {
-            background: var(--secondary);
-            color: white;
-            transform: scale(1.05);
-            box-shadow: 0 6px 18px rgba(52, 152, 219, 0.25);
-        }
-        
-        /* Footer */
-        .footer {
-            background: var(--primary);
-            color: white;
+            z-index: 3;
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 40px;
         }
-        
-        .footer p {
-            opacity: 0.9;
-            font-size: 0.95rem;
+
+        .title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.6),
+                0 8px 16px rgba(0, 0, 0, 0.4),
+                0 12px 24px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+            padding: 25px 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: 2px;
+            line-height: 1.2;
+            animation: textGlow 2s infinite alternate;
+            box-shadow: 
+                inset 0 0 20px rgba(255, 255, 255, 0.1),
+                0 0 30px rgba(0, 0, 0, 0.5);
         }
-        
+
+        .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px 30px;
+            border-radius: 10px;
+            max-width: 700px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 500;
+        }
+
         /* Animations */
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes spin-slow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
-        }
-        
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
-        
-        /* Responsive */
-        @media (max-width: 1024px) {
+
+        @keyframes textGlow {
+            from {
+                box-shadow: 
+                    inset 0 0 20px rgba(255, 255, 255, 0.1),
+                    0 0 30px rgba(0, 0, 0, 0.5);
+            }
+            to {
+                box-shadow: 
+                    inset 0 0 20px rgba(255, 255, 255, 0.2),
+                    0 0 40px rgba(0, 102, 255, 0.4);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 992px) {
             .container {
-                flex-direction: column;
+                height: 600px;
             }
             
-            .sidebar {
-                width: 100%;
-                position: static;
+            .title {
+                font-size: 3.2rem;
+                padding: 20px 30px;
             }
             
-            .map-controls {
-                flex-direction: row;
-                top: auto;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-            }
-            
-            .info-panel {
-                top: auto;
-                bottom: 90px;
-                right: 20px;
+            .subtitle {
+                font-size: 1.2rem;
+                padding: 12px 25px;
             }
         }
-        
+
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
+            body {
+                padding: 15px;
+                background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
             }
             
-            .menu-btn {
-                padding: 15px;
+            .container {
+                height: 500px;
+                border-width: 3px;
+            }
+            
+            .title {
+                font-size: 2.5rem;
+                padding: 18px 25px;
+                letter-spacing: 1.5px;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+                padding: 10px 20px;
+            }
+            
+            .map-background {
+                background-position: center center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                height: 400px;
+                margin: 5px;
+            }
+            
+            .title {
+                font-size: 2rem;
+                padding: 15px 20px;
+                margin-bottom: 15px;
+                letter-spacing: 1px;
+            }
+            
+            .subtitle {
                 font-size: 1rem;
+                padding: 8px 15px;
             }
             
-            .map-header h2 {
-                font-size: 1.5rem;
+            .text-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .container {
+                height: 350px;
             }
             
-            .info-panel {
-                max-width: 250px;
-                padding: 15px;
+            .title {
+                font-size: 1.6rem;
+                padding: 12px 15px;
             }
+        }
+
+        /* Loading effect */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: white;
+            z-index: 4;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .map-background.loading {
+            filter: blur(10px);
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <div class="header">
-        <h1><i class="fas fa-globe-asia"></i> Geoportal Kecamatan Purwokerto Selatan</h1>
-        <p>Sistem Informasi Geografis Berbasis Web - Kabupaten Banyumas</p>
-    </div>
-    
-    <!-- Main Container -->
     <div class="container">
-        <!-- Sidebar Menu -->
-        <div class="sidebar">
-            <h2 class="menu-title"><i class="fas fa-map"></i> Menu Peta</h2>
-            <ul class="menu-list">
-                <li class="menu-item">
-                    <button class="menu-btn active" id="btnPetaUtama" onclick="loadPetaPurwokertoSelatan()">
-                        <i class="fas fa-map-marked-alt"></i>
-                        Peta Purwokerto Selatan
-                    </button>
-                </li>
-                <li class="menu-item">
-                    <button class="menu-btn" id="btnPetaAdministrasi" onclick="loadPetaAdministrasi()">
-                        <i class="fas fa-landmark"></i>
-                        Peta Administrasi
-                    </button>
-                </li>
-                <li class="menu-item">
-                    <button class="menu-btn" id="btnPetaInfrastruktur" onclick="loadPetaInfrastruktur()">
-                        <i class="fas fa-road"></i>
-                        Peta Infrastruktur
-                    </button>
-                </li>
-                <li class="menu-item">
-                    <button class="menu-btn" id="btnPetaPemukiman" onclick="loadPetaPemukiman()">
-                        <i class="fas fa-home"></i>
-                        Peta Pemukiman
-                    </button>
-                </li>
-                <li class="menu-item">
-                    <button class="menu-btn" id="btnPetaFasilitas" onclick="loadPetaFasilitas()">
-                        <i class="fas fa-hospital"></i>
-                        Fasilitas Publik
-                    </button>
-                </li>
-                <li class="menu-item">
-                    <button class="menu-btn" id="btnPetaPertanian" onclick="loadPetaPertanian()">
-                        <i class="fas fa-tractor"></i>
-                        Lahan Pertanian
-                    </button>
-                </li>
-            </ul>
-        </div>
-        
-        <!-- Map Container -->
-        <div class="map-container">
-            <div class="map-header">
-                <h2><i class="fas fa-map-pin"></i> Peta Purwokerto Selatan</h2>
-                <p>Visualisasi data spasial Kecamatan Purwokerto Selatan, Kabupaten Banyumas</p>
-            </div>
-            
-            <!-- Map -->
-            <div id="map"></div>
-            
-            <!-- Loading Overlay -->
-            <div class="loading-overlay" id="loadingOverlay">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">Memuat peta...</div>
-            </div>
-            
-            <!-- Info Panel -->
-            <div class="info-panel" id="infoPanel">
-                <h3 class="info-title"><i class="fas fa-info-circle"></i> Info Kecamatan</h3>
-                <div class="info-content">
-                    <div class="info-item">
-                        <strong>Nama:</strong> Purwokerto Selatan
-                    </div>
-                    <div class="info-item">
-                        <strong>Kabupaten:</strong> Banyumas
-                    </div>
-                    <div class="info-item">
-                        <strong>Provinsi:</strong> Jawa Tengah
-                    </div>
-                    <div class="info-item">
-                        <strong>Luas Wilayah:</strong> 12.5 km²
-                    </div>
-                    <div class="info-item">
-                        <strong>Jumlah Penduduk:</strong> 85,432 jiwa
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Legend -->
-            <div class="legend" id="legend">
-                <h4 class="legend-title"><i class="fas fa-layer-group"></i> Legenda</h4>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #3498DB;"></div>
-                    <span class="legend-label">Batas Kecamatan</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #2ECC71;"></div>
-                    <span class="legend-label">Area Pemukiman</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #E74C3C;"></div>
-                    <span class="legend-label">Fasilitas Publik</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-color" style="background-color: #F39C12;"></div>
-                    <span class="legend-label">Lahan Pertanian</span>
-                </div>
-            </div>
-            
-            <!-- Map Controls -->
-            <div class="map-controls">
-                <button class="control-btn" onclick="zoomIn()" title="Zoom In">
-                    <i class="fas fa-plus"></i>
-                </button>
-                <button class="control-btn" onclick="zoomOut()" title="Zoom Out">
-                    <i class="fas fa-minus"></i>
-                </button>
-                <button class="control-btn" onclick="resetView()" title="Reset View">
-                    <i class="fas fa-crosshairs"></i>
-                </button>
-                <button class="control-btn" onclick="toggleInfoPanel()" title="Toggle Info">
-                    <i class="fas fa-info"></i>
-                </button>
-                <button class="control-btn" onclick="toggleLegend()" title="Toggle Legend">
-                    <i class="fas fa-layer-group"></i>
-                </button>
-            </div>
+        <div class="loading">Memuat Peta...</div>
+        <div class="map-background" id="mapBg"></div>
+        <div class="overlay"></div>
+        <div class="text-container">
+            <h1 class="title">Pilih Peta di Atas untuk Memulai!</h1>
+            <p class="subtitle">Klik pada area peta untuk menjelajahi lebih lanjut</p>
         </div>
     </div>
-    
-    <!-- Footer -->
-    <div class="footer">
-        <p>© 2023 Geoportal Kecamatan Purwokerto Selatan | Dinas Pertanahan dan Tata Ruang Kabupaten Banyumas</p>
-    </div>
-    
+
     <script>
-        // Inisialisasi variabel global
-        let map;
-        let kecamatanLayer;
-        let currentLayer = 'purwokerto-selatan';
+        // Simulasi loading gambar
+        const mapBg = document.getElementById('mapBg');
+        const loading = document.querySelector('.loading');
         
-        // Inisialisasi peta saat halaman dimuat
-        document.addEventListener('DOMContentLoaded', function() {
-            initMap();
-            loadPetaPurwokertoSelatan();
-        });
-        
-        // Fungsi inisialisasi peta
-        function initMap() {
-            // Buat peta dengan view ke Purwokerto Selatan
-            map = L.map('map').setView([-7.431, 109.247], 13);
-            
-            // Tambahkan tile layer (peta dasar)
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(map);
-            
-            // Event untuk menyembunyikan loading setelah peta siap
-            map.whenReady(function() {
-                setTimeout(hideLoading, 1000);
-            });
-        }
-        
-        // Fungsi untuk memuat peta Purwokerto Selatan
-        function loadPetaPurwokertoSelatan() {
-            showLoading("Memuat Peta Purwokerto Selatan...");
-            updateActiveButton('btnPetaUtama');
-            
-            // Hapus layer sebelumnya jika ada
-            if (kecamatanLayer) {
-                map.removeLayer(kecamatanLayer);
-            }
-            
-            // Tampilkan koordinat area Purwokerto Selatan (contoh)
-            const purwokertoSelatanCoords = [
-                [-7.445, 109.230],
-                [-7.440, 109.240],
-                [-7.435, 109.245],
-                [-7.430, 109.250],
-                [-7.425, 109.255],
-                [-7.420, 109.260],
-                [-7.415, 109.265],
-                [-7.410, 109.270],
-                [-7.405, 109.275],
-                [-7.400, 109.280]
-            ];
-            
-            // Buat polygon untuk kecamatan
-            kecamatanLayer = L.polygon(purwokertoSelatanCoords, {
-                color: '#1A5276',
-                weight: 3,
-                opacity: 1,
-                fillColor: '#3498DB',
-                fillOpacity: 0.3
-            }).addTo(map);
-            
-            // Tambahkan popup
-            kecamatanLayer.bindPopup(`
-                <div style="padding: 10px;">
-                    <h3 style="color: #1A5276; margin-bottom: 10px;">Kecamatan Purwokerto Selatan</h3>
-                    <p><strong>Kabupaten:</strong> Banyumas</p>
-                    <p><strong>Provinsi:</strong> Jawa Tengah</p>
-                    <p><strong>Luas Wilayah:</strong> 12.5 km²</p>
-                    <p><strong>Jumlah Penduduk:</strong> 85,432 jiwa</p>
-                    <p><strong>Kepadatan:</strong> 6,835 jiwa/km²</p>
-                </div>
-            `);
-            
-            // Fit bounds ke area kecamatan
-            map.fitBounds(kecamatanLayer.getBounds());
-            
-            // Update info panel
-            updateInfoPanel('Purwokerto Selatan', 'Peta utama wilayah kecamatan dengan batas administratif');
-            
-            // Tambahkan marker untuk lokasi penting
-            addImportantLocations();
-            
-            currentLayer = 'purwokerto-selatan';
-            hideLoading();
-        }
-        
-        // Fungsi untuk memuat peta administrasi
-        function loadPetaAdministrasi() {
-            showLoading("Memuat Peta Administrasi...");
-            updateActiveButton('btnPetaAdministrasi');
-            
-            // Simulasi peta administrasi
-            if (kecamatanLayer) {
-                map.removeLayer(kecamatanLayer);
-            }
-            
-            // Update info panel
-            updateInfoPanel('Peta Administrasi', 'Peta batas wilayah administrasi desa/kelurahan');
-            
-            // Contoh: set view yang sedikit berbeda
-            map.setView([-7.431, 109.247], 12);
-            
-            currentLayer = 'administrasi';
-            hideLoading();
-        }
-        
-        // Fungsi untuk memuat peta infrastruktur
-        function loadPetaInfrastruktur() {
-            showLoading("Memuat Peta Infrastruktur...");
-            updateActiveButton('btnPetaInfrastruktur');
-            
-            // Simulasi peta infrastruktur
-            if (kecamatanLayer) {
-                map.removeLayer(kecamatanLayer);
-            }
-            
-            // Update info panel
-            updateInfoPanel('Peta Infrastruktur', 'Peta jaringan jalan, jembatan, dan infrastruktur publik');
-            
-            // Contoh: set view yang sedikit berbeda
-            map.setView([-7.431, 109.247], 13);
-            
-            currentLayer = 'infrastruktur';
-            hideLoading();
-        }
-        
-        // Fungsi untuk memuat peta pemukiman
-        function loadPetaPemukiman() {
-            showLoading("Memuat Peta Pemukiman...");
-            updateActiveButton('btnPetaPemukiman');
-            
-            // Simulasi peta pemukiman
-            if (kecamatanLayer) {
-                map.removeLayer(kecamatanLayer);
-            }
-            
-            // Update info panel
-            updateInfoPanel('Peta Pemukiman', 'Peta sebaran wilayah permukiman dan perumahan');
-            
-            // Contoh: set view yang sedikit berbeda
-            map.setView([-7.431, 109.247], 14);
-            
-            currentLayer = 'pemukiman';
-            hideLoading();
-        }
-        
-        // Fungsi untuk memuat peta fasilitas
-        function loadPetaFasilitas() {
-            showLoading("Memuat Peta Fasilitas Publik...");
-            updateActiveButton('btnPetaFasilitas');
-            
-            // Simulasi peta fasilitas
-            if (kecamatanLayer) {
-                map.removeLayer(kecamatanLayer);
-            }
-            
-            // Update info panel
-            updateInfoPanel('Fasilitas Publik', 'Peta lokasi sekolah, puskesmas, pasar, dan fasilitas umum');
-            
-            // Contoh: set view yang sedikit berbeda
-            map.setView([-7.431, 109.247], 14);
-            
-            currentLayer = 'fasilitas';
-            hideLoading();
-        }
-        
-        // Fungsi untuk memuat peta pertanian
-        function loadPetaPertanian() {
-            showLoading("Memuat Peta Lahan Pertanian...");
-            updateActiveButton('btnPetaPertanian');
-            
-            // Simulasi peta pertanian
-            if (kecamatanLayer) {
-                map.removeLayer(kecamatanLayer);
-            }
-            
-            // Update info panel
-            updateInfoPanel('Lahan Pertanian', 'Peta sebaran lahan pertanian dan perkebunan');
-            
-            // Contoh: set view yang sedikit berbeda
-            map.setView([-7.431, 109.247], 13);
-            
-            currentLayer = 'pertanian';
-            hideLoading();
-        }
-        
-        // Fungsi untuk menambahkan lokasi penting
-        function addImportantLocations() {
-            const locations = [
-                {
-                    lat: -7.431,
-                    lng: 109.247,
-                    title: "Kantor Kecamatan",
-                    icon: "fa-landmark",
-                    color: "#1A5276"
-                },
-                {
-                    lat: -7.435,
-                    lng: 109.250,
-                    title: "Puskesmas",
-                    icon: "fa-hospital",
-                    color: "#E74C3C"
-                },
-                {
-                    lat: -7.430,
-                    lng: 109.240,
-                    title: "Sekolah",
-                    icon: "fa-school",
-                    color: "#2ECC71"
-                },
-                {
-                    lat: -7.428,
-                    lng: 109.255,
-                    title: "Pasar",
-                    icon: "fa-shopping-cart",
-                    color: "#F39C12"
-                }
-            ];
-            
-            locations.forEach(loc => {
-                // Buat custom icon
-                const customIcon = L.divIcon({
-                    html: `<div style="background-color: ${loc.color}; 
-                           width: 40px; 
-                           height: 40px; 
-                           border-radius: 50%; 
-                           display: flex; 
-                           align-items: center; 
-                           justify-content: center;
-                           color: white;
-                           font-size: 18px;
-                           border: 3px solid white;
-                           box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
-                           <i class="fas ${loc.icon}"></i>
-                          </div>`,
-                    className: 'custom-marker',
-                    iconSize: [40, 40],
-                    iconAnchor: [20, 40]
-                });
-                
-                // Tambahkan marker ke peta
-                const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(map);
-                
-                // Tambahkan popup
-                marker.bindPopup(`
-                    <div style="padding: 10px;">
-                        <h4 style="color: ${loc.color}; margin-bottom: 8px;">${loc.title}</h4>
-                        <p>Lokasi: ${loc.lat.toFixed(4)}, ${loc.lng.toFixed(4)}</p>
-                        <p>Kecamatan Purwokerto Selatan</p>
-                    </div>
-                `);
-            });
-        }
-        
-        // Fungsi untuk memperbarui tombol aktif
-        function updateActiveButton(activeId) {
-            // Hapus kelas active dari semua tombol
-            document.querySelectorAll('.menu-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Tambahkan kelas active ke tombol yang diklik
-            document.getElementById(activeId).classList.add('active');
-        }
-        
-        // Fungsi untuk memperbarui info panel
-        function updateInfoPanel(title, description) {
-            const mapHeader = document.querySelector('.map-header h2');
-            const mapDesc = document.querySelector('.map-header p');
-            
-            mapHeader.innerHTML = `<i class="fas fa-map-pin"></i> ${title}`;
-            mapDesc.textContent = description;
-        }
-        
-        // Fungsi untuk menampilkan loading
-        function showLoading(message = "Memuat peta...") {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const loadingText = document.querySelector('.loading-text');
-            
-            loadingText.textContent = message;
-            loadingOverlay.style.display = 'flex';
-            loadingOverlay.style.opacity = '1';
-        }
-        
-        // Fungsi untuk menyembunyikan loading
-        function hideLoading() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            
-            loadingOverlay.style.opacity = '0';
+        window.addEventListener('load', function() {
             setTimeout(() => {
-                loadingOverlay.style.display = 'none';
+                loading.style.opacity = '1';
+                
+                // Setelah 1 detik, sembunyikan loading
+                setTimeout(() => {
+                    loading.style.opacity = '0';
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                    }, 300);
+                }, 1000);
             }, 500);
-        }
-        
-        // Fungsi untuk kontrol peta
-        function zoomIn() {
-            map.zoomIn();
-        }
-        
-        function zoomOut() {
-            map.zoomOut();
-        }
-        
-        function resetView() {
-            if (currentLayer === 'purwokerto-selatan' && kecamatanLayer) {
-                map.fitBounds(kecamatanLayer.getBounds());
-            } else {
-                map.setView([-7.431, 109.247], 13);
-            }
-        }
-        
-        function toggleInfoPanel() {
-            const infoPanel = document.getElementById('infoPanel');
-            infoPanel.classList.toggle('hidden');
-        }
-        
-        function toggleLegend() {
-            const legend = document.getElementById('legend');
-            legend.classList.toggle('hidden');
-        }
-        
-        // Event untuk koordinat saat mouse move
-        map.on('mousemove', function(e) {
-            // Anda bisa menambahkan display koordinat di sini jika diperlukan
-            // console.log(`Lat: ${e.latlng.lat.toFixed(4)}, Lng: ${e.latlng.lng.toFixed(4)}`);
         });
+
+        // Efek interaktif saat di klik
+        document.querySelector('.container').addEventListener('click', function(e) {
+            // Efek ripple
+            const ripple = document.createElement('div');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+            ripple.style.transform = 'scale(0)';
+            ripple.style.animation = 'ripple 0.6s linear';
+            ripple.style.zIndex = '4';
+            
+            const size = Math.max(this.offsetWidth, this.offsetHeight);
+            const x = e.offsetX - size / 2;
+            const y = e.offsetY - size / 2;
+            
+            ripple.style.width = size + 'px';
+            ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            
+            this.appendChild(ripple);
+            
+            // Hapus ripple setelah animasi selesai
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+            
+            // Efek title glow
+            const title = document.querySelector('.title');
+            title.style.animation = 'none';
+            setTimeout(() => {
+                title.style.animation = 'textGlow 2s infinite alternate';
+            }, 10);
+        });
+
+        // Tambahkan style untuk ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>

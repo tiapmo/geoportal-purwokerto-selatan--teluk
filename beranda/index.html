@@ -4,995 +4,924 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geoportal Kecamatan Purwokerto Selatan</title>
+    
+    <!-- Leaflet CSS & JS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* ===== VARIABLES & RESET ===== */
+        /* Root Variables */
         :root {
-            --primary: #2C3E50;
+            --primary: #1A5276;
             --secondary: #3498DB;
-            --accent: #1ABC9C;
-            --accent-light: #4ECDC4;
+            --accent: #2ECC71;
+            --warning: #E74C3C;
             --light-bg: #F8F9FA;
             --light-card: #FFFFFF;
-            --light-gray: #ECF0F1;
-            --medium-gray: #BDC3C7;
-            --dark-gray: #7F8C8D;
             --text-dark: #2C3E50;
-            --text-light: #7F8C8D;
-            --white: #FFFFFF;
-            --border-radius: 12px;
-            --border-radius-sm: 8px;
-            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 6px 18px rgba(0, 0, 0, 0.12);
-            --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.15);
-            --transition-fast: 0.2s ease;
-            --transition-normal: 0.3s ease;
-            --transition-slow: 0.4s ease;
         }
         
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Nunito', sans-serif;
-            color: var(--text-dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--light-bg);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ===== HEADER DENGAN LOGO GAMBAR ASLI ===== */
-        .header {
-            background-color: var(--light-card);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-subtle);
-            border-bottom: 2px solid var(--light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.98);
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-        
-        /* CONTAINER UNTUK LOGO KECAMATAN DENGAN GAMBAR */
-        .logo-kecamatan {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(26, 188, 156, 0.08));
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            border: 2px solid var(--light-gray);
-            box-shadow: var(--shadow-subtle);
-            transition: all var(--transition-normal);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .logo-kecamatan::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left var(--transition-slow);
-        }
-        
-        .logo-kecamatan:hover::before {
-            left: 100%;
-        }
-        
-        .logo-kecamatan:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-            border-color: var(--secondary);
-        }
-        
-        /* GAMBAR LOGO KECAMATAN */
-        .logo-kecamatan-img {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
-            border-radius: var(--border-radius-sm);
-            border: 2px solid var(--white);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: var(--white);
-            padding: 4px;
-            transition: transform var(--transition-normal);
-        }
-        
-        .logo-kecamatan:hover .logo-kecamatan-img {
-            transform: scale(1.05);
-        }
-        
-        .logo-kecamatan-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        
-        .logo-kecamatan-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary);
-            letter-spacing: -0.3px;
-        }
-        
-        .logo-kecamatan-subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--dark-gray);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .logo-kecamatan-subtitle::before {
-            content: '';
-            display: block;
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent);
-            border-radius: 50%;
-        }
-        
-        /* LOGO GEOPORTAL */
-        .logo-geoportal {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.8));
-            border-radius: var(--border-radius);
-            border: 2px solid var(--light-gray);
-            box-shadow: var(--shadow-subtle);
-            transition: all var(--transition-normal);
-        }
-        
-        .logo-geoportal:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-            border-color: var(--accent);
-        }
-        
-        .logo-geoportal-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: var(--border-radius-sm);
-            color: var(--white);
-            font-size: 1.8rem;
-            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.25);
-            transition: transform var(--transition-normal);
-        }
-        
-        .logo-geoportal:hover .logo-geoportal-icon {
-            transform: rotate(-5deg) scale(1.05);
-        }
-        
-        .logo-geoportal-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        
-        .logo-geoportal-main {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
-        }
-        
-        .logo-geoportal-tagline {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--dark-gray);
-        }
-        
-        .nav {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .nav a {
-            padding: 0.8rem 1.8rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all var(--transition-normal);
-            display: flex;
-            align-items: center;
-            gap: 10px;
             color: var(--text-dark);
-            background-color: transparent;
-            border: 2px solid var(--medium-gray);
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
         
-        .nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
-            transition: left var(--transition-slow);
-        }
-        
-        .nav a:hover::before {
-            left: 100%;
-        }
-        
-        .nav a:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-medium);
-        }
-        
-        .nav a.active {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-        }
-        
-        .nav a i {
-            font-size: 1.2rem;
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            padding: 5rem 2rem;
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary), #154360);
+            color: white;
+            padding: 1.5rem;
             text-align: center;
-            max-width: 1000px;
-            margin: 2rem auto;
-            background: linear-gradient(135deg, var(--light-card) 0%, #FDFEFE 100%);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-subtle);
-            border: 2px solid var(--light-gray);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
-            animation: fadeInUp 1s ease-out;
         }
         
-        .hero::before {
+        .header::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            height: 6px;
-            background: linear-gradient(90deg, var(--secondary), var(--accent), var(--secondary));
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
         }
         
-        .hero h2 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-            line-height: 1.2;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero h2 span {
-            color: var(--accent);
-            -webkit-text-fill-color: var(--accent);
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
-            color: var(--text-light);
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.8;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            color: var(--white);
-            padding: 1.2rem 3rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.2rem;
-            box-shadow: var(--shadow-subtle);
-            transition: all var(--transition-normal);
-            border: none;
-            font-family: 'Poppins', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left var(--transition-slow);
-        }
-        
-        .cta-button:hover::before {
-            left: 100%;
-        }
-        
-        .cta-button:hover {
-            background: linear-gradient(135deg, #16A085, #1ABC9C);
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .cta-button i {
-            margin-right: 10px;
-            font-size: 1.3rem;
-        }
-
-        /* ===== FEATURE CARDS ===== */
-        .features {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto 5rem;
-        }
-        
-        .features h3 {
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
+        .header h1 {
             font-size: 2.2rem;
-            margin-bottom: 3rem;
-            color: var(--primary);
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 15px;
         }
         
-        .features h3 i {
+        .header h1 i {
             color: var(--accent);
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            animation: spin-slow 20s linear infinite;
         }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
         
-        .feature-card {
-            background: var(--white);
-            padding: 2.5rem 2rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-subtle);
-            transition: all var(--transition-normal);
-            text-align: center;
-            border: 2px solid var(--light-gray);
-            position: relative;
-            overflow: hidden;
+        /* Main Container */
+        .container {
+            display: flex;
+            min-height: calc(100vh - 140px);
+            padding: 20px;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
         }
         
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.05), transparent);
-            transition: left var(--transition-slow);
+        /* Sidebar Menu */
+        .sidebar {
+            width: 320px;
+            background: var(--light-card);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+            height: fit-content;
+            border: 2px solid rgba(52, 152, 219, 0.1);
         }
         
-        .feature-card:hover::before {
-            left: 100%;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--secondary);
-        }
-        
-        .feature-card i {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: inline-block;
-        }
-        
-        .feature-card h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+        .menu-title {
             color: var(--primary);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-        }
-        
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 1.05rem;
-            line-height: 1.7;
-        }
-
-        /* ===== MAP PREVIEW ===== */
-        .map-preview {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto 6rem;
-            text-align: center;
-        }
-        
-        .map-preview h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 2.2rem;
-            margin-bottom: 2.5rem;
-            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 15px;
+            gap: 12px;
         }
         
-        .map-preview h3 i {
-            color: var(--accent);
-            background: linear-gradient(135deg, var(--accent), var(--accent-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .menu-title i {
+            color: var(--secondary);
         }
         
-        .map-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 3rem;
-            box-shadow: var(--shadow-subtle);
-            border: 2px solid var(--light-gray);
-            transition: all var(--transition-normal);
+        .menu-list {
+            list-style: none;
         }
         
-        .map-container:hover {
-            box-shadow: var(--shadow-medium);
-            border-color: var(--medium-gray);
+        .menu-item {
+            margin: 12px 0;
         }
         
-        .map-options {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2.5rem 0 3rem;
-            flex-wrap: wrap;
-        }
-        
-        .map-option {
-            background-color: var(--white);
-            padding: 1.5rem 2.5rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
+        .menu-btn {
+            width: 100%;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(240, 247, 255, 0.9));
+            border: 2px solid rgba(52, 152, 219, 0.2);
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
             color: var(--text-dark);
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all var(--transition-normal);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
             display: flex;
             align-items: center;
             gap: 15px;
-            box-shadow: var(--shadow-subtle);
-            border: 2px solid var(--light-gray);
-            width: 300px;
             position: relative;
             overflow: hidden;
         }
         
-        .map-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.05), transparent);
-            transition: left var(--transition-slow);
-        }
-        
-        .map-option:hover::before {
-            left: 100%;
-        }
-        
-        .map-option:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
+        .menu-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.15);
             border-color: var(--secondary);
-            background-color: var(--light-bg);
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.1), rgba(26, 82, 118, 0.05));
         }
         
-        .map-option i {
-            font-size: 2rem;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .menu-btn.active {
+            background: linear-gradient(135deg, var(--secondary), #2980B9);
+            color: white;
+            border-color: var(--secondary);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.25);
         }
         
-        .map-option div {
-            text-align: left;
-        }
-        
-        .map-option strong {
-            display: block;
+        .menu-btn i {
             font-size: 1.3rem;
-            margin-bottom: 5px;
-            color: var(--primary);
-            font-weight: 700;
+            width: 30px;
+            text-align: center;
         }
         
-        .map-thumbnail {
-            width: 100%;
-            height: 350px;
-            background: linear-gradient(135deg, #F8F9FA, #EFF8FF);
-            border-radius: var(--border-radius);
+        .menu-btn.active i {
+            animation: bounce 0.5s;
+        }
+        
+        .menu-btn::after {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .menu-btn:hover::after {
+            opacity: 1;
+            right: 15px;
+        }
+        
+        .menu-btn.active::after {
+            content: '✓';
+            opacity: 1;
+            right: 20px;
+        }
+        
+        /* Map Container */
+        .map-container {
+            flex: 1;
+            background: var(--light-card);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 2px solid rgba(52, 152, 219, 0.1);
+        }
+        
+        .map-header {
+            padding: 20px;
+            background: linear-gradient(135deg, rgba(26, 82, 118, 0.05), rgba(52, 152, 219, 0.05));
+            border-bottom: 2px solid rgba(52, 152, 219, 0.1);
+        }
+        
+        .map-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 3rem auto;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid var(--light-gray);
+            gap: 12px;
         }
         
-        .map-thumbnail::before {
-            content: '';
+        .map-header p {
+            color: var(--text-dark);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        #map {
+            flex: 1;
+            min-height: 500px;
+            background: #e8f4f8;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(52, 152, 219, 0.08) 50%, 
-                transparent 100%);
-            animation: shimmer 2.5s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .map-thumbnail-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--text-light);
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 1.5rem 3rem;
-            border-radius: var(--border-radius);
-            border: 2px solid var(--light-gray);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .map-container > p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-top: 2rem;
-            font-style: italic;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            background: linear-gradient(135deg, var(--primary), #1A252F);
-            color: var(--white);
-            text-align: center;
-            padding: 3rem 2rem;
-            margin-top: auto;
-            border-top: 2px solid var(--secondary);
-        }
-        
-        .footer p {
-            margin-bottom: 1rem;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-        
-        .footer-links {
+            background: rgba(255, 255, 255, 0.95);
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.5s;
         }
         
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(52, 152, 219, 0.2);
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        .loading-text {
+            color: var(--primary);
+            font-size: 1.2rem;
             font-weight: 600;
-            transition: all var(--transition-normal);
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Info Panel */
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(52, 152, 219, 0.2);
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .info-panel.hidden {
+            transform: translateX(120%);
+        }
+        
+        .info-title {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 10px;
-            font-family: 'Poppins', sans-serif;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.2);
         }
         
-        .footer-links a:hover {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        .info-content {
+            line-height: 1.6;
         }
         
-        .footer-links a i {
-            font-size: 1.2rem;
-        }
-
-        /* ===== ANIMATIONS ===== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 1100px) {
-            .logo-container {
-                gap: 20px;
-            }
-            
-            .logo-kecamatan {
-                padding: 8px 16px;
-            }
-            
-            .logo-geoportal {
-                padding: 8px 16px;
-            }
+        .info-item {
+            margin: 12px 0;
+            padding: 10px;
+            background: rgba(52, 152, 219, 0.08);
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
         }
         
-        @media (max-width: 992px) {
-            .header { 
-                flex-direction: column; 
-                gap: 1.5rem; 
-                padding: 1.5rem; 
-            }
-            
-            .logo-container {
+        /* Legend */
+        .legend {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            z-index: 1000;
+            max-width: 250px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .legend-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 22px;
+            height: 22px;
+            border-radius: 5px;
+            border: 2px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .legend-label {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        
+        /* Controls */
+        .map-controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid rgba(52, 152, 219, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .control-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(52, 152, 219, 0.25);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .footer p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes spin-slow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
                 flex-direction: column;
-                gap: 20px;
+            }
+            
+            .sidebar {
                 width: 100%;
+                position: static;
             }
             
-            .logo-kecamatan, 
-            .logo-geoportal {
-                width: 100%;
-                justify-content: center;
+            .map-controls {
+                flex-direction: row;
+                top: auto;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
             }
             
-            .nav { 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                width: 100%;
-            }
-            
-            .hero h2 { 
-                font-size: 2.3rem; 
-            }
-            
-            .features-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 2rem;
-            }
-            
-            .map-options { 
-                flex-direction: column; 
-                align-items: center; 
-            }
-            
-            .map-option { 
-                width: 100%; 
-                max-width: 450px; 
+            .info-panel {
+                top: auto;
+                bottom: 90px;
+                right: 20px;
             }
         }
         
         @media (max-width: 768px) {
-            .hero {
-                padding: 4rem 1.5rem;
-            }
-            
-            .hero h2 { 
-                font-size: 2rem; 
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .features-grid { 
-                grid-template-columns: 1fr; 
-                gap: 1.5rem;
-            }
-            
-            .nav a { 
-                padding: 0.7rem 1.5rem; 
-                font-size: 0.95rem; 
-            }
-            
-            .logo-kecamatan-img {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .logo-kecamatan-title {
-                font-size: 1.1rem;
-            }
-            
-            .logo-geoportal-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.6rem;
-            }
-            
-            .logo-geoportal-main {
-                font-size: 1.6rem;
-            }
-            
-            .map-thumbnail { 
-                height: 250px; 
-            }
-            
-            .map-thumbnail-text { 
-                font-size: 1.6rem; 
-                padding: 1.2rem 2rem; 
-            }
-            
-            .features h3,
-            .map-preview h3 {
-                font-size: 1.8rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header {
-                padding: 1rem;
-            }
-            
-            .hero {
-                padding: 3rem 1rem;
-            }
-            
-            .hero h2 {
+            .header h1 {
                 font-size: 1.8rem;
             }
             
-            .cta-button {
-                padding: 1rem 2rem;
-                font-size: 1.1rem;
+            .menu-btn {
+                padding: 15px;
+                font-size: 1rem;
             }
             
-            .map-container {
-                padding: 2rem 1.5rem;
+            .map-header h2 {
+                font-size: 1.5rem;
             }
             
-            .map-option {
-                padding: 1.2rem 1.5rem;
-            }
-            
-            .map-thumbnail {
-                height: 200px;
-            }
-            
-            .map-thumbnail-text {
-                font-size: 1.4rem;
-                padding: 1rem 1.5rem;
-            }
-            
-            .logo-kecamatan,
-            .logo-geoportal {
-                padding: 8px 12px;
-            }
-            
-            .logo-kecamatan-img {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .logo-geoportal-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.4rem;
+            .info-panel {
+                max-width: 250px;
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- HEADER DENGAN LOGO GAMBAR ASLI -->
-    <header class="header">
-        <div class="logo-kecamatan">
-                <div class="logo-kecamatan">
-               <img src="logo-kecamatan-anda.png" 
-     alt="Logo Kecamatan Purwokerto Selatan" 
-     class="logo-image">
-            </div>
-                 </div>
-            
-            <!-- LOGO GEOPORTAL -->
-            <div class="logo-geoportal">
-                <div class="logo-geoportal-icon">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="logo-geoportal-text">
-                    <div class="logo-geoportal-main">Geoportal</div>
-                    <div class="logo-geoportal-tagline">Data Spasial Digital</div>
-                </div>
-            </div>
+    <!-- Header -->
+    <div class="header">
+        <h1><i class="fas fa-globe-asia"></i> Geoportal Kecamatan Purwokerto Selatan</h1>
+        <p>Sistem Informasi Geografis Berbasis Web - Kabupaten Banyumas</p>
+    </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar Menu -->
+        <div class="sidebar">
+            <h2 class="menu-title"><i class="fas fa-map"></i> Menu Peta</h2>
+            <ul class="menu-list">
+                <li class="menu-item">
+                    <button class="menu-btn active" id="btnPetaUtama" onclick="loadPetaPurwokertoSelatan()">
+                        <i class="fas fa-map-marked-alt"></i>
+                        Peta Purwokerto Selatan
+                    </button>
+                </li>
+                <li class="menu-item">
+                    <button class="menu-btn" id="btnPetaAdministrasi" onclick="loadPetaAdministrasi()">
+                        <i class="fas fa-landmark"></i>
+                        Peta Administrasi
+                    </button>
+                </li>
+                <li class="menu-item">
+                    <button class="menu-btn" id="btnPetaInfrastruktur" onclick="loadPetaInfrastruktur()">
+                        <i class="fas fa-road"></i>
+                        Peta Infrastruktur
+                    </button>
+                </li>
+                <li class="menu-item">
+                    <button class="menu-btn" id="btnPetaPemukiman" onclick="loadPetaPemukiman()">
+                        <i class="fas fa-home"></i>
+                        Peta Pemukiman
+                    </button>
+                </li>
+                <li class="menu-item">
+                    <button class="menu-btn" id="btnPetaFasilitas" onclick="loadPetaFasilitas()">
+                        <i class="fas fa-hospital"></i>
+                        Fasilitas Publik
+                    </button>
+                </li>
+                <li class="menu-item">
+                    <button class="menu-btn" id="btnPetaPertanian" onclick="loadPetaPertanian()">
+                        <i class="fas fa-tractor"></i>
+                        Lahan Pertanian
+                    </button>
+                </li>
+            </ul>
         </div>
         
-        <!-- NAVIGASI -->
-        <nav class="nav">
-            <a href="./" class="active"><i class="fas fa-home"></i> Beranda</a>
-            <a href="../pwtslt/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
-            <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
-            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Kami</a>
-        </nav>
-    </header>
-
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <h2>Portal <span>Data Spasial</span> Terpadu</h2>
-        <p>Portal ini menyajikan peta interaktif dan data geospasial wilayah Kecamatan Purwokerto Selatan untuk perencanaan dan pengembangan wilayah. Jelajahi, analisis, dan akses data dengan mudah!</p>
-        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Jelajahi Peta</a>
-    </section>
-
-    <!-- FEATURES SECTION -->
-    <section class="features">
-        <h3><i class="fas fa-star"></i> Fitur Unggulan</h3>
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-layer-group"></i>
-                <h4>Layers Berlapis</h4>
-                <p>Tampilkan lapisan peta seperti batas administrasi, jalan, dan penggunaan lahan. Sesuaikan tampilan sesuai kebutuhan Anda.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-download"></i>
-                <h4>Unduh Data</h4>
-                <p>Data geospasial tersedia dalam format Shapefile, GeoJSON, atau KML. Siap untuk diolah lebih lanjut.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-search-location"></i>
-                <h4>Pencarian Lokasi</h4>
-                <p>Cari lokasi berdasarkan nama desa, kecamatan, atau koordinat. Temukan tempat yang Anda cari dengan cepat.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-mobile-alt"></i>
-                <h4>Akses Responsif</h4>
-                <p>Dapat diakses dari berbagai perangkat: desktop, tablet, atau ponsel. Pengalaman yang optimal di mana saja.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAP PREVIEW SECTION -->
-    <section class="map-preview" id="peta">
-        <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
+        <!-- Map Container -->
         <div class="map-container">
-            <div class="map-options">
-                <a href="../pwtslt/" class="map-option">
-                    <i class="fas fa-mountain"></i>
-                    <div>
-                        <strong>Kecamatan Purwokerto Selatan</strong>
-                    </div>
-                </a>
-                <a href="../teluk/" class="map-option">
-                    <i class="fas fa-water"></i>
-                    <div>
-                        <strong>Desa Teluk</strong>
-                    </div>
-                </a>
+            <div class="map-header">
+                <h2><i class="fas fa-map-pin"></i> Peta Purwokerto Selatan</h2>
+                <p>Visualisasi data spasial Kecamatan Purwokerto Selatan, Kabupaten Banyumas</p>
             </div>
-            <div class="map-thumbnail">
-                <div class="map-thumbnail-text">Pilih Peta di Atas untuk Memulai!</div>
+            
+            <!-- Map -->
+            <div id="map"></div>
+            
+            <!-- Loading Overlay -->
+            <div class="loading-overlay" id="loadingOverlay">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">Memuat peta...</div>
             </div>
-            <p>Klik pada pilihan peta di atas untuk membuka peta interaktif dengan semua fitur lengkap.</p>
+            
+            <!-- Info Panel -->
+            <div class="info-panel" id="infoPanel">
+                <h3 class="info-title"><i class="fas fa-info-circle"></i> Info Kecamatan</h3>
+                <div class="info-content">
+                    <div class="info-item">
+                        <strong>Nama:</strong> Purwokerto Selatan
+                    </div>
+                    <div class="info-item">
+                        <strong>Kabupaten:</strong> Banyumas
+                    </div>
+                    <div class="info-item">
+                        <strong>Provinsi:</strong> Jawa Tengah
+                    </div>
+                    <div class="info-item">
+                        <strong>Luas Wilayah:</strong> 12.5 km²
+                    </div>
+                    <div class="info-item">
+                        <strong>Jumlah Penduduk:</strong> 85,432 jiwa
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Legend -->
+            <div class="legend" id="legend">
+                <h4 class="legend-title"><i class="fas fa-layer-group"></i> Legenda</h4>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #3498DB;"></div>
+                    <span class="legend-label">Batas Kecamatan</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #2ECC71;"></div>
+                    <span class="legend-label">Area Pemukiman</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #E74C3C;"></div>
+                    <span class="legend-label">Fasilitas Publik</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background-color: #F39C12;"></div>
+                    <span class="legend-label">Lahan Pertanian</span>
+                </div>
+            </div>
+            
+            <!-- Map Controls -->
+            <div class="map-controls">
+                <button class="control-btn" onclick="zoomIn()" title="Zoom In">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button class="control-btn" onclick="zoomOut()" title="Zoom Out">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button class="control-btn" onclick="resetView()" title="Reset View">
+                    <i class="fas fa-crosshairs"></i>
+                </button>
+                <button class="control-btn" onclick="toggleInfoPanel()" title="Toggle Info">
+                    <i class="fas fa-info"></i>
+                </button>
+                <button class="control-btn" onclick="toggleLegend()" title="Toggle Legend">
+                    <i class="fas fa-layer-group"></i>
+                </button>
+            </div>
         </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>Dibuat dengan menggunakan QGIS & Leaflet</p>
-        <p>© <span id="current-year">2025</span> Geoportal Kecamatan Purwokerto Selatan</p>
-        <div class="footer-links">
-            <a href="https://github.com/tiapmo" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-            <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Kontak</a>
-            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Kami</a>
-        </div>
-    </footer>
-
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2023 Geoportal Kecamatan Purwokerto Selatan | Dinas Pertanahan dan Tata Ruang Kabupaten Banyumas</p>
+    </div>
+    
     <script>
-        // Dynamic year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        // Inisialisasi variabel global
+        let map;
+        let kecamatanLayer;
+        let currentLayer = 'purwokerto-selatan';
         
-        // Highlight current page in navigation
-        const currentPage = window.location.pathname;
-        const navLinks = document.querySelectorAll('.nav a');
-        
-        navLinks.forEach(link => {
-            const linkPath = link.getAttribute('href');
-            
-            // Remove ../ and ./ for comparison
-            const cleanLinkPath = linkPath.replace('../', '').replace('./', '');
-            const cleanCurrentPath = currentPage.replace('/geoportal-purwokerto-selatan--teluk/', '');
-            
-            if (cleanCurrentPath.includes(cleanLinkPath) || 
-                (cleanCurrentPath === '' && linkPath === './') ||
-                (cleanCurrentPath.endsWith('/beranda') && linkPath === './')) {
-                
-                link.classList.add('active');
-            }
+        // Inisialisasi peta saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            loadPetaPurwokertoSelatan();
         });
         
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+        // Fungsi inisialisasi peta
+        function initMap() {
+            // Buat peta dengan view ke Purwokerto Selatan
+            map = L.map('map').setView([-7.431, 109.247], 13);
+            
+            // Tambahkan tile layer (peta dasar)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Event untuk menyembunyikan loading setelah peta siap
+            map.whenReady(function() {
+                setTimeout(hideLoading, 1000);
             });
+        }
+        
+        // Fungsi untuk memuat peta Purwokerto Selatan
+        function loadPetaPurwokertoSelatan() {
+            showLoading("Memuat Peta Purwokerto Selatan...");
+            updateActiveButton('btnPetaUtama');
+            
+            // Hapus layer sebelumnya jika ada
+            if (kecamatanLayer) {
+                map.removeLayer(kecamatanLayer);
+            }
+            
+            // Tampilkan koordinat area Purwokerto Selatan (contoh)
+            const purwokertoSelatanCoords = [
+                [-7.445, 109.230],
+                [-7.440, 109.240],
+                [-7.435, 109.245],
+                [-7.430, 109.250],
+                [-7.425, 109.255],
+                [-7.420, 109.260],
+                [-7.415, 109.265],
+                [-7.410, 109.270],
+                [-7.405, 109.275],
+                [-7.400, 109.280]
+            ];
+            
+            // Buat polygon untuk kecamatan
+            kecamatanLayer = L.polygon(purwokertoSelatanCoords, {
+                color: '#1A5276',
+                weight: 3,
+                opacity: 1,
+                fillColor: '#3498DB',
+                fillOpacity: 0.3
+            }).addTo(map);
+            
+            // Tambahkan popup
+            kecamatanLayer.bindPopup(`
+                <div style="padding: 10px;">
+                    <h3 style="color: #1A5276; margin-bottom: 10px;">Kecamatan Purwokerto Selatan</h3>
+                    <p><strong>Kabupaten:</strong> Banyumas</p>
+                    <p><strong>Provinsi:</strong> Jawa Tengah</p>
+                    <p><strong>Luas Wilayah:</strong> 12.5 km²</p>
+                    <p><strong>Jumlah Penduduk:</strong> 85,432 jiwa</p>
+                    <p><strong>Kepadatan:</strong> 6,835 jiwa/km²</p>
+                </div>
+            `);
+            
+            // Fit bounds ke area kecamatan
+            map.fitBounds(kecamatanLayer.getBounds());
+            
+            // Update info panel
+            updateInfoPanel('Purwokerto Selatan', 'Peta utama wilayah kecamatan dengan batas administratif');
+            
+            // Tambahkan marker untuk lokasi penting
+            addImportantLocations();
+            
+            currentLayer = 'purwokerto-selatan';
+            hideLoading();
+        }
+        
+        // Fungsi untuk memuat peta administrasi
+        function loadPetaAdministrasi() {
+            showLoading("Memuat Peta Administrasi...");
+            updateActiveButton('btnPetaAdministrasi');
+            
+            // Simulasi peta administrasi
+            if (kecamatanLayer) {
+                map.removeLayer(kecamatanLayer);
+            }
+            
+            // Update info panel
+            updateInfoPanel('Peta Administrasi', 'Peta batas wilayah administrasi desa/kelurahan');
+            
+            // Contoh: set view yang sedikit berbeda
+            map.setView([-7.431, 109.247], 12);
+            
+            currentLayer = 'administrasi';
+            hideLoading();
+        }
+        
+        // Fungsi untuk memuat peta infrastruktur
+        function loadPetaInfrastruktur() {
+            showLoading("Memuat Peta Infrastruktur...");
+            updateActiveButton('btnPetaInfrastruktur');
+            
+            // Simulasi peta infrastruktur
+            if (kecamatanLayer) {
+                map.removeLayer(kecamatanLayer);
+            }
+            
+            // Update info panel
+            updateInfoPanel('Peta Infrastruktur', 'Peta jaringan jalan, jembatan, dan infrastruktur publik');
+            
+            // Contoh: set view yang sedikit berbeda
+            map.setView([-7.431, 109.247], 13);
+            
+            currentLayer = 'infrastruktur';
+            hideLoading();
+        }
+        
+        // Fungsi untuk memuat peta pemukiman
+        function loadPetaPemukiman() {
+            showLoading("Memuat Peta Pemukiman...");
+            updateActiveButton('btnPetaPemukiman');
+            
+            // Simulasi peta pemukiman
+            if (kecamatanLayer) {
+                map.removeLayer(kecamatanLayer);
+            }
+            
+            // Update info panel
+            updateInfoPanel('Peta Pemukiman', 'Peta sebaran wilayah permukiman dan perumahan');
+            
+            // Contoh: set view yang sedikit berbeda
+            map.setView([-7.431, 109.247], 14);
+            
+            currentLayer = 'pemukiman';
+            hideLoading();
+        }
+        
+        // Fungsi untuk memuat peta fasilitas
+        function loadPetaFasilitas() {
+            showLoading("Memuat Peta Fasilitas Publik...");
+            updateActiveButton('btnPetaFasilitas');
+            
+            // Simulasi peta fasilitas
+            if (kecamatanLayer) {
+                map.removeLayer(kecamatanLayer);
+            }
+            
+            // Update info panel
+            updateInfoPanel('Fasilitas Publik', 'Peta lokasi sekolah, puskesmas, pasar, dan fasilitas umum');
+            
+            // Contoh: set view yang sedikit berbeda
+            map.setView([-7.431, 109.247], 14);
+            
+            currentLayer = 'fasilitas';
+            hideLoading();
+        }
+        
+        // Fungsi untuk memuat peta pertanian
+        function loadPetaPertanian() {
+            showLoading("Memuat Peta Lahan Pertanian...");
+            updateActiveButton('btnPetaPertanian');
+            
+            // Simulasi peta pertanian
+            if (kecamatanLayer) {
+                map.removeLayer(kecamatanLayer);
+            }
+            
+            // Update info panel
+            updateInfoPanel('Lahan Pertanian', 'Peta sebaran lahan pertanian dan perkebunan');
+            
+            // Contoh: set view yang sedikit berbeda
+            map.setView([-7.431, 109.247], 13);
+            
+            currentLayer = 'pertanian';
+            hideLoading();
+        }
+        
+        // Fungsi untuk menambahkan lokasi penting
+        function addImportantLocations() {
+            const locations = [
+                {
+                    lat: -7.431,
+                    lng: 109.247,
+                    title: "Kantor Kecamatan",
+                    icon: "fa-landmark",
+                    color: "#1A5276"
+                },
+                {
+                    lat: -7.435,
+                    lng: 109.250,
+                    title: "Puskesmas",
+                    icon: "fa-hospital",
+                    color: "#E74C3C"
+                },
+                {
+                    lat: -7.430,
+                    lng: 109.240,
+                    title: "Sekolah",
+                    icon: "fa-school",
+                    color: "#2ECC71"
+                },
+                {
+                    lat: -7.428,
+                    lng: 109.255,
+                    title: "Pasar",
+                    icon: "fa-shopping-cart",
+                    color: "#F39C12"
+                }
+            ];
+            
+            locations.forEach(loc => {
+                // Buat custom icon
+                const customIcon = L.divIcon({
+                    html: `<div style="background-color: ${loc.color}; 
+                           width: 40px; 
+                           height: 40px; 
+                           border-radius: 50%; 
+                           display: flex; 
+                           align-items: center; 
+                           justify-content: center;
+                           color: white;
+                           font-size: 18px;
+                           border: 3px solid white;
+                           box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+                           <i class="fas ${loc.icon}"></i>
+                          </div>`,
+                    className: 'custom-marker',
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40]
+                });
+                
+                // Tambahkan marker ke peta
+                const marker = L.marker([loc.lat, loc.lng], { icon: customIcon }).addTo(map);
+                
+                // Tambahkan popup
+                marker.bindPopup(`
+                    <div style="padding: 10px;">
+                        <h4 style="color: ${loc.color}; margin-bottom: 8px;">${loc.title}</h4>
+                        <p>Lokasi: ${loc.lat.toFixed(4)}, ${loc.lng.toFixed(4)}</p>
+                        <p>Kecamatan Purwokerto Selatan</p>
+                    </div>
+                `);
+            });
+        }
+        
+        // Fungsi untuk memperbarui tombol aktif
+        function updateActiveButton(activeId) {
+            // Hapus kelas active dari semua tombol
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Tambahkan kelas active ke tombol yang diklik
+            document.getElementById(activeId).classList.add('active');
+        }
+        
+        // Fungsi untuk memperbarui info panel
+        function updateInfoPanel(title, description) {
+            const mapHeader = document.querySelector('.map-header h2');
+            const mapDesc = document.querySelector('.map-header p');
+            
+            mapHeader.innerHTML = `<i class="fas fa-map-pin"></i> ${title}`;
+            mapDesc.textContent = description;
+        }
+        
+        // Fungsi untuk menampilkan loading
+        function showLoading(message = "Memuat peta...") {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            const loadingText = document.querySelector('.loading-text');
+            
+            loadingText.textContent = message;
+            loadingOverlay.style.display = 'flex';
+            loadingOverlay.style.opacity = '1';
+        }
+        
+        // Fungsi untuk menyembunyikan loading
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            loadingOverlay.style.opacity = '0';
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 500);
+        }
+        
+        // Fungsi untuk kontrol peta
+        function zoomIn() {
+            map.zoomIn();
+        }
+        
+        function zoomOut() {
+            map.zoomOut();
+        }
+        
+        function resetView() {
+            if (currentLayer === 'purwokerto-selatan' && kecamatanLayer) {
+                map.fitBounds(kecamatanLayer.getBounds());
+            } else {
+                map.setView([-7.431, 109.247], 13);
+            }
+        }
+        
+        function toggleInfoPanel() {
+            const infoPanel = document.getElementById('infoPanel');
+            infoPanel.classList.toggle('hidden');
+        }
+        
+        function toggleLegend() {
+            const legend = document.getElementById('legend');
+            legend.classList.toggle('hidden');
+        }
+        
+        // Event untuk koordinat saat mouse move
+        map.on('mousemove', function(e) {
+            // Anda bisa menambahkan display koordinat di sini jika diperlukan
+            // console.log(`Lat: ${e.latlng.lat.toFixed(4)}, Lng: ${e.latlng.lng.toFixed(4)}`);
         });
     </script>
 </body>

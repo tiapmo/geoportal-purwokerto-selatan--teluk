@@ -42,7 +42,7 @@
             flex-direction: column;
         }
 
-        /* ===== HEADER ===== */
+        /* ===== HEADER YANG SIMPLE ===== */
         .header {
             background-color: var(--light-card);
             padding: 1rem 2rem;
@@ -62,101 +62,32 @@
             gap: 20px;
         }
         
-        /* CONTAINER LOGO KECAMATAN */
+        /* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */
         .logo-kecamatan {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(26, 188, 156, 0.08));
-            padding: 10px 20px;
-            border-radius: var(--border-radius);
-            border: 2px solid var(--light-gray);
-            box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
-        }
-        
-        .logo-kecamatan:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-            border-color: var(--secondary);
-        }
-        
-        /* GAMBAR LOGO - DENGAN FALLBACK */
-        .logo-kecamatan-img {
-            width: 55px;
-            height: 55px;
-            object-fit: contain;
+            width: 60px;
+            height: 60px;
             border-radius: 10px;
-            border: 2px solid var(--white);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            background-color: var(--white);
-            padding: 5px;
-            /* Fallback jika gambar tidak ditemukan */
-            background-image: linear-gradient(135deg, var(--secondary), var(--accent));
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 30px;
-            color: white;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--white);
+            background-color: var(--white);
         }
         
-        /* Teks yang muncul jika gambar gagal load */
-        .logo-kecamatan-img::after {
-            content: 'PS';
-            display: none;
-            font-weight: bold;
+        .logo-kecamatan img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
         }
         
-        /* Jika gambar gagal load, tampilkan background gradient dan teks */
-        .logo-kecamatan-img[data-fallback="true"] {
-            background-image: linear-gradient(135deg, var(--secondary), var(--accent));
-        }
-        
-        .logo-kecamatan-img[data-fallback="true"]::after {
-            display: block;
-        }
-        
-        .logo-kecamatan-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-kecamatan-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--primary);
-            line-height: 1.2;
-        }
-        
-        .logo-kecamatan-subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--dark-gray);
-            margin-top: 2px;
-        }
-        
-        /* LOGO GEOPORTAL */
+        /* LOGO GEOPORTAL - SIMPLE HANYA ICON */
         .logo-geoportal {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 249, 250, 0.8));
-            border-radius: var(--border-radius);
-            border: 2px solid var(--light-gray);
-            box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
-        }
-        
-        .logo-geoportal:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-medium);
-            border-color: var(--accent);
         }
         
         .logo-geoportal-icon {
@@ -169,7 +100,7 @@
             border-radius: 10px;
             color: var(--white);
             font-size: 1.8rem;
-            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.25);
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
         }
         
         .logo-geoportal-text {
@@ -181,10 +112,8 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
             font-size: 1.8rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--primary);
+            line-height: 1;
         }
         
         .logo-geoportal-tagline {
@@ -192,6 +121,7 @@
             font-weight: 500;
             font-size: 0.85rem;
             color: var(--dark-gray);
+            margin-top: 2px;
         }
         
         /* NAVIGASI */
@@ -599,17 +529,9 @@
                 font-size: 0.95rem; 
             }
             
-            .logo-kecamatan-img {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .logo-kecamatan-title {
-                font-size: 1.1rem;
-            }
-            
-            .logo-kecamatan-subtitle {
-                font-size: 0.8rem;
+            .logo-kecamatan {
+                width: 50px;
+                height: 50px;
             }
             
             .logo-geoportal-icon {
@@ -646,9 +568,15 @@
                 font-size: 1rem;
             }
             
-            .logo-kecamatan,
-            .logo-geoportal {
-                padding: 8px 15px;
+            .logo-kecamatan {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .logo-geoportal-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
             }
         }
     </style>
@@ -657,9 +585,11 @@
     <!-- HEADER DENGAN LOGO GAMBAR ASLI -->
     <header class="header">
         <div class="logo-container">
-            <img src="logo_pwtsel.png" 
-     alt="Logo Kecamatan Purwokerto Selatan" 
-     class="logo-image">
+            <!-- LOGO KECAMATAN - HANYA GAMBAR SAJA -->
+            <div class="logo-kecamatan">
+                <img src="logo_pwtsel.png" 
+                     alt="Logo Kecamatan Purwokerto Selatan" 
+                     id="logo-kecamatan-img">
             </div>
             
             <!-- LOGO GEOPORTAL -->
@@ -722,7 +652,7 @@
         <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
         <div class="map-container">
             <div class="map-options">
-                <a href="../pwtslt/" class="map-option">
+                <a href="../Kecamatan/" class="map-option">
                     <i class="fas fa-mountain"></i>
                     <div>
                         <strong>Kecamatan Purwokerto Selatan</strong>
@@ -773,19 +703,12 @@
         });
         
         // Check if logo image loads successfully
-        const logoImg = document.getElementById('logo-kecamatan');
+        const logoImg = document.getElementById('logo-kecamatan-img');
         
         // Jika gambar gagal load, tampilkan fallback
         logoImg.addEventListener('error', function() {
-            this.style.backgroundImage = 'linear-gradient(135deg, var(--secondary), var(--accent))';
-            this.style.color = 'white';
-            this.style.display = 'flex';
-            this.style.alignItems = 'center';
-            this.style.justifyContent = 'center';
-            this.style.fontWeight = 'bold';
-            this.style.fontSize = '1.5rem';
-            this.textContent = 'PS';
-            this.setAttribute('data-fallback', 'true');
+            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjUiIGZpbGw9IiMzNDk4REIiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjAiIGZpbGw9IiMyRUNDNzEiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMTIiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+';
+            this.alt = "Logo Fallback";
         });
         
         // Smooth scrolling for anchor links

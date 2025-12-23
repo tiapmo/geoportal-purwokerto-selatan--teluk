@@ -202,43 +202,31 @@ footer {
 </section>
 
 <!-- PETA KECAMATAN -->
-<section id="Kecamatan">
-    <div class="section-title">
-        <h2>Peta Kecamatan Purwokerto Selatan</h2>
-    </div>
-
-    <div class="map-card">
-        <div class="card">
-            <img src="img/A3__.png">
-            <div class="content">
-                <h3>Peta Administrasi</h3>
-                <p>Batas wilayah, jalan, dan fasilitas umum.</p>
-            </div>
+<div class="map-card">
+    <div class="card">
+        <img id="preview-kecamatan" src="img/A3__.png" alt="Peta Administrasi Kecamatan">
+        <div class="content">
+            <h3>Peta Administrasi</h3>
+            <p>Batas wilayah, jalan, dan fasilitas umum.</p>
         </div>
     </div>
-
-    <!-- NANTI GANTI DIV INI DENGAN LEAFLET -->
-    <!-- <div id="map-Kecamatan"></div> -->
-</section>
+</div>
+<div id="map-kecamatan" style="height:500px; display:none;"></div>
 
 <!-- PETA TELUK -->
-<section id="teluk">
-    <div class="section-title">
-        <h2>Peta Desa Teluk</h2>
-    </div>
-
-    <div class="map-card">
-        <div class="card">
-            <img src="img/peta teluk.png">
-            <div class="content">
-                <h3>Peta Detail Desa</h3>
-                <p>RT/RW, penggunaan lahan, sarana prasarana.</p>
-            </div>
+<div class="map-card">
+    <div class="card">
+        <img id="preview-teluk" src="img/peta teluk.png" alt="Peta Desa Teluk">
+        <div class="content">
+            <h3>Peta Detail Desa</h3>
+            <p>RT/RW, penggunaan lahan, sarana prasarana.</p>
         </div>
     </div>
+</div>
+<div id="map-teluk" style="height:500px; display:none;"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
 
-    <!-- <div id="map-teluk"></div> -->
-</section>
 
 <!-- ABOUT -->
 <section class="about" id="tentang">

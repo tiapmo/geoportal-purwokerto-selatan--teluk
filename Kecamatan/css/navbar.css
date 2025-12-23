@@ -1,3 +1,4 @@
+/* ===== NAVBAR ===== */
 .navbar {
     position: fixed;
     top: 0;
@@ -9,7 +10,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 40px;
-    z-index: 2000;
+    z-index: 9999;
 }
 
 .navbar img {
@@ -17,20 +18,22 @@
 }
 
 .navbar nav a {
-    color: #fff;
-    text-decoration: none;
+    color: #fff !important;
+    text-decoration: none !important;
     margin-left: 25px;
     font-weight: 500;
 }
 
-.navbar nav a:hover {
-    color: #2ecc71;
+/* ===== FIX MAP LEAFLET ===== */
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
-/* ===== FIX LEAFLET MAP ===== */
 #map {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 70px);
-    margin-top: 70px;
+    position: absolute;
+    top: 70px;                 /* setinggi navbar */
+    left: 0;
+    right: 0;
+    bottom: 0;
 }

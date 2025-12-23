@@ -1,731 +1,260 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geoportal Kecamatan Purwokerto Selatan</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        /* ===== VARIABLES & RESET ===== */
-        :root {
-            --primary: #1A5276;
-            --secondary: #3498DB;
-            --accent: #2ECC71;
-            --light-bg: #F8F9FA;
-            --light-card: #FFFFFF;
-            --light-gray: #ECF0F1;
-            --medium-gray: #BDC3C7;
-            --dark-gray: #7F8C8D;
-            --text-dark: #2C3E50;
-            --text-light: #95A5A6;
-            --white: #FFFFFF;
-            --border-radius: 12px;
-            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
-            --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
-        body {
-            font-family: 'Nunito', sans-serif;
-            color: var(--text-dark);
-            background-color: var(--light-bg);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geoportal Purwokerto Selatan - Teluk</title>
 
-        /* ===== HEADER YANG SIMPLE ===== */
-        .header {
-            background-color: var(--light-card);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-subtle);
-            border-bottom: 2px solid var(--light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        /* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */
-        .logo-kecamatan {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 3px solid var(--white);
-            background-color: var(--white);
-        }
-        
-        .logo-kecamatan img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 5px;
-        }
-        
-        /* LOGO GEOPORTAL - SIMPLE HANYA ICON */
-        .logo-geoportal {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-geoportal-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 10px;
-            color: var(--white);
-            font-size: 1.8rem;
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
-        }
-        
-        .logo-geoportal-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-geoportal-main {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--primary);
-            line-height: 1;
-        }
-        
-        .logo-geoportal-tagline {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--dark-gray);
-            margin-top: 2px;
-        }
-        
-        /* NAVIGASI */
-        .nav {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .nav a {
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-dark);
-            background-color: transparent;
-            border: 2px solid var(--medium-gray);
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .nav a:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .nav a.active {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-        }
-        
-        /* ===== HERO SECTION ===== */
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            max-width: 900px;
-            margin: 2rem auto;
-            background-color: var(--light-card);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
-        }
-        
-        .hero h2 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2.5rem;
-            margin-bottom: 1.2rem;
-            color: var(--primary);
-            line-height: 1.3;
-        }
-        
-        .hero h2 span {
-            color: var(--secondary);
-        }
-        
-        .hero p {
-            font-size: 1.1rem;
-            margin-bottom: 2.5rem;
-            color: var(--text-light);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--white);
-            padding: 1rem 2.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
-            border: none;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .cta-button:hover {
-            background-color: #16A085;
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-        
-        .cta-button i {
-            margin-right: 8px;
-        }
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        /* ===== FEATURE CARDS ===== */
-        .features {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-        }
-        
-        .features h3 {
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2rem;
-            margin-bottom: 2.5rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .features h3 i {
-            color: var(--accent);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        
-        .feature-card {
-            background: var(--white);
-            padding: 2rem 1.8rem;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
-            text-align: center;
-            border: 1px solid var(--light-gray);
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--secondary);
-        }
-        
-        .feature-card i {
-            font-size: 2.8rem;
-            margin-bottom: 1.2rem;
-            color: var(--secondary);
-        }
-        
-        .feature-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
-            color: var(--primary);
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-        }
-        
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 1rem;
-            line-height: 1.6;
-        }
+<style>
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
-        /* ===== MAP PREVIEW ===== */
-        .map-preview {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto 5rem;
-            text-align: center;
-        }
-        
-        .map-preview h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .map-preview h3 i {
-            color: var(--accent);
-        }
-        
-        .map-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 2.5rem;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
-            transition: all 0.3s ease;
-        }
-        
-        .map-container:hover {
-            box-shadow: var(--shadow-hover);
-            border-color: var(--medium-gray);
-        }
-        
-        .map-options {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0 2.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .map-option {
-            background-color: var(--white);
-            padding: 1.2rem 2rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
-            width: 280px;
-        }
-        
-        .map-option:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--secondary);
-            background-color: var(--light-bg);
-        }
-        
-        .map-option i {
-            font-size: 1.8rem;
-            color: var(--secondary);
-        }
-        
-        .map-option div {
-            text-align: left;
-        }
-        
-        .map-option strong {
-            display: block;
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-            color: var(--primary);
-        }
-        
-        .map-thumbnail {
-            width: 100%;
-            height: 300px;
-            background-color: var(--light-bg);
-            border-radius: var(--border-radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 2rem auto;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--light-gray);
-        }
-        
-        .map-thumbnail::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent 0%, 
-                rgba(52, 152, 219, 0.05) 50%, 
-                transparent 100%);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        .map-thumbnail-text {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text-light);
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 1rem 2rem;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--light-gray);
-        }
-        
-        .map-container > p {
-            color: var(--text-light);
-            font-size: 1rem;
-            margin-top: 1.5rem;
-        }
+html {
+    scroll-behavior: smooth;
+}
 
-        /* ===== FOOTER ===== */
-        .footer {
-            background-color: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem;
-            margin-top: auto;
-            border-top: 1px solid var(--light-gray);
-        }
-        
-        .footer p {
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .footer-links a:hover {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .footer-links a i {
-            font-size: 1.1rem;
-        }
+body {
+    background: #f4f7f6;
+    color: #2c3e50;
+}
 
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 992px) {
-            .header { 
-                flex-direction: column; 
-                gap: 1.5rem; 
-                padding: 1.5rem; 
-            }
-            
-            .logo-container {
-                flex-direction: column;
-                gap: 15px;
-                width: 100%;
-            }
-            
-            .logo-kecamatan,
-            .logo-geoportal {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .nav { 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                width: 100%;
-            }
-            
-            .hero h2 { 
-                font-size: 2rem; 
-            }
-            
-            .features-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-            }
-            
-            .map-options { 
-                flex-direction: column; 
-                align-items: center; 
-            }
-            
-            .map-option { 
-                width: 100%; 
-                max-width: 400px; 
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .hero h2 { 
-                font-size: 1.8rem; 
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .features-grid { 
-                grid-template-columns: 1fr; 
-            }
-            
-            .nav a { 
-                padding: 0.7rem 1.2rem; 
-                font-size: 0.95rem; 
-            }
-            
-            .logo-kecamatan {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .logo-geoportal-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.6rem;
-            }
-            
-            .logo-geoportal-main {
-                font-size: 1.6rem;
-            }
-            
-            .map-thumbnail { 
-                height: 200px; 
-            }
-            
-            .map-thumbnail-text { 
-                font-size: 1.4rem; 
-                padding: 0.8rem 1.5rem; 
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header {
-                padding: 1rem;
-            }
-            
-            .hero {
-                padding: 3rem 1rem;
-            }
-            
-            .cta-button {
-                padding: 0.9rem 2rem;
-                font-size: 1rem;
-            }
-            
-            .logo-kecamatan {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .logo-geoportal-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.4rem;
-            }
-        }
-    </style>
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(20, 60, 60, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 40px;
+    z-index: 1000;
+}
+
+.navbar img {
+    height: 45px;
+}
+
+.navbar nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+}
+
+.navbar nav a:hover {
+    color: #2ecc71;
+}
+
+/* ===== HERO ===== */
+.hero {
+    min-height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.75)),
+        url("img/Peta Kabupaten.png") center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    padding: 0 10%;
+    color: #fff;
+}
+
+.hero h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    margin-bottom: 15px;
+}
+
+.hero span {
+    color: #2ecc71;
+}
+
+.hero p {
+    max-width: 500px;
+    font-size: 1.1rem;
+}
+
+.hero a {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: 1px solid #fff;
+    text-decoration: none;
+    color: #fff;
+}
+
+.hero a:hover {
+    background: #2ecc71;
+    border-color: #2ecc71;
+}
+
+/* ===== SECTION ===== */
+section {
+    padding: 100px 8%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title h2 {
+    font-size: 2.3rem;
+    color: #145a5a;
+}
+
+/* ===== MAP CARD ===== */
+.map-card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+    gap: 30px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 15px 30px rgba(0,0,0,.1);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.card .content {
+    padding: 20px;
+}
+
+.card h3 {
+    color: #145a5a;
+    margin-bottom: 10px;
+}
+
+/* ===== ABOUT ===== */
+.about {
+    background:
+        linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.8)),
+        url("img/peta teluk.png") center/cover no-repeat;
+    color: #fff;
+}
+
+.about p {
+    max-width: 700px;
+    margin: auto;
+    font-size: 1.1rem;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    background: #0f3d3d;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar nav a {
+        margin: 10px;
+    }
+}
+</style>
 </head>
+
 <body>
-    <!-- HEADER DENGAN LOGO GAMBAR ASLI -->
-    <header class="header">
-        <div class="logo-container">
-            <!-- LOGO KECAMATAN - HANYA GAMBAR SAJA -->
-            <div class="logo-kecamatan">
-                <img src="logo_pwtsel.png" 
-                     alt="Logo Kecamatan Purwokerto Selatan" 
-                     id="logo-kecamatan-img">
-            </div>
-            
-            <!-- LOGO GEOPORTAL -->
-            <div class="logo-geoportal">
-                <div class="logo-geoportal-icon">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="logo-geoportal-text">
-                    <div class="logo-geoportal-main">Geoportal</div>
-                    <div class="logo-geoportal-tagline">Data Spasial Digital</div>
-                </div>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <img src="img/logo_pwtsel.png" alt="Logo">
+    <nav>
+        <a href="#beranda">Beranda</a>
+        <a href="#Kecamatan">Peta Kecamatan</a>
+        <a href="#teluk">Peta Teluk</a>
+        <a href="#tentang">Tentang Kami</a>
+    </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="beranda">
+    <div>
+        <h1>Geoportal <span>Purwokerto Selatan</span></h1>
+        <p>Portal informasi geospasial Kabupaten Banyumas, Kecamatan Purwokerto Selatan, dan Desa Teluk.</p>
+        <a href="#Kecamatan">Jelajahi Peta</a>
+    </div>
+</section>
+
+<!-- PETA KECAMATAN -->
+<section id="Kecamatan">
+    <div class="section-title">
+        <h2>Peta Kecamatan Purwokerto Selatan</h2>
+    </div>
+
+    <div class="map-card">
+        <div class="card">
+            <img src="img/A3__.png">
+            <div class="content">
+                <h3>Peta Administrasi</h3>
+                <p>Batas wilayah, jalan, dan fasilitas umum.</p>
             </div>
         </div>
-        
-        <!-- NAVIGASI -->
-        <nav class="nav">
-            <a href="./" class="active"><i class="fas fa-home"></i> Beranda</a>
-            <a href="../Kecamatan/"><i class="fas fa-map-marked-alt"></i> Peta Purwokerto Selatan</a>
-            <a href="../teluk/"><i class="fas fa-water"></i> Peta Teluk</a>
-            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Kami</a>
-        </nav>
-    </header>
+    </div>
 
-    <!-- HERO SECTION -->
-    <section class="hero">
-        <h2>Portal <span>Data Spasial</span> Terpadu</h2>
-        <p>Portal ini menyajikan peta interaktif dan data geospasial wilayah Kecamatan Purwokerto Selatan untuk perencanaan dan pengembangan wilayah. Jelajahi, analisis, dan akses data dengan mudah!</p>
-        <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Jelajahi Peta</a>
-    </section>
+    <!-- NANTI GANTI DIV INI DENGAN LEAFLET -->
+    <!-- <div id="map-Kecamatan"></div> -->
+</section>
 
-    <!-- FEATURES SECTION -->
-    <section class="features">
-        <h3><i class="fas fa-star"></i> Fitur Unggulan</h3>
-        <div class="features-grid">
-            <div class="feature-card">
-                <i class="fas fa-layer-group"></i>
-                <h4>Layers Berlapis</h4>
-                <p>Tampilkan lapisan peta seperti batas administrasi, jalan, dan penggunaan lahan. Sesuaikan tampilan sesuai kebutuhan Anda.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-download"></i>
-                <h4>Unduh Data</h4>
-                <p>Data geospasial tersedia dalam format Shapefile, GeoJSON, atau KML. Siap untuk diolah lebih lanjut.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-search-location"></i>
-                <h4>Pencarian Lokasi</h4>
-                <p>Cari lokasi berdasarkan nama desa, kecamatan, atau koordinat. Temukan tempat yang Anda cari dengan cepat.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-mobile-alt"></i>
-                <h4>Akses Responsif</h4>
-                <p>Dapat diakses dari berbagai perangkat: desktop, tablet, atau ponsel. Pengalaman yang optimal di mana saja.</p>
+<!-- PETA TELUK -->
+<section id="teluk">
+    <div class="section-title">
+        <h2>Peta Desa Teluk</h2>
+    </div>
+
+    <div class="map-card">
+        <div class="card">
+            <img src="img/peta teluk.png">
+            <div class="content">
+                <h3>Peta Detail Desa</h3>
+                <p>RT/RW, penggunaan lahan, sarana prasarana.</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- MAP PREVIEW SECTION -->
-    <section class="map-preview" id="peta">
-        <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
-        <div class="map-container">
-            <div class="map-options">
-                <a href="../Kecamatan/" class="map-option">
-                    <i class="fas fa-mountain"></i>
-                    <div>
-                        <strong>Kecamatan Purwokerto Selatan</strong>
-                    </div>
-                </a>
-                <a href="../teluk/" class="map-option">
-                    <i class="fas fa-water"></i>
-                    <div>
-                        <strong>teluk</strong>
-                    </div>
-                </a>
-            </div>
-            <div class="map-thumbnail">
-                <div class="map-thumbnail-text">Pilih Peta di Atas untuk Memulai!</div>
-            </div>
-            <p>Klik pada pilihan peta di atas untuk membuka peta interaktif dengan semua fitur lengkap.</p>
-        </div>
-    </section>
+    <!-- <div id="map-teluk"></div> -->
+</section>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-        <p>Dibuat menggunakan QGIS & Leaflet</p>
-        <p>© <span id="current-year">2025</span> Geoportal Kecamatan Purwokerto Selatan</p>
-        <div class="footer-links">
-            <a href="https://github.com/tiapmo" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-            <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Kontak</a>
-            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Kami</a>
-        </div>
-    </footer>
+<!-- ABOUT -->
+<section class="about" id="tentang">
+    <div class="section-title">
+        <h2>Tentang Kami</h2>
+    </div>
+    <p>
+        Geoportal Purwokerto Selatan – Teluk merupakan media penyajian data
+        geospasial berbasis web untuk mendukung perencanaan wilayah dan
+        pelayanan informasi publik.
+    </p>
+</section>
 
-    <script>
-        // Dynamic year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // Highlight current page in navigation
-        const currentPage = window.location.pathname;
-        const navLinks = document.querySelectorAll('.nav a');
-        
-        navLinks.forEach(link => {
-            const linkPath = link.getAttribute('href');
-            const cleanLinkPath = linkPath.replace('../', '').replace('./', '');
-            const cleanCurrentPath = currentPage.replace('/geoportal-purwokerto-selatan--teluk/', '');
-            
-            if (cleanCurrentPath.includes(cleanLinkPath) || 
-                (cleanCurrentPath === '' && linkPath === './')) {
-                link.classList.add('active');
-            }
-        });
-        
-        // Check if logo image loads successfully
-        const logoImg = document.getElementById('logo-kecamatan-img');
-        
-        // Jika gambar gagal load, tampilkan fallback
-        logoImg.addEventListener('error', function() {
-            this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjUiIGZpbGw9IiMzNDk4REIiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjAiIGZpbGw9IiMyRUNDNzEiLz4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMTIiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+';
-            this.alt = "Logo Fallback";
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
+<footer>
+    © 2025 Geoportal Purwokerto Selatan – Teluk
+</footer>
+
 </body>
-</html>
+</html>  

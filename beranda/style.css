@@ -1,235 +1,572 @@
-/* ===== RESET & BASE ===== */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+/* ===== VARIABLES & RESET ===== */
+:root {
+    --primary: #1A5276;
+    --secondary: #3498DB;
+    --accent: #2ECC71;
+    --light-bg: #F8F9FA;
+    --light-card: #FFFFFF;
+    --light-gray: #ECF0F1;
+    --medium-gray: #BDC3C7;
+    --dark-gray: #7F8C8D;
+    --text-dark: #2C3E50;
+    --text-light: #95A5A6;
+    --white: #FFFFFF;
+    --border-radius: 12px;
+    --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+    --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
-html {
-    scroll-behavior: smooth;
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
 }
 
 body {
-    background: #f2f6f5;
-    color: #2c3e50;
-}
-
-/* ===== NAVBAR ===== */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 70px;
-    background: rgba(18, 55, 55, 0.95);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 60px;
-    z-index: 1000;
-    backdrop-filter: blur(6px);
-}
-
-.navbar img {
-    height: 45px;
-}
-
-.navbar nav a {
-    color: #ffffff;
-    text-decoration: none;
-    margin-left: 30px;
-    font-weight: 500;
-    position: relative;
-    transition: .3s;
-}
-
-.navbar nav a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    background: #2ecc71;
-    left: 0;
-    bottom: -6px;
-    transition: .3s;
-}
-
-.navbar nav a:hover {
-    color: #2ecc71;
-}
-
-.navbar nav a:hover::after {
-    width: 100%;
-}
-
-/* ===== HERO ===== */
-.hero {
+    font-family: 'Nunito', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--light-bg);
+    line-height: 1.6;
     min-height: 100vh;
-    background:
-        linear-gradient(135deg, rgba(0,0,0,.6), rgba(0,0,0,.85)),
-        url("img/peta_banyumas.jpg") center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== HEADER YANG SIMPLE ===== */
+.header {
+    background-color: var(--light-card);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-subtle);
+    border-bottom: 2px solid var(--light-gray);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container {
     display: flex;
     align-items: center;
-    padding: 0 12%;
-    color: #ffffff;
+    gap: 20px;
 }
 
-.hero h1 {
-    font-size: clamp(2.6rem, 5vw, 3.8rem);
+/* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */
+.logo-kecamatan {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--white);
+    background-color: var(--white);
+}
+
+.logo-kecamatan img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 5px;
+}
+
+/* LOGO GEOPORTAL - SIMPLE HANYA ICON */
+.logo-geoportal {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-geoportal-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--secondary), var(--accent));
+    border-radius: 10px;
+    color: var(--white);
+    font-size: 1.8rem;
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
+}
+
+.logo-geoportal-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-geoportal-main {
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    margin-bottom: 15px;
+    font-size: 1.8rem;
+    color: var(--primary);
+    line-height: 1;
 }
 
-.hero span {
-    color: #2ecc71;
+.logo-geoportal-tagline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--dark-gray);
+    margin-top: 2px;
+}
+
+/* NAVIGASI */
+.nav {
+    display: flex;
+    gap: 10px;
+}
+
+.nav a {
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-dark);
+    background-color: transparent;
+    border: 2px solid var(--medium-gray);
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav a:hover {
+    background-color: var(--secondary);
+    color: var(--white);
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-subtle);
+}
+
+.nav a.active {
+    background-color: var(--secondary);
+    color: var(--white);
+    border-color: var(--secondary);
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    padding: 4rem 2rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 2rem auto;
+    background-color: var(--light-card);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--light-gray);
+}
+
+.hero h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+    color: var(--primary);
+    line-height: 1.3;
+}
+
+.hero h2 span {
+    color: var(--secondary);
 }
 
 .hero p {
-    max-width: 520px;
     font-size: 1.1rem;
-    opacity: .9;
+    margin-bottom: 2.5rem;
+    color: var(--text-light);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.hero a {
+.cta-button {
     display: inline-block;
-    margin-top: 30px;
-    padding: 13px 36px;
-    border-radius: 40px;
-    border: 2px solid #ffffff;
+    background-color: var(--accent);
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
     text-decoration: none;
-    color: #ffffff;
-    font-weight: 500;
-    transition: .3s;
-}
-
-.hero a:hover {
-    background: #2ecc71;
-    border-color: #2ecc71;
-    color: #0b3d3d;
-}
-
-/* ===== SECTION ===== */
-section {
-    padding: 110px 10%;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 60px;
-}
-
-.section-title h2 {
-    font-size: 2.4rem;
     font-weight: 600;
-    color: #145a5a;
+    font-size: 1.1rem;
+    box-shadow: var(--shadow-subtle);
+    transition: all 0.3s ease;
+    border: none;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* ===== MAP CARD ===== */
-.map-card {
+.cta-button:hover {
+    background-color: #16A085;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover);
+}
+
+.cta-button i {
+    margin-right: 8px;
+}
+
+/* ===== FEATURE CARDS ===== */
+.features {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto 4rem;
+}
+
+.features h3 {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2.5rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.features h3 i {
+    color: var(--accent);
+}
+
+.features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-    gap: 35px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
 }
 
-.card {
-    background: #ffffff;
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: 0 18px 40px rgba(0,0,0,.12);
-    transition: .35s ease;
+.feature-card {
+    background: var(--white);
+    padding: 2rem 1.8rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-subtle);
+    transition: all 0.3s ease;
+    text-align: center;
+    border: 1px solid var(--light-gray);
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 25px 55px rgba(0,0,0,.18);
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--secondary);
 }
 
-.card img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
+.feature-card i {
+    font-size: 2.8rem;
+    margin-bottom: 1.2rem;
+    color: var(--secondary);
 }
 
-.card .content {
-    padding: 26px;
+.feature-card h4 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    color: var(--primary);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
-.card h3 {
-    color: #145a5a;
-    margin-bottom: 8px;
-    font-size: 1.25rem;
+.feature-card p {
+    color: var(--text-light);
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
-.card p {
-    font-size: .95rem;
-    opacity: .85;
-}
-
-/* ===== ABOUT ===== */
-.about {
-    background:
-        linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.9)),
-        url("img/peta_desa_teluk.jpg") center/cover no-repeat;
-    color: #ffffff;
+/* ===== MAP PREVIEW ===== */
+.map-preview {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto 5rem;
     text-align: center;
 }
 
-.about p {
-    max-width: 760px;
-    margin: auto;
+.map-preview h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.map-preview h3 i {
+    color: var(--accent);
+}
+
+.map-container {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--light-gray);
+    transition: all 0.3s ease;
+}
+
+.map-container:hover {
+    box-shadow: var(--shadow-hover);
+    border-color: var(--medium-gray);
+}
+
+.map-options {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 2rem 0 2.5rem;
+    flex-wrap: wrap;
+}
+
+.map-option {
+    background-color: var(--white);
+    padding: 1.2rem 2rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
     font-size: 1.1rem;
-    line-height: 1.8;
-    opacity: .95;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-subtle);
+    border: 1px solid var(--light-gray);
+    width: 280px;
+}
+
+.map-option:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--secondary);
+    background-color: var(--light-bg);
+}
+
+.map-option i {
+    font-size: 1.8rem;
+    color: var(--secondary);
+}
+
+.map-option div {
+    text-align: left;
+}
+
+.map-option strong {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 4px;
+    color: var(--primary);
+}
+
+.map-thumbnail {
+    width: 100%;
+    height: 300px;
+    background-color: var(--light-bg);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--light-gray);
+}
+
+.map-thumbnail::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(52, 152, 219, 0.05) 50%, 
+        transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.map-thumbnail-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--light-gray);
+}
+
+.map-container > p {
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-top: 1.5rem;
 }
 
 /* ===== FOOTER ===== */
-footer {
-    background: #0b3d3d;
-    color: #ffffff;
+.footer {
+    background-color: var(--primary);
+    color: var(--white);
     text-align: center;
-    padding: 22px;
-    font-size: .95rem;
+    padding: 2rem;
+    margin-top: auto;
+    border-top: 1px solid var(--light-gray);
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-    .navbar {
-        padding: 0 30px;
-    }
+.footer p {
+    margin-bottom: 0.8rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
 
-    .hero {
-        padding: 0 8%;
-        text-align: center;
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.footer-links a:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.footer-links a i {
+    font-size: 1.1rem;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+    .header { 
+        flex-direction: column; 
+        gap: 1.5rem; 
+        padding: 1.5rem; 
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+    
+    .logo-kecamatan,
+    .logo-geoportal {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .nav { 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        width: 100%;
+    }
+    
+    .hero h2 { 
+        font-size: 2rem; 
+    }
+    
+    .features-grid { 
+        grid-template-columns: repeat(2, 1fr); 
+    }
+    
+    .map-options { 
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    .map-option { 
+        width: 100%; 
+        max-width: 400px; 
     }
 }
 
 @media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 15px;
-        gap: 10px;
+    .hero h2 { 
+        font-size: 1.8rem; 
     }
-
-    .navbar nav a {
-        margin: 8px 15px;
+    
+    .hero p {
+        font-size: 1rem;
     }
-
-    section {
-        padding: 90px 6%;
+    
+    .features-grid { 
+        grid-template-columns: 1fr; 
     }
-
-    .hero h1 {
-        font-size: 2.2rem;
+    
+    .nav a { 
+        padding: 0.7rem 1.2rem; 
+        font-size: 0.95rem; 
+    }
+    
+    .logo-kecamatan {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-geoportal-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+    }
+    
+    .logo-geoportal-main {
+        font-size: 1.6rem;
+    }
+    
+    .map-thumbnail { 
+        height: 200px; 
+    }
+    
+    .map-thumbnail-text { 
+        font-size: 1.4rem; 
+        padding: 0.8rem 1.5rem; 
     }
 }
 
 @media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2rem;
+    .header {
+        padding: 1rem;
     }
-
-    .hero p {
+    
+    .hero {
+        padding: 3rem 1rem;
+    }
+    
+    .cta-button {
+        padding: 0.9rem 2rem;
         font-size: 1rem;
+    }
+    
+    .logo-kecamatan {
+        width: 45px;
+        height: 45px;
+    }
+    
+    .logo-geoportal-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.4rem;
     }
 }

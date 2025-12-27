@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <link rel="stylesheet" href="css/leaflet.css">
 		<link rel="stylesheet" href="css/navbar.css">
@@ -15,8 +15,126 @@
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet.photon.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
+
+		
 		
         <style>
+			/* Style untuk navbar */
+        .navbar {
+            background-color: #2c3e50;
+            overflow: hidden;
+            padding: 0 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 15px 0;
+            text-decoration: none;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-item {
+            margin-left: 10px;
+        }
+        
+        .nav-link {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 20px 15px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .nav-link:hover {
+            background-color: #34495e;
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            background-color: #3498db;
+            font-weight: bold;
+        }
+        
+        /* Responsive design */
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: #2c3e50;
+                flex-direction: column;
+            }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-item {
+                margin: 0;
+                width: 100%;
+            }
+            
+            .nav-link {
+                padding: 15px;
+                text-align: left;
+                border-bottom: 1px solid #34495e;
+            }
+		}
+			 .content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .map-container {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
         html, body, #map {
             width: 100%;
             height: 100%;
@@ -28,17 +146,57 @@
     </head>
 
     <body>
-			<header class="navbar">
-    <img src="../img/logo_pwtsel.png" alt="Logo">
-    <nav>
-        <a href="../beranda/index.html">Beranda</a>
-        <a href="../Kecamatan/index.html">Peta Kecamatan</a>
-        <a href="../teluk/index.html">Peta Teluk</a>
-        <a href="../tentang/index.html">Tentang Kami</a>
-	
-
+		 <nav class="navbar">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">Sistem Peta</a>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                ☰
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Beranda</a>
+                </li>
+                <li class="nav-item">
+                    <a href="peta-kecamatan.html" class="nav-link active">Peta Kecamatan</a>
+                </li>
+                <li class="nav-item">
+                    <a href="peta-desa.html" class="nav-link">Peta Desa</a>
+                </li>
+                <li class="nav-item">
+                    <a href="tentang.html" class="nav-link">Tentang Kami</a>
+                </li>
+            </ul>
+        </div>
     </nav>
-</header>
+			<div class="content">
+        <h1>Peta Kecamatan</h1>
+        <p>Selamat datang di peta kecamatan. Gunakan menu di atas untuk navigasi ke halaman lain.</p>
+        
+        <!-- Container untuk peta -->
+        <div class="map-container">
+            <!-- Tempatkan peta Anda di sini -->
+            <div id="map" style="height: 500px; width: 100%;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Script untuk toggle menu di mobile
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Script untuk menutup menu saat link diklik (di mobile)
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                const navMenu = document.getElementById('nav-menu');
+                navMenu.classList.remove('active');
+            });
+        });
+
         <div id="map">
         </div>
         <script src="js/qgis2web_expressions.js"></script>
@@ -169,6 +327,7 @@
         document.getElementsByClassName('leaflet-control-measure-toggle')[0].innerHTML = '';
         document.getElementsByClassName('leaflet-control-measure-toggle')[0].className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
+			  document.addEventListener('DOMContentLoaded', function() {
         function setBounds() {
         }
         map.createPane('pane_GoogleSatellite_0');
@@ -1458,6 +1617,8 @@
         });
         map.on("layerremove", function(){
             resetLabels([layer_JalanKecamatan_9,layer_JalanKabupaten_10,layer_JalanProvinsi_11,layer_Kelurahan_13]);
+        });
+				   console.log('Halaman peta kecamatan siap');
         });
         </script>        
     </body>

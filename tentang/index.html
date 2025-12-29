@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Kami- Geoportal Kecamatan Purwokerto Selatan</title>
+    <title>Tentang Kami - Geoportal Kecamatan Purwokerto Selatan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -22,12 +22,18 @@
             --border-radius: 12px;
             --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
             --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --navbar-height: 80px;
         }
         
         * { 
             margin: 0; 
             padding: 0; 
             box-sizing: border-box; 
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--navbar-height);
         }
         
         body {
@@ -38,101 +44,224 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: var(--navbar-height);
         }
 
-        /* ===== HEADER MINIMALIS DENGAN LOGO KECAMATAN ===== */
-        .header {
-            background-color: var(--light-card);
-            padding: 1.2rem 2rem;
+        /* ===== NAVBAR ===== */
+        .navbar {
+            background: linear-gradient(135deg, #1A5276 0%, #2C3E50 100%);
+            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 20px;
+            border-bottom: 3px solid #3498DB;
+            height: var(--navbar-height);
+        }
+
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid var(--light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            padding: 12px 0;
+            height: 100%;
         }
-        
-        .logo-container {
+
+        /* Brand section */
+        .navbar-brand {
             display: flex;
             align-items: center;
-            gap: 20px;
-        }
-        
-        .logo-kecamatan {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--light-gray);
-            padding: 8px 16px;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--medium-gray);
-        }
-        
-        .logo-kecamatan-img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 8px;
-        }
-        
-        .logo-kecamatan-text {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1rem;
-            color: var(--primary);
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .logo i {
-            font-size: 2.2rem;
-            color: var(--secondary);
-        }
-        
-        .logo h1 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.8rem;
-            color: var(--primary);
-            letter-spacing: -0.5px;
-        }
-        
-        .nav {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .nav a {
-            padding: 0.7rem 1.5rem;
-            border-radius: 30px;
+            gap: 15px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
+        }
+
+        .logo-kecamatan-small {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            padding: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 2px solid #3498DB;
+        }
+
+        .logo-kecamatan-small img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .navbar-title h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-title p {
+            font-size: 0.8rem;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Navigation menu */
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-nav {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: var(--text-dark);
-            background-color: transparent;
-            border: 1px solid var(--medium-gray);
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
-        
-        .nav a:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        
-        .nav a i {
+
+        .nav-link i {
             font-size: 1.1rem;
+        }
+
+        .nav-link span {
+            font-size: 0.95rem;
+        }
+
+        /* Active link */
+        .nav-link.active {
+            background: #3498DB;
+            border-color: #3498DB;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+        }
+
+        /* Mobile menu button (hidden on desktop) */
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Mobile menu (hidden on desktop) */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1A5276;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-menu-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mobile-menu-logo img {
+            width: 50px;
+            height: 50px;
+            background: white;
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .mobile-menu-logo h3 {
+            margin: 0;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .mobile-menu-logo p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .mobile-menu-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+            padding: 10px;
+        }
+
+        .mobile-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 15px;
+        }
+
+        .mobile-nav a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-nav a i {
+            width: 24px;
+            text-align: center;
         }
 
         /* ===== MAIN CONTENT ===== */
@@ -140,19 +269,21 @@
             max-width: 1100px;
             margin: 3rem auto;
             padding: 0 2rem;
+            width: 100%;
         }
 
         /* ===== HERO ABOUT SECTION ===== */
         .about-hero {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
+            padding: 0 1rem;
         }
         
         .about-hero h2 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
             color: var(--primary);
             line-height: 1.2;
         }
@@ -162,32 +293,30 @@
         }
         
         .about-hero p {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--text-light);
             max-width: 800px;
             margin: 0 auto;
+            line-height: 1.6;
         }
 
         /* ===== PROFILE SECTION ===== */
         .profile-section {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
             gap: 3rem;
-            align-items: flex-start;
             margin-bottom: 4rem;
         }
         
         .profile-card {
-            flex: 1;
-            min-width: 300px;
+            width: 100%;
             background: var(--light-card);
             border-radius: var(--border-radius);
-            padding: 2.5rem;
+            padding: 2rem;
             box-shadow: var(--shadow-subtle);
             border: 1px solid var(--light-gray);
             text-align: center;
             transition: all 0.3s ease;
-            position: relative;
         }
         
         .profile-card:hover {
@@ -197,8 +326,8 @@
         }
         
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             margin: 0 auto 1.5rem;
             background: var(--light-gray);
@@ -211,7 +340,7 @@
         }
         
         .profile-img i {
-            font-size: 5rem;
+            font-size: 4rem;
             color: var(--secondary);
         }
         
@@ -224,13 +353,13 @@
         .profile-card h3 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
             color: var(--primary);
         }
         
         .profile-card .title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--secondary);
             margin-bottom: 1.5rem;
             font-weight: 500;
@@ -240,7 +369,7 @@
             text-align: left;
             margin-bottom: 2rem;
             color: var(--text-light);
-            line-height: 1.8;
+            line-height: 1.7;
         }
         
         .profile-stats {
@@ -248,7 +377,7 @@
             justify-content: space-around;
             margin-top: 2rem;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.5rem;
         }
         
         .stat {
@@ -259,7 +388,7 @@
         
         .stat-number {
             font-family: 'Poppins', sans-serif;
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             color: var(--secondary);
             display: block;
@@ -272,14 +401,13 @@
 
         /* ===== BIO CONTENT ===== */
         .bio-content {
-            flex: 2;
-            min-width: 300px;
+            width: 100%;
         }
         
         .bio-section {
             background: var(--light-card);
             border-radius: var(--border-radius);
-            padding: 2.5rem;
+            padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: var(--shadow-subtle);
             border-left: 4px solid var(--accent);
@@ -302,7 +430,7 @@
         .bio-section h3 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 1.2rem;
             color: var(--primary);
             display: flex;
@@ -313,13 +441,13 @@
         .bio-section p {
             color: var(--text-light);
             margin-bottom: 1rem;
-            line-height: 1.8;
+            line-height: 1.7;
         }
         
         .skills {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 1.5rem;
         }
         
@@ -345,47 +473,51 @@
         .contact-section {
             background: var(--light-card);
             border-radius: var(--border-radius);
-            padding: 2.5rem;
+            padding: 2rem;
             box-shadow: var(--shadow-subtle);
             text-align: center;
             margin-bottom: 4rem;
             border: 1px solid var(--light-gray);
+            width: 100%;
         }
         
         .contact-section h3 {
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-size: 1.6rem;
+            margin-bottom: 1.8rem;
             color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
         }
         
         .contact-links {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 1.2rem;
             margin-bottom: 2rem;
         }
         
         .contact-link {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 10px;
             background: var(--light-card);
             color: var(--text-dark);
-            padding: 1rem 2rem;
+            padding: 1rem 1.5rem;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.1rem;
+            font-size: 1rem;
             transition: all 0.3s ease;
             box-shadow: var(--shadow-subtle);
             border: 1px solid var(--light-gray);
+            width: 100%;
+            max-width: 400px;
         }
         
         .contact-link:hover {
@@ -399,37 +531,40 @@
         .contact-note {
             font-style: italic;
             color: var(--text-light);
-            margin-top: 2rem;
+            margin-top: 1.8rem;
             padding-top: 1.5rem;
             border-top: 1px solid var(--light-gray);
+            line-height: 1.7;
         }
 
-        /* ===== FOOTER MINIMALIS ===== */
+        /* ===== FOOTER ===== */
         .footer {
             background-color: var(--primary);
             color: var(--white);
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1.5rem;
             margin-top: auto;
             border-top: 1px solid var(--light-gray);
+            width: 100%;
         }
         
         .footer p {
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
         }
         
         .footer-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 1.5rem;
             margin-top: 1.5rem;
             flex-wrap: wrap;
         }
         
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.9);
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s;
@@ -439,6 +574,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 0.9rem;
         }
         
         .footer-links a:hover {
@@ -447,494 +583,291 @@
         }
         
         .footer-links a i {
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 992px) {
-            .header { 
-                flex-direction: column; 
-                gap: 1.2rem; 
-                padding: 1.2rem; 
+        @media (max-width: 768px) {
+            .navbar-nav {
+                display: none;
             }
             
-            .logo-container {
-                flex-direction: column;
-                gap: 15px;
+            .mobile-menu-btn {
+                display: block;
             }
             
-            .nav { 
-                flex-wrap: wrap; 
-                justify-content: center; 
+            .navbar-container {
+                padding: 8px 0;
             }
             
-            .profile-section { 
-                flex-direction: column; 
+            .logo-kecamatan-small {
+                width: 40px;
+                height: 40px;
             }
             
-            .profile-card, .bio-content { 
-                width: 100%; 
+            .navbar-title h1 {
+                font-size: 1.3rem;
             }
             
-            .contact-links { 
-                flex-direction: column; 
-                align-items: center; 
+            .navbar-title p {
+                font-size: 0.7rem;
             }
             
-            .contact-link { 
-                width: 100%; 
-                max-width: 400px; 
+            .main-content {
+                padding: 0 1rem;
+                margin: 2rem auto;
+            }
+            
+            .about-hero h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .about-hero p {
+                font-size: 1rem;
+            }
+            
+            .profile-card {
+                padding: 1.5rem;
+            }
+            
+            .profile-img {
+                width: 140px;
+                height: 140px;
+            }
+            
+            .profile-img i {
+                font-size: 3rem;
+            }
+            
+            .profile-card h3 {
+                font-size: 1.6rem;
+            }
+            
+            .profile-card .title {
+                font-size: 1rem;
+            }
+            
+            .bio-section {
+                padding: 1.5rem;
+            }
+            
+            .bio-section h3 {
+                font-size: 1.3rem;
+            }
+            
+            .bio-section p {
+                font-size: 0.95rem;
+            }
+            
+            .skill-tag {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .contact-section {
+                padding: 1.5rem;
+            }
+            
+            .contact-section h3 {
+                font-size: 1.4rem;
+            }
+            
+            .contact-link {
+                padding: 0.9rem 1.2rem;
+                font-size: 0.95rem;
+            }
+            
+            .footer {
+                padding: 1.5rem 1rem;
+            }
+            
+            .footer p {
+                font-size: 0.9rem;
             }
         }
         
-        @media (max-width: 768px) {
-            .about-hero h2 { 
-                font-size: 2.2rem; 
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 0 10px;
             }
             
-            .profile-img { 
-                width: 150px; 
-                height: 150px; 
+            .navbar-title h1 {
+                font-size: 1.2rem;
             }
             
-            .profile-img i { 
-                font-size: 4rem; 
+            .navbar-title p {
+                display: none;
             }
             
-            .profile-card h3 { 
-                font-size: 1.8rem; 
+            .mobile-menu-btn {
+                padding: 8px;
             }
             
-            .bio-section h3 { 
-                font-size: 1.4rem; 
+            .about-hero h2 {
+                font-size: 1.6rem;
             }
             
-            .nav a { 
-                padding: 0.6rem 1.2rem; 
-                font-size: 0.95rem; 
+            .about-hero p {
+                font-size: 0.95rem;
             }
             
-            .logo h1 { 
-                font-size: 1.6rem; 
+            .profile-img {
+                width: 120px;
+                height: 120px;
             }
             
-            .logo i { 
-                font-size: 2rem; 
+            .profile-card {
+                padding: 1.2rem;
             }
             
-            .logo-kecamatan-text {
-                font-size: 0.9rem;
+            .profile-card h3 {
+                font-size: 1.4rem;
             }
             
-            .logo-kecamatan-img {
-                width: 35px;
-                height: 35px;
+            .profile-card .title {
+                font-size: 0.95rem;
+            }
+            
+            .bio-section {
+                padding: 1.2rem;
+            }
+            
+            .bio-section h3 {
+                font-size: 1.2rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .skills {
+                gap: 0.6rem;
+            }
+            
+            .skill-tag {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .contact-link {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .profile-section {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            
+            .profile-card {
+                flex: 0 0 350px;
+            }
+            
+            .bio-content {
+                flex: 1;
             }
         }
     </style>
 </head>
-    <!-- Hanya main.js yang dibutuhkan -->
-<script src="../js/main.js"></script>
 <body>
-   <!-- File: navbar.html -->
-<nav class="navbar">
-    <div class="navbar-container">
-        <div class="navbar-brand">
-            <div class="logo-kecamatan-small">
-                <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <div class="logo-kecamatan-small">
+                    <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
+                </div>
+                <div class="navbar-title">
+                    <h1>Geoportal</h1>
+                    <p>Data Spasial Digital</p>
+                </div>
             </div>
-            <div class="navbar-title">
-                <h1>Geoportal</h1>
-                <p>Data Spasial Digital</p>
-            </div>
-        </div>
-        
-        <div class="navbar-menu">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a href="../" class="nav-link">
-                        <i class="fas fa-home"></i>
-                        <span>Beranda</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../Kecamatan/" class="nav-link">
-                        <i class="fas fa-map"></i>
-                        <span>Peta Kecamatan</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../teluk/" class="nav-link">
-                        <i class="fas fa-water"></i>
-                        <span>Peta Desa Teluk</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../tentang/" class="nav-link">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Tentang Kami</span>
-                    </a>
-                </li>
-            </ul>
             
-            <!-- Mobile menu button -->
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
+            <div class="navbar-menu">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="../" class="nav-link">
+                            <i class="fas fa-home"></i>
+                            <span>Beranda</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../Kecamatan/" class="nav-link">
+                            <i class="fas fa-map"></i>
+                            <span>Peta Kecamatan</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../teluk/" class="nav-link">
+                            <i class="fas fa-water"></i>
+                            <span>Peta Desa Teluk</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../tentang/" class="nav-link active">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Tentang Kami</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- Mobile menu button -->
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
             </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div class="mobile-menu">
-            <div class="mobile-menu-header">
-                <div class="mobile-menu-logo">
-                    <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan">
-                    <div>
-                        <h3>Geoportal</h3>
-                        <p>Data Spasial Digital</p>
+            
+            <!-- Mobile menu -->
+            <div class="mobile-menu">
+                <div class="mobile-menu-header">
+                    <div class="mobile-menu-logo">
+                        <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan">
+                        <div>
+                            <h3>Geoportal</h3>
+                            <p>Data Spasial Digital</p>
+                        </div>
+                    </div>
+                    <div class="mobile-menu-close">
+                        <i class="fas fa-times"></i>
                     </div>
                 </div>
-                <div class="mobile-menu-close">
-                    <i class="fas fa-times"></i>
-                </div>
+                <ul class="mobile-nav">
+                    <li>
+                        <a href="../">
+                            <i class="fas fa-home"></i>
+                            Beranda
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../Kecamatan/">
+                            <i class="fas fa-map"></i>
+                            Peta Kecamatan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../teluk/">
+                            <i class="fas fa-water"></i>
+                            Peta Desa Teluk
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../tentang/">
+                            <i class="fas fa-info-circle"></i>
+                            Tentang Kami
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <ul class="mobile-nav">
-                <li>
-                    <a href="../">
-                        <i class="fas fa-home"></i>
-                        Beranda
-                    </a>
-                </li>
-                <li>
-                    <a href="../Kecamatan/">
-                        <i class="fas fa-map"></i>
-                        Peta Kecamatan
-                    </a>
-                </li>
-                <li>
-                    <a href="../teluk/">
-                        <i class="fas fa-water"></i>
-                        Peta Desa Teluk
-                    </a>
-                </li>
-                <li>
-                    <a href="../tentang/">
-                        <i class="fas fa-info-circle"></i>
-                        Tentang Kami
-                    </a>
-                </li>
-            </ul>
         </div>
-    </div>
-</nav>
-
-<style>
-/* ===== NAVBAR STYLES ===== */
-.navbar {
-    background: linear-gradient(135deg, #1A5276 0%, #2C3E50 100%);
-    color: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    padding: 0 20px;
-    border-bottom: 3px solid #3498DB;
-}
-
-.navbar-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 0;
-}
-
-/* Brand section */
-.navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-decoration: none;
-}
-
-.logo-kecamatan-small {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    overflow: hidden;
-    background: white;
-    padding: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    border: 2px solid #3498DB;
-}
-
-.logo-kecamatan-small img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-
-.navbar-title h1 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-    color: white;
-    font-family: 'Poppins', sans-serif;
-}
-
-.navbar-title p {
-    font-size: 0.8rem;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.8);
-    font-family: 'Poppins', sans-serif;
-}
-
-/* Navigation menu */
-.navbar-menu {
-    display: flex;
-    align-items: center;
-}
-
-.navbar-nav {
-    display: flex;
-    list-style: none;
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-}
-
-.nav-item {
-    position: relative;
-}
-
-.nav-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 20px;
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    font-family: 'Poppins', sans-serif;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.nav-link:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.nav-link i {
-    font-size: 1.1rem;
-}
-
-.nav-link span {
-    font-size: 0.95rem;
-}
-
-/* Active link */
-.nav-link.active {
-    background: #3498DB;
-    border-color: #3498DB;
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
-}
-
-/* Mobile menu button (hidden on desktop) */
-.mobile-menu-btn {
-    display: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-    padding: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-}
-
-/* Mobile menu (hidden on desktop) */
-.mobile-menu {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #1A5276;
-    z-index: 2000;
-    padding: 20px;
-}
-
-.mobile-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.mobile-menu-logo {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.mobile-menu-logo img {
-    width: 50px;
-    height: 50px;
-    background: white;
-    padding: 5px;
-    border-radius: 8px;
-}
-
-.mobile-menu-logo h3 {
-    margin: 0;
-    color: white;
-    font-size: 1.3rem;
-}
-
-.mobile-menu-logo p {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9rem;
-}
-
-.mobile-menu-close {
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: white;
-    padding: 10px;
-}
-
-.mobile-nav {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.mobile-nav li {
-    margin-bottom: 15px;
-}
-
-.mobile-nav a {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 15px;
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-}
-
-.mobile-nav a:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.mobile-nav a i {
-    width: 24px;
-    text-align: center;
-}
-
-/* Responsive styles */
-@media (max-width: 768px) {
-    .navbar-nav {
-        display: none;
-    }
-    
-    .mobile-menu-btn {
-        display: block;
-    }
-    
-    .navbar-container {
-        padding: 8px 0;
-    }
-    
-    .logo-kecamatan-small {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .navbar-title h1 {
-        font-size: 1.3rem;
-    }
-    
-    .navbar-title p {
-        font-size: 0.7rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 0 10px;
-    }
-    
-    .navbar-title h1 {
-        font-size: 1.2rem;
-    }
-    
-    .navbar-title p {
-        display: none;
-    }
-}
-</style>
-
-<script>
-// Script untuk navbar
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile menu toggle
-    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-    const mobileMenu = document.querySelector('.mobile-menu');
-    const mobileMenuClose = document.querySelector('.mobile-menu-close');
-    
-    if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', function() {
-            mobileMenu.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-    }
-    
-    if (mobileMenuClose) {
-        mobileMenuClose.addEventListener('click', function() {
-            mobileMenu.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-    }
-    
-    // Close mobile menu when clicking outside
-    mobileMenu.addEventListener('click', function(e) {
-        if (e.target === mobileMenu) {
-            mobileMenu.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-    });
-    
-    // Highlight active page
-    const currentPage = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav-link, .mobile-nav a');
-    
-    navLinks.forEach(link => {
-        const linkHref = link.getAttribute('href');
-        
-        // Simple active page detection
-        if (currentPage.includes(linkHref.replace('../', '').replace('/', ''))) {
-            link.classList.add('active');
-        }
-        
-        // Handle home page separately
-        if (currentPage.endsWith('/') || currentPage.endsWith('index.html')) {
-            if (linkHref === '../' || linkHref === '../index.html') {
-                link.classList.add('active');
-            }
-        }
-    });
-});
-</script>
+    </nav>
 
     <!-- MAIN CONTENT -->
     <div class="main-content">
@@ -956,6 +889,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="bio">
                     <p>Saya seorang profesional di bidang Sistem Informasi Geografis dengan pengalaman dalam pengembangan aplikasi web GIS, analisis data spasial, dan visualisasi data geografis.</p>
                 </div>
+            </div>
 
             <!-- BIO CONTENT -->
             <div class="bio-content">
@@ -1007,44 +941,74 @@ document.addEventListener('DOMContentLoaded', function() {
         <p>Dibuat oleh Eka Setia Wati untuk memenuhi Tugas Akhir Mata Kuliah Geogrphic Information System</p>
         <p>© <span id="current-year">2025</span> Geoportal Kecamatan Purwokerto Selatan</p>
         <div class="footer-links">
-            <a href="../beranda/"><i class="fas fa-home"></i> Beranda</a>
+            <a href="../"><i class="fas fa-home"></i> Beranda</a>
             <a href="mailto:ekasetiawati36579@gmail.com"><i class="fas fa-envelope"></i> Hubungi Saya</a>
         </div>
     </footer>
 
     <script>
-        // Dynamic year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-        
-        // Highlight current page in navigation
-        const currentPage = window.location.pathname;
-        const navLinks = document.querySelectorAll('.nav a');
-        
-        navLinks.forEach(link => {
-            const linkPath = link.getAttribute('href');
+        // Script untuk navbar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileMenuClose = document.querySelector('.mobile-menu-close');
             
-            // Remove ../ and ./ for comparison
-            const cleanLinkPath = linkPath.replace('../', '').replace('./', '');
-            const cleanCurrentPath = currentPage.replace('/geoportal-purwokerto-selatan--teluk/', '');
-            
-            if (cleanCurrentPath.includes(cleanLinkPath) || 
-                (cleanCurrentPath === '' && linkPath === './') ||
-                (cleanCurrentPath.endsWith('/tentang') && linkPath === './')) {
-                
-                link.style.backgroundColor = 'var(--secondary)';
-                link.style.color = 'var(--white)';
-                link.style.borderColor = 'var(--secondary)';
-                link.style.fontWeight = '600';
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    mobileMenu.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
             }
-        });
-        
-        // Simple hover effect for skill tags
-        document.querySelectorAll('.skill-tag').forEach(tag => {
-            tag.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px)';
+            
+            if (mobileMenuClose) {
+                mobileMenuClose.addEventListener('click', function() {
+                    mobileMenu.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            if (mobileMenu) {
+                mobileMenu.addEventListener('click', function(e) {
+                    if (e.target === mobileMenu) {
+                        mobileMenu.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // Highlight active page
+            const currentPage = window.location.pathname;
+            const navLinks = document.querySelectorAll('.nav-link, .mobile-nav a');
+            
+            navLinks.forEach(link => {
+                const linkHref = link.getAttribute('href');
+                
+                // Simple active page detection
+                if (currentPage.includes(linkHref.replace('../', '').replace('/', ''))) {
+                    link.classList.add('active');
+                }
+                
+                // Handle home page separately
+                if (currentPage.endsWith('/') || currentPage.endsWith('index.html')) {
+                    if (linkHref === '../' || linkHref === '../index.html') {
+                        link.classList.add('active');
+                    }
+                }
             });
-            tag.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
+            
+            // Dynamic year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Simple hover effect for skill tags
+            document.querySelectorAll('.skill-tag').forEach(tag => {
+                tag.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-3px)';
+                });
+                tag.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
             });
         });
     </script>

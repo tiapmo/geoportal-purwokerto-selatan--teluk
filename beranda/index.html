@@ -265,7 +265,7 @@
             font-size: 1.4rem;
         }
 
-        /* ===== FEATURE CARDS ===== */
+        /* ===== TEMPAT BERSEJARAH ===== */
         .features {
             padding: 4rem 2rem;
             max-width: 1200px;
@@ -301,14 +301,19 @@
         
         .feature-card {
             background: var(--white);
-            padding: 2.5rem 2rem;
+            padding: 2rem;
             border-radius: var(--border-radius);
             box-shadow: var(--shadow-subtle);
             transition: all 0.3s ease;
-            text-align: center;
+            text-align: left;
             border: 1px solid var(--light-gray);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         
         .feature-card::before {
@@ -332,21 +337,28 @@
             width: 10px;
         }
         
-        .feature-card i {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            color: var(--secondary);
-            transition: all 0.3s ease;
+        .place-image {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.2rem;
         }
         
-        .feature-card:hover i {
-            transform: scale(1.2);
-            color: var(--accent);
+        .place-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-card:hover .place-image img {
+            transform: scale(1.05);
         }
         
         .feature-card h4 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
             color: var(--primary);
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
@@ -354,8 +366,36 @@
         
         .feature-card p {
             color: var(--text-light);
-            font-size: 1rem;
+            font-size: 0.95rem;
             line-height: 1.6;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+        
+        .place-address {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+        
+        .place-address i {
+            color: var(--secondary);
+            margin-top: 3px;
+        }
+        
+        .address-link {
+            color: var(--secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            word-break: break-word;
+        }
+        
+        .address-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
         }
 
         /* ===== MAP PREVIEW ===== */
@@ -631,6 +671,151 @@
             font-size: 1.1rem;
         }
 
+        /* ===== MODAL UNTUK DETAIL TEMPAT ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .modal-image {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .modal-description {
+            color: var(--text-dark);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-address {
+            background-color: var(--light-gray);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .modal-address i {
+            color: var(--secondary);
+            margin-top: 3px;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .modal-btn {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .btn-view-map {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-close {
+            background-color: var(--light-gray);
+            color: var(--text-dark);
+        }
+        
+        .modal-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-subtle);
+        }
+        
+        .btn-view-map:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-close:hover {
+            background-color: var(--medium-gray);
+        }
+
         /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 992px) {
             .header { 
@@ -673,6 +858,10 @@
             .map-option { 
                 width: 100%; 
                 max-width: 400px; 
+            }
+            
+            .modal-content {
+                width: 95%;
             }
         }
         
@@ -717,6 +906,14 @@
                 font-size: 1.4rem; 
                 padding: 0.8rem 1.5rem; 
             }
+            
+            .modal-image {
+                height: 200px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+            }
         }
         
         @media (max-width: 480px) {
@@ -743,21 +940,33 @@
                 height: 40px;
                 font-size: 1.4rem;
             }
+            
+            .features {
+                padding: 2rem 1rem;
+            }
+            
+            .map-preview {
+                padding: 2rem 1rem;
+            }
+            
+            .modal-header {
+                padding: 1rem;
+            }
+            
+            .modal-body {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
-    <!-- Di bagian sebelum </body> -->
-<script src="../js/main.js"></script>
-<script src="../js/places.js"></script>
 <body>
     <!-- HEADER DENGAN LOGO GAMBAR ASLI -->
     <header class="header">
         <div class="logo-container">
-            <!-- LOGO KECAMATAN - HANYA GAMBAR SAJA --
+            <!-- LOGO KECAMATAN - HANYA GAMBAR SAJA -->
             <div class="logo-kecamatan">
-    <!-- Gunakan ../ untuk naik satu folder dari beranda/ -->
-    <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
-</div>
+                <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
+            </div>
             <!-- LOGO GEOPORTAL -->
             <div class="logo-geoportal">
                 <div class="logo-geoportal-icon">
@@ -784,60 +993,66 @@
         <div class="hero-content">
             <h2>Portal <span>Data Spasial</span> Terpadu</h2>
             <p>Portal ini menyajikan peta interaktif dan data geospasial wilayah Kecamatan Purwokerto Selatan untuk perencanaan dan pengembangan wilayah. Jelajahi, analisis, dan akses data dengan mudah!</p>
-            <a href="#peta" class="cta-button"><i class="fas fa-play-circle"></i> Jelajahi Peta</a>
+            <a href="#tempat-bersejarah" class="cta-button"><i class="fas fa-landmark"></i> Jelajahi Tempat Bersejarah</a>
         </div>
     </section>
 
-    <!-- FEATURES SECTION -->
-    <section class="features">
-    <h3><i class="fas fa-landmark"></i>Tempat Bersejarah</h3>
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="place-image">
-                <img src="../img/taman-andhang-pangeran-purwokerto.jpg" alt="Taman Andhang Pangrenan">
+    <!-- TEMPAT BERSEJARAH -->
+    <section class="features" id="tempat-bersejarah">
+        <h3><i class="fas fa-landmark"></i> Tempat Bersejarah</h3>
+        <div class="features-grid">
+            <!-- Tempat 1 -->
+            <div class="feature-card" data-place="1">
+                <div class="place-image">
+                    <img src="../img/taman-andhang-pangeran-purwokerto.jpg" alt="Taman Andhang Pangrenan">
+                </div>
+                <h4>Taman Andhang Pangrenan Purwokerto</h4>
+                <p>Taman rekreasi ini dibangun pada tahun 2017 dengan konsep taman edukasi yang menggabungkan unsur budaya, sejarah, dan lingkungan. Nama taman ini berasal dari bahasa Jawa yang berarti "taman yang mengajarkan" atau "taman yang memberi petunjuk".</p>
+                <div class="place-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="teluk/?lat=-7.4417&lng=109.2385&zoom=16&place=Masjid Jami' Purwokerto" class="address-link">Jalan Gerilya Purwokerto Selatan, Jl. Prof. M Yamin I, Windusara, Karangklesem, Kec. Banyumas, Kabupaten Banyumas, Jawa Tengah 53144</a>
+                </div>
             </div>
-            <h4>Taman Andhang Pangrenan Purwokerto</h4>
-            <p>Taman rekreasi ini dibangun pada tahun 2017 dengan konsep taman edukasi yang menggabungkan unsur budaya, sejarah, dan lingkungan. Nama taman ini berasal dari bahasa Jawa yang berarti “taman yang mengajarkan” atau “taman yang memberi petunjuk”.</p>
-            <div class="place-address">
-                <i class="fas fa-map-marker-alt"></i>
-                <a href="teluk/?lat=-7.4417&lng=109.2385&zoom=16&place=Masjid Jami' Purwokerto" class="address-link">Jalan Gerilya Purwokerto Selatan, Jl. Prof. M Yamin I, Windusara, Karangklesem, Kec. Banyumas, Kabupaten Banyumas, Jawa Tengah 53144</a>
+            
+            <!-- Tempat 2 -->
+            <div class="feature-card" data-place="2">
+                <div class="place-image">
+                    <img src="../img/Taman-Satria-Purwokerto.png" alt="Taman Satria Purwokerto">
+                </div>
+                <h4>Taman Satria Purwokerto</h4>
+                <p>Taman Satria Berkoh Purwokerto merupakan salah satu RTH atau Taman Kota yang sudah 33 tahun menjadi paru-paru kota Purwokerto. Taman Satria Berkoh Purwokerto diresmikan pada Rabu, 15 Januari 1992 oleh Bupati KDH TK.II Banyumas Djoko Sudantoko.</p>
+                <div class="place-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="teluk/?lat=-7.4432&lng=109.2401&zoom=16&place=Museum BRI" class="address-link">Kebontebu, Berkoh, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53146</a>
+                </div>
+            </div>
+            
+            <!-- Tempat 3 -->
+            <div class="feature-card" data-place="3">
+                <div class="place-image">
+                    <img src="../img/Bukit cinta.png" alt="Bukit Cinta">
+                </div>
+                <h4>Bukit Cinta</h4>
+                <p>Bukit Cinta merupakan area perbukitan yang sejak lama dikenal oleh warga setempat sebagai tempat berkumpul dan berkegiatan sosial, terutama bagi generasi muda. Dari kebiasaan inilah tempat ini mendapat nama "Bukit Cinta".</p>
+                <div class="place-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="teluk/?lat=-7.4398&lng=109.2352&zoom=16&place=Taman Andhang Pangrenan" class="address-link">G7F4+5RJ, Dusun II Wiradadi, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah 53181</a>
+                </div>
+            </div>
+            
+            <!-- Tempat 4 -->
+            <div class="feature-card" data-place="4">
+                <div class="place-image">
+                    <img src="../img/terminal-pwt.jpeg" alt="Terminal Bulupitu">
+                </div>
+                <h4>Terminal Bulupitu</h4>
+                <p>Terminal Bulupitu di Purwokerto secara resmi berdiri pada 6 April 2006, ketika terminal bus dipindahkan dari lokasi lama ke Bulupitu sebagai terminal tipe A yang melayani angkutan kota, pedesaan, serta angkutan antarkota dalam dan antar provinsi.</p>
+                <div class="place-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <a href="teluk/?lat=-7.4465&lng=109.2428&zoom=16&place=Stasiun Purwokerto" class="address-link">H744+HHM, Karanggayam, Teluk, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53145</a>
+                </div>
             </div>
         </div>
-        <div class="feature-card">
-            <div class="place-image">
-                <img src="../img/Taman-Satria-Purwokerto.png" alt="Taman Satria Purwokerto">
-            </div>
-            <h4>Taman Satria Purwokerto</h4>
-            <p>Taman Satria Berkoh Purwokerto merupakan salah satu RTH atau Taman Kota yang sudah 33 tahun menjadi paru-paru kota Purwokerto. Taman Satria Berkoh Purwokerto diresmikan pada Rabu, 15 Januari 1992 oleh Bupati KDH TK.II Banyumas Djoko Sudantoko.</p>
-            <div class="place-address">
-                <i class="fas fa-map-marker-alt"></i>
-                <a href="teluk/?lat=-7.4432&lng=109.2401&zoom=16&place=Museum BRI" class="address-link">Kebontebu, Berkoh, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53146 </a>
-            </div>
-        </div>
-        <div class="feature-card">
-            <div class="place-image">
-                <img src="../img/Bukit cinta.png" alt="Bukit Cinta">
-            </div>
-            <h4>Bukit Cinta </h4>
-            <p>Bukit Cinta merupakan area perbukitan yang sejak lama dikenal oleh warga setempat sebagai tempat berkumpul dan berkegiatan sosial, terutama bagi generasi muda. Dari kebiasaan inilah tempat ini mendapat nama “Bukit Cinta”.</p>
-            <div class="place-address">
-                <i class="fas fa-map-marker-alt"></i>
-                <a href="teluk/?lat=-7.4398&lng=109.2352&zoom=16&place=Taman Andhang Pangrenan" class="address-link">G7F4+5RJ, Dusun II Wiradadi, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah 53181</a>
-            </div>
-        </div>
-        <div class="feature-card">
-            <div class="place-image">
-                <img src="../img/terminal-pwt.jpeg" alt="Stasiun Purwokerto">
-            </div>
-            <h4>Terminal Bulupitu</h4>
-            <p>Terminal Bulupitu di Purwokerto secara resmi berdiri pada 6 April 2006, ketika terminal bus dipindahkan dari lokasi lama ke Bulupitu sebagai terminal tipe A yang melayani angkutan kota, pedesaan, serta angkutan antarkota dalam dan antar provinsi.</p>
-            <div class="place-address">
-                <i class="fas fa-map-marker-alt"></i>
-                <a href="teluk/?lat=-7.4465&lng=109.2428&zoom=16&place=Stasiun Purwokerto" class="address-link">H744+HHM, Karanggayam, Teluk, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53145</a>
-            </div>
-        </div>
-    </div>
-</section>
     </section>
 
     <!-- MAP PREVIEW SECTION -->
@@ -888,6 +1103,34 @@
         </div>
     </section>
 
+    <!-- MODAL UNTUK DETAIL TEMPAT BERSEJARAH -->
+    <div class="modal" id="placeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalPlaceName">Tempat Bersejarah</h3>
+                <button class="close-modal" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalPlaceImage" src="" alt="Gambar Tempat">
+                </div>
+                <p class="modal-description" id="modalPlaceDescription"></p>
+                <div class="modal-address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="modalPlaceAddress"></span>
+                </div>
+                <div class="modal-buttons">
+                    <button class="modal-btn btn-view-map" id="viewOnMap">
+                        <i class="fas fa-map-marked-alt"></i> Lihat di Peta
+                    </button>
+                    <button class="modal-btn btn-close" id="closeModalBtn">
+                        <i class="fas fa-times"></i> Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="footer">
         <p>Dibuat menggunakan QGIS & Leaflet</p>
@@ -900,6 +1143,109 @@
     </footer>
 
     <script>
+        // Data tempat bersejarah
+        const placesData = {
+            1: {
+                name: "Taman Andhang Pangrenan Purwokerto",
+                image: "../img/taman-andhang-pangeran-purwokerto.jpg",
+                description: "Taman rekreasi ini dibangun pada tahun 2017 dengan konsep taman edukasi yang menggabungkan unsur budaya, sejarah, dan lingkungan. Nama taman ini berasal dari bahasa Jawa yang berarti 'taman yang mengajarkan' atau 'taman yang memberi petunjuk'. Taman ini menjadi salah satu ruang publik favorit warga Purwokerto untuk bersantai dan beraktivitas.",
+                address: "Jalan Gerilya Purwokerto Selatan, Jl. Prof. M Yamin I, Windusara, Karangklesem, Kec. Banyumas, Kabupaten Banyumas, Jawa Tengah 53144",
+                mapLink: "teluk/?lat=-7.4417&lng=109.2385&zoom=16&place=Taman Andhang Pangrenan"
+            },
+            2: {
+                name: "Taman Satria Purwokerto",
+                image: "../img/Taman-Satria-Purwokerto.png",
+                description: "Taman Satria Berkoh Purwokerto merupakan salah satu RTH atau Taman Kota yang sudah 33 tahun menjadi paru-paru kota Purwokerto. Taman Satria Berkoh Purwokerto diresmikan pada Rabu, 15 Januari 1992 oleh Bupati KDH TK.II Banyumas Djoko Sudantoko. Taman ini memiliki fasilitas lengkap termasuk area bermain anak, jogging track, dan area pertemuan masyarakat.",
+                address: "Kebontebu, Berkoh, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53146",
+                mapLink: "teluk/?lat=-7.4432&lng=109.2401&zoom=16&place=Taman Satria"
+            },
+            3: {
+                name: "Bukit Cinta",
+                image: "../img/Bukit cinta.png",
+                description: "Bukit Cinta merupakan area perbukitan yang sejak lama dikenal oleh warga setempat sebagai tempat berkumpul dan berkegiatan sosial, terutama bagi generasi muda. Dari kebiasaan inilah tempat ini mendapat nama 'Bukit Cinta'. Tempat ini menawarkan pemandangan kota Purwokerto yang indah, terutama saat sore dan malam hari.",
+                address: "G7F4+5RJ, Dusun II Wiradadi, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah 53181",
+                mapLink: "teluk/?lat=-7.4398&lng=109.2352&zoom=16&place=Bukit Cinta"
+            },
+            4: {
+                name: "Terminal Bulupitu",
+                image: "../img/terminal-pwt.jpeg",
+                description: "Terminal Bulupitu di Purwokerto secara resmi berdiri pada 6 April 2006, ketika terminal bus dipindahkan dari lokasi lama ke Bulupitu sebagai terminal tipe A yang melayani angkutan kota, pedesaan, serta angkutan antarkota dalam dan antar provinsi. Terminal ini menjadi pusat transportasi utama di wilayah Banyumas dan sekitarnya.",
+                address: "H744+HHM, Karanggayam, Teluk, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53145",
+                mapLink: "teluk/?lat=-7.4465&lng=109.2428&zoom=16&place=Terminal Bulupitu"
+            }
+        };
+
+        // Elemen modal
+        const modal = document.getElementById('placeModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const closeModalBtn2 = document.getElementById('closeModalBtn');
+        const viewOnMapBtn = document.getElementById('viewOnMap');
+        
+        // Elemen konten modal
+        const modalPlaceName = document.getElementById('modalPlaceName');
+        const modalPlaceImage = document.getElementById('modalPlaceImage');
+        const modalPlaceDescription = document.getElementById('modalPlaceDescription');
+        const modalPlaceAddress = document.getElementById('modalPlaceAddress');
+        
+        // Variabel untuk menyimpan data tempat yang sedang dilihat
+        let currentPlaceData = null;
+
+        // Fungsi untuk membuka modal
+        function openModal(placeId) {
+            const placeData = placesData[placeId];
+            if (!placeData) return;
+            
+            currentPlaceData = placeData;
+            
+            // Isi konten modal
+            modalPlaceName.textContent = placeData.name;
+            modalPlaceImage.src = placeData.image;
+            modalPlaceImage.alt = placeData.name;
+            modalPlaceDescription.textContent = placeData.description;
+            modalPlaceAddress.textContent = placeData.address;
+            
+            // Tampilkan modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listener untuk kartu tempat bersejarah
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Cegah klik pada link alamat agar tidak membuka modal
+                if (e.target.tagName === 'A' || e.target.closest('a')) {
+                    return;
+                }
+                
+                const placeId = this.getAttribute('data-place');
+                openModal(placeId);
+            });
+        });
+
+        // Event listener untuk tombol tutup modal
+        closeModalBtn.addEventListener('click', closeModal);
+        closeModalBtn2.addEventListener('click', closeModal);
+        
+        // Event listener untuk tombol lihat di peta
+        viewOnMapBtn.addEventListener('click', function() {
+            if (currentPlaceData && currentPlaceData.mapLink) {
+                window.location.href = currentPlaceData.mapLink;
+            }
+        });
+
+        // Tutup modal saat klik di luar konten modal
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
         // Dynamic year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
         

@@ -1,0 +1,265 @@
+/**
+ * main.js - Fungsi umum untuk SEMUA halaman
+ * Berisi fungsi dasar yang digunakan di seluruh situs
+ */
+
+// ===== KONFIGURASI SITUS =====
+const SITE_CONFIG = {
+    baseUrl: '/geoportal-purwokerto-selatan--teluk/',
+    siteName: 'Geoportal Kecamatan Purwokerto Selatan',
+    version: '1.0.0',
+    currentYear: new Date().getFullYear(),
+    isGithubPages: true
+};
+
+// ===== UTILITY FUNCTIONS =====
+
+/**
+ * Update tahun di footer
+ */
+function updateFooterYear() {
+    const yearElements = document.querySelectorAll('#current-year, .current-year');
+    yearElements.forEach(el => {
+        if (el) el.textContent = SITE_CONFIG.currentYear;
+    });
+}
+
+/**
+ * Setup navigasi aktif berdasarkan halaman saat ini
+ */
+function setupActiveNavigation() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav a, .navbar a');
+    
+    navLinks.forEach(link => {
+        if (!link.href) return;
+        
+        const linkUrl = new URL(link.href);
+        const linkPath = linkUrl.pathname;
+        
+        // Cek apakah halaman saat ini cocok dengan link
+        const isActive = currentPath === linkPath || 
+                        currentPath === linkPath + 'index.html' ||
+                        (currentPath.endsWith('/') && linkPath.endsWith('index.html')) ||
+                        (currentPath.includes('beranda') && linkPath.includes('index.html'));
+        
+        if (isActive) {
+            link.classList.add('active');
+        } else {
+            link.classList.remove('active');
+        }
+    });
+}
+
+/**
+ * Smooth scrolling untuk anchor links (#)
+ */
+function setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+/**
+ * Toggle menu mobile
+ */
+function setupMobileMenu() {
+    const menuToggle = document.getElementById('mobile-menu');
+    const navMenu = document.getElementById('nav-menu');
+    
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            this.classList.toggle('open');
+            
+            // Update icon
+            const icon = this.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('open');
+            }
+        });
+    }
+}
+
+/**
+ * Tambahkan loading indicator
+ */
+function setupLoadingIndicator() {
+    // Create loading element
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = 'loading-indicator';
+    loadingDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right, var(--accent), var(--secondary));
+        z-index: 9999;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    `;
+    document.body.appendChild(loadingDiv);
+    
+    // Show on page load
+    window.addEventListener('load', function() {
+        loadingDiv.style.transform = 'translateX(0)';
+        setTimeout(() => {
+            loadingDiv.style.transform = 'translateX(-100%)';
+        }, 1000);
+    });
+}
+
+/**
+ * Setup form validation jika ada
+ */
+function setupFormValidation() {
+    const forms = document.querySelectorAll('form[data-validate]');
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            if (!this.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            this.classList.add('was-validated');
+        });
+    });
+}
+
+/**
+ * Setup tooltips jika ada
+ */
+function setupTooltips() {
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    tooltipElements.forEach(el => {
+        const tooltipText = el.getAttribute('data-tooltip');
+        const tooltip = document.createElement('div');
+        tooltip.className = 'custom-tooltip';
+        tooltip.textContent = tooltipText;
+        
+        el.addEventListener('mouseenter', (e) => {
+            document.body.appendChild(tooltip);
+            tooltip.style.left = e.pageX + 10 + 'px';
+            tooltip.style.top = e.pageY + 10 + 'px';
+            tooltip.style.opacity = '1';
+        });
+        
+        el.addEventListener('mouseleave', () => {
+            tooltip.remove();
+        });
+        
+        el.addEventListener('mousemove', (e) => {
+            tooltip.style.left = e.pageX + 10 + 'px';
+            tooltip.style.top = e.pageY + 10 + 'px';
+        });
+    });
+}
+
+/**
+ * Setup semua event listeners
+ */
+function setupEventListeners() {
+    // Close alerts jika ada
+    document.querySelectorAll('.alert .close').forEach(closeBtn => {
+        closeBtn.addEventListener('click', function() {
+            this.closest('.alert').style.display = 'none';
+        });
+    });
+    
+    // Back to top button
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+}
+
+/**
+ * Inisialisasi semua fungsi umum
+ */
+function initMain() {
+    console.log('🚀 Initializing main functions...');
+    
+    // Update footer year
+    updateFooterYear();
+    
+    // Setup navigation
+    setupActiveNavigation();
+    
+    // Setup smooth scrolling
+    setupSmoothScrolling();
+    
+    // Setup mobile menu
+    setupMobileMenu();
+    
+    // Setup loading indicator
+    setupLoadingIndicator();
+    
+    // Setup form validation
+    setupFormValidation();
+    
+    // Setup tooltips
+    setupTooltips();
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Log site info
+    console.log('🌐 Site:', SITE_CONFIG.siteName);
+    console.log('📅 Year:', SITE_CONFIG.currentYear);
+    console.log('✅ Main functions initialized');
+}
+
+// ===== EXPORT FUNCTIONS (jika menggunakan modules) =====
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        SITE_CONFIG,
+        initMain,
+        updateFooterYear,
+        setupActiveNavigation
+    };
+}
+
+// ===== EXECUTE ON DOM LOAD =====
+document.addEventListener('DOMContentLoaded', initMain);
+
+// ===== EXECUTE ON WINDOW LOAD =====
+window.addEventListener('load', function() {
+    console.log('📊 Page fully loaded');
+    
+    // Remove loading class jika ada
+    document.body.classList.remove('loading');
+    
+    // Dispatch custom event
+    window.dispatchEvent(new CustomEvent('site:loaded'));
+});

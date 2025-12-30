@@ -1453,6 +1453,471 @@
     </script>
     // Tambahkan di akhir script tag yang sudah ada
 <script>
+     // Data tempat bersejarah
+        const placesData = {
+            1: {
+                name: "Taman Andhang Pangrenan Purwokerto",
+                image: "../img/taman-andhang-pangeran-purwokerto.jpg",
+                description: "Taman rekreasi ini dibangun pada tahun 2017 dengan konsep taman edukasi yang menggabungkan unsur budaya, sejarah, dan lingkungan. Nama taman ini berasal dari bahasa Jawa yang berarti 'taman yang mengajarkan' atau 'taman yang memberi petunjuk'. Taman ini menjadi salah satu ruang publik favorit warga Purwokerto untuk bersantai dan beraktivitas. Fasilitas yang tersedia meliputi area bermain anak, jogging track, taman bunga, dan ruang terbuka untuk berbagai kegiatan masyarakat.",
+                address: "Jalan Gerilya Purwokerto Selatan, Jl. Prof. M Yamin I, Windusara, Karangklesem, Kec. Banyumas, Kabupaten Banyumas, Jawa Tengah 53144",
+                mapLink: "teluk/?lat=-7.4417&lng=109.2385&zoom=16&place=Taman Andhang Pangrenan",
+                initialRating: 4.2,
+                initialReviews: 42
+            },
+            2: {
+                name: "Taman Satria Purwokerto",
+                image: "../img/Taman-Satria-Purwokerto.png",
+                description: "Taman Satria Berkoh Purwokerto merupakan salah satu RTH atau Taman Kota yang sudah 33 tahun menjadi paru-paru kota Purwokerto. Taman Satria Berkoh Purwokerto diresmikan pada Rabu, 15 Januari 1992 oleh Bupati KDH TK.II Banyumas Djoko Sudantoko. Taman ini memiliki fasilitas lengkap termasuk area bermain anak, jogging track, dan area pertemuan masyarakat. Taman ini sering menjadi lokasi kegiatan sosial, olahraga, dan rekreasi keluarga di akhir pekan.",
+                address: "Kebontebu, Berkoh, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53146",
+                mapLink: "teluk/?lat=-7.4432&lng=109.2401&zoom=16&place=Taman Satria",
+                initialRating: 4.8,
+                initialReviews: 67
+            },
+            3: {
+                name: "Bukit Cinta",
+                image: "../img/Bukit cinta.png",
+                description: "Bukit Cinta merupakan area perbukitan yang sejak lama dikenal oleh warga setempat sebagai tempat berkumpul dan berkegiatan sosial, terutama bagi generasi muda. Dari kebiasaan inilah tempat ini mendapat nama 'Bukit Cinta'. Tempat ini menawarkan pemandangan kota Purwokerto yang indah, terutama saat sore dan malam hari. Meskipun tidak memiliki fasilitas yang lengkap, keindahan alam dan udara segar membuat tempat ini tetap populer dikunjungi.",
+                address: "G7F4+5RJ, Dusun II Wiradadi, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah 53181",
+                mapLink: "teluk/?lat=-7.4398&lng=109.2352&zoom=16&place=Bukit Cinta",
+                initialRating: 3.5,
+                initialReviews: 28
+            },
+            4: {
+                name: "Terminal Bulupitu",
+                image: "../img/terminal-pwt.jpeg",
+                description: "Terminal Bulupitu di Purwokerto secara resmi berdiri pada 6 April 2006, ketika terminal bus dipindahkan dari lokasi lama ke Bulupitu sebagai terminal tipe A yang melayani angkutan kota, pedesaan, serta angkutan antarkota dalam dan antar provinsi. Terminal ini menjadi pusat transportasi utama di wilayah Banyumas dan sekitarnya. Meskipun lebih berfungsi sebagai terminal transportasi, bangunannya memiliki nilai sejarah sebagai titik penting perkembangan transportasi di Purwokerto.",
+                address: "H744+HHM, Karanggayam, Teluk, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53145",
+                mapLink: "teluk/?lat=-7.4465&lng=109.2428&zoom=16&place=Terminal Bulupitu",
+                initialRating: 2.8,
+                initialReviews: 51
+            }
+        };
+
+        // Reviews data (simulated - in real app this would come from a database)
+        let reviewsData = {
+            1: [
+                { id: 1, name: "Budi Santoso", rating: 5, comment: "Taman yang sangat nyaman dan bersih. Cocok untuk keluarga!", date: "2024-03-15" },
+                { id: 2, name: "Sari Indah", rating: 4, comment: "Fasilitas lengkap, tapi area bermain anak perlu perawatan lebih.", date: "2024-03-10" },
+                { id: 3, name: "Agus Prasetyo", rating: 4, comment: "Tempat favorit untuk jogging di pagi hari. Udara segar!", date: "2024-03-05" }
+            ],
+            2: [
+                { id: 1, name: "Dewi Lestari", rating: 5, comment: "Taman terbaik di Purwokerto! Sangat terawat dan asri.", date: "2024-03-18" },
+                { id: 2, name: "Rudi Hartono", rating: 5, comment: "Anak-anak sangat senang bermain di sini. Keamanan terjaga.", date: "2024-03-12" }
+            ],
+            3: [
+                { id: 1, name: "Fajar Nugroho", rating: 4, comment: "Pemandangan indah, tapi akses jalan agak sulit.", date: "2024-03-14" },
+                { id: 2, name: "Maya Sari", rating: 3, comment: "Tempat romantis untuk pasangan, tapi kurang fasilitas.", date: "2024-03-08" }
+            ],
+            4: [
+                { id: 1, name: "Joko Widodo", rating: 3, comment: "Terminal cukup luas tapi kadang ramai dan berisik.", date: "2024-03-16" },
+                { id: 2, name: "Linda Susanti", rating: 2, comment: "Parkir agak sempit, perlu penataan ulang.", date: "2024-03-09" }
+            ]
+        };
+
+        // Initialize localStorage if not exists
+        function initializeReviewsStorage() {
+            if (!localStorage.getItem('geoportalReviews')) {
+                localStorage.setItem('geoportalReviews', JSON.stringify(reviewsData));
+            } else {
+                reviewsData = JSON.parse(localStorage.getItem('geoportalReviews'));
+            }
+        }
+
+        // Save reviews to localStorage
+        function saveReviewsToStorage() {
+            localStorage.setItem('geoportalReviews', JSON.stringify(reviewsData));
+        }
+
+        // Calculate average rating
+        function calculateAverageRating(placeId) {
+            const reviews = reviewsData[placeId] || [];
+            if (reviews.length === 0) return placesData[placeId]?.initialRating || 0;
+            
+            const total = reviews.reduce((sum, review) => sum + review.rating, 0);
+            return (total / reviews.length).toFixed(1);
+        }
+
+        // Get total reviews
+        function getTotalReviews(placeId) {
+            const reviews = reviewsData[placeId] || [];
+            return reviews.length;
+        }
+
+        // Get rating distribution
+        function getRatingDistribution(placeId) {
+            const reviews = reviewsData[placeId] || [];
+            const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+            
+            reviews.forEach(review => {
+                if (review.rating >= 1 && review.rating <= 5) {
+                    distribution[review.rating]++;
+                }
+            });
+            
+            return distribution;
+        }
+
+        // Render stars based on rating
+        function renderStars(rating, containerId, isEditable = false) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            container.innerHTML = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 1; i <= 5; i++) {
+                const star = document.createElement('span');
+                star.className = 'star';
+                
+                if (i <= fullStars) {
+                    star.classList.add('filled');
+                    star.textContent = '★';
+                } else if (i === fullStars + 1 && hasHalfStar) {
+                    // Half star (not implemented in this simple version)
+                    star.textContent = '★';
+                } else {
+                    star.textContent = '★';
+                }
+                
+                if (isEditable) {
+                    star.dataset.rating = i;
+                    star.classList.add('star-input');
+                    star.addEventListener('mouseover', handleStarHover);
+                    star.addEventListener('click', handleStarClick);
+                }
+                
+                container.appendChild(star);
+            }
+        }
+
+        // Render rating distribution
+        function renderRatingDistribution(placeId) {
+            const container = document.getElementById('ratingDistribution');
+            if (!container) return;
+            
+            const distribution = getRatingDistribution(placeId);
+            const totalReviews = getTotalReviews(placeId);
+            
+            container.innerHTML = '';
+            
+            for (let i = 5; i >= 1; i--) {
+                const percentage = totalReviews > 0 ? (distribution[i] / totalReviews * 100) : 0;
+                
+                const bar = document.createElement('div');
+                bar.className = 'rating-bar';
+                
+                bar.innerHTML = `
+                    <div class="rating-label">${i} ★</div>
+                    <div class="rating-progress">
+                        <div class="rating-progress-fill" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="rating-count">${distribution[i]}</div>
+                `;
+                
+                container.appendChild(bar);
+            }
+        }
+
+        // Render reviews list
+        function renderReviewsList(placeId) {
+            const container = document.getElementById('reviewsList');
+            if (!container) return;
+            
+            const reviews = reviewsData[placeId] || [];
+            
+            if (reviews.length === 0) {
+                container.innerHTML = '<p>Belum ada ulasan. Jadilah yang pertama memberikan ulasan!</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            // Sort reviews by date (newest first)
+            const sortedReviews = [...reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            sortedReviews.forEach(review => {
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review-item';
+                
+                // Format date
+                const date = new Date(review.date);
+                const formattedDate = date.toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+                
+                // Render stars for this review
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    starsHtml += `<span class="star ${i <= review.rating ? 'filled' : ''}">★</span>`;
+                }
+                
+                reviewElement.innerHTML = `
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">${review.name}</div>
+                            <div class="review-date">${formattedDate}</div>
+                        </div>
+                        <div class="review-rating">
+                            ${starsHtml}
+                        </div>
+                    </div>
+                    <p class="review-comment">${review.comment}</p>
+                `;
+                
+                container.appendChild(reviewElement);
+            });
+        }
+
+        // Update rating display on card
+        function updateCardRating(placeId) {
+            const card = document.querySelector(`.feature-card[data-place="${placeId}"]`);
+            if (!card) return;
+            
+            const averageRating = calculateAverageRating(placeId);
+            const totalReviews = getTotalReviews(placeId);
+            
+            const ratingContainer = card.querySelector('.place-rating');
+            if (ratingContainer) {
+                const starsContainer = ratingContainer.querySelector('.stars');
+                const ratingValue = ratingContainer.querySelector('.rating-value');
+                const reviewCount = ratingContainer.querySelector('.review-count');
+                
+                if (starsContainer) {
+                    starsContainer.innerHTML = '';
+                    const fullStars = Math.floor(averageRating);
+                    
+                    for (let i = 1; i <= 5; i++) {
+                        const star = document.createElement('span');
+                        star.className = 'star';
+                        if (i <= fullStars) {
+                            star.classList.add('filled');
+                        }
+                        star.textContent = '★';
+                        starsContainer.appendChild(star);
+                    }
+                }
+                
+                if (ratingValue) ratingValue.textContent = averageRating;
+                if (reviewCount) reviewCount.textContent = `(${totalReviews} ulasan)`;
+            }
+        }
+
+        // Star input handlers
+        let selectedRating = 0;
+
+        function handleStarHover(e) {
+            const rating = parseInt(e.target.dataset.rating);
+            highlightStars(rating);
+            updateRatingText(rating);
+        }
+
+        function handleStarClick(e) {
+            selectedRating = parseInt(e.target.dataset.rating);
+            highlightStars(selectedRating);
+            updateRatingText(selectedRating);
+            document.getElementById('selectedRating').value = selectedRating;
+        }
+
+        function highlightStars(rating) {
+            const stars = document.querySelectorAll('#ratingStarsInput .star-input');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        function updateRatingText(rating) {
+            const texts = [
+                "Pilih rating dengan mengklik bintang",
+                "Kurang memuaskan",
+                "Cukup memuaskan",
+                "Baik",
+                "Sangat baik",
+                "Luar biasa!"
+            ];
+            document.getElementById('ratingText').textContent = texts[rating];
+        }
+
+        // Reset star input
+        function resetStarInput() {
+            selectedRating = 0;
+            highlightStars(0);
+            updateRatingText(0);
+            document.getElementById('selectedRating').value = 0;
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewComment').value = '';
+        }
+
+        // Elemen modal
+        const modal = document.getElementById('placeModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const closeModalBtn2 = document.getElementById('closeModalBtn');
+        const viewOnMapBtn = document.getElementById('viewOnMap');
+        const openReviewFormBtn = document.getElementById('openReviewForm');
+        const reviewForm = document.getElementById('reviewForm');
+        const cancelReviewFormBtn = document.getElementById('cancelReviewForm');
+        const newReviewForm = document.getElementById('newReviewForm');
+        
+        // Elemen konten modal
+        const modalPlaceName = document.getElementById('modalPlaceName');
+        const modalPlaceImage = document.getElementById('modalPlaceImage');
+        const modalPlaceDescription = document.getElementById('modalPlaceDescription');
+        const modalPlaceAddress = document.getElementById('modalPlaceAddress');
+        const averageRatingElement = document.getElementById('averageRating');
+        const averageStarsElement = document.getElementById('averageStars');
+        const totalReviewsElement = document.getElementById('totalReviews');
+        
+        // Variabel untuk menyimpan data tempat yang sedang dilihat
+        let currentPlaceId = null;
+        let currentPlaceData = null;
+
+        // Fungsi untuk membuka modal
+        function openModal(placeId) {
+            const placeData = placesData[placeId];
+            if (!placeData) return;
+            
+            currentPlaceId = placeId;
+            currentPlaceData = placeData;
+            
+            // Isi konten modal
+            modalPlaceName.textContent = placeData.name;
+            modalPlaceImage.src = placeData.image;
+            modalPlaceImage.alt = placeData.name;
+            modalPlaceDescription.textContent = placeData.description;
+            modalPlaceAddress.textContent = placeData.address;
+            
+            // Update rating information
+            const averageRating = calculateAverageRating(placeId);
+            const totalReviews = getTotalReviews(placeId);
+            
+            averageRatingElement.textContent = averageRating;
+            totalReviewsElement.textContent = `${totalReviews} ulasan`;
+            
+            // Render stars
+            renderStars(averageRating, 'averageStars');
+            
+            // Render rating distribution
+            renderRatingDistribution(placeId);
+            
+            // Render reviews list
+            renderReviewsList(placeId);
+            
+            // Hide review form
+            reviewForm.style.display = 'none';
+            
+            // Reset star input
+            resetStarInput();
+            
+            // Tampilkan modal
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Fungsi untuk menutup modal
+        function closeModal() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            currentPlaceId = null;
+            currentPlaceData = null;
+        }
+
+        // Event listener untuk kartu tempat bersejarah
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Cegah klik pada link alamat agar tidak membuka modal
+                if (e.target.tagName === 'A' || e.target.closest('a')) {
+                    return;
+                }
+                
+                const placeId = this.getAttribute('data-place');
+                openModal(placeId);
+            });
+        });
+
+        // Event listener untuk tombol tutup modal
+        closeModalBtn.addEventListener('click', closeModal);
+        closeModalBtn2.addEventListener('click', closeModal);
+        
+        // Event listener untuk tombol lihat di peta
+        viewOnMapBtn.addEventListener('click', function() {
+            if (currentPlaceData && currentPlaceData.mapLink) {
+                window.location.href = currentPlaceData.mapLink;
+            }
+        });
+
+        // Event listener untuk tombol tambah ulasan
+        openReviewFormBtn.addEventListener('click', function() {
+            reviewForm.style.display = 'block';
+            this.style.display = 'none';
+        });
+
+        // Event listener untuk tombol batal form ulasan
+        cancelReviewFormBtn.addEventListener('click', function() {
+            reviewForm.style.display = 'none';
+            openReviewFormBtn.style.display = 'flex';
+            resetStarInput();
+        });
+
+        // Event listener untuk form ulasan baru
+        newReviewForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('reviewerName').value.trim();
+            const rating = parseInt(document.getElementById('selectedRating').value);
+            const comment = document.getElementById('reviewComment').value.trim();
+            
+            if (!name || !rating || rating < 1 || rating > 5 || !comment) {
+                alert('Harap isi semua field dengan benar!');
+                return;
+            }
+            
+            // Add new review
+            const newReview = {
+                id: Date.now(),
+                name: name,
+                rating: rating,
+                comment: comment,
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            if (!reviewsData[currentPlaceId]) {
+                reviewsData[currentPlaceId] = [];
+            }
+            
+            reviewsData[currentPlaceId].push(newReview);
+            saveReviewsToStorage();
+            
+            // Update UI
+            const averageRating = calculateAverageRating(currentPlaceId);
+            const totalReviews = getTotalReviews(currentPlaceId);
+            
+            averageRatingElement.textContent = averageRating;
+            totalReviewsElement.textContent = `${totalReviews} ulasan`;
+            renderStars(averageRating, 'averageStars');
+            renderRatingDistribution(currentPlaceId);
+            renderReviewsList(currentPlaceId);
+            updateCardRating(currentPlaceId);
+            
+            // Reset form
+            resetStarInput();
+            reviewForm.style.display = 'none';
+            openReviewFormBtn.style.display = 'flex';
+            
+            alert('Ulasan Anda telah berhasil dikirim! Terima kasih.');
+        });
+
+        // Tutup modal saat klik di luar konten modal
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
 // Counter Animation
 // ===== ANIMASI COUNTER YANG DIPERBAIKI =====
 function animateCounters() {

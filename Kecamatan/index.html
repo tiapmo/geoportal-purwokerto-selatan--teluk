@@ -172,11 +172,11 @@
     
     <!-- NAVIGASI -->
     <nav class="nav">
-        <a href="../" class="nav-link"><i class="fas fa-home"></i> Beranda</a>
-        <a href="../Kecamatan/" class="nav-link"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
-        <a href="../teluk/" class="nav-link"><i class="fas fa-water"></i> Peta Desa Teluk</a>
-        <a href="../tentang/" class="nav-link"><i class="fas fa-user-circle"></i> Tentang Kami</a>
-    </nav>
+<a href="../" class="nav-link" data-page="beranda"><i class="fas fa-home"></i> Beranda</a>
+<a href="../Kecamatan/" class="nav-link" data-page="kecamatan"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
+<a href="../teluk/" class="nav-link" data-page="desa"><i class="fas fa-water"></i> Peta Desa Teluk</a>
+<a href="../tentang/" class="nav-link" data-page="tentang"><i class="fas fa-user-circle"></i> Tentang Kami</a>
+</nav>
 </header>
 
 <style>
@@ -338,21 +338,55 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Highlight active page
-    const currentPage = window.location.pathname;
-    const navLinks = document.querySelectorAll('.nav a');
-    
-    navLinks.forEach(link => {
-        const linkPath = link.getAttribute('href');
+    // Fungsi untuk mengatur menu aktif berdasarkan halaman saat ini
+    function setActiveNav() {
+        // Dapatkan path URL saat ini
+        const currentPath = window.location.pathname;
         
-        // Check if current page includes the link path
-        // Adjust the logic according to your directory structure
-        if (currentPage.endsWith(linkPath) || 
-            (linkPath === '../' && (currentPage.endsWith('/') || currentPage.endsWith('index.html')))) {
-            link.classList.add('active');
-        } else {
+        // Hapus class active dari semua link
+        document.querySelectorAll('.nav a').forEach(link => {
             link.classList.remove('active');
+        });
+        
+        // Tentukan halaman aktif berdasarkan path
+        if (currentPath.includes('Kecamatan')) {
+            // Jika berada di halaman Peta Kecamatan
+            document.querySelector('.nav a[data-page="kecamatan"]').classList.add('active');
+        } else if (currentPath.includes('teluk')) {
+            // Jika berada di halaman Peta Desa Teluk
+            document.querySelector('.nav a[data-page="desa"]').classList.add('active');
+        } else if (currentPath.includes('tentang')) {
+            // Jika berada di halaman Tentang Kami
+            document.querySelector('.nav a[data-page="tentang"]').classList.add('active');
+        } else {
+            // Default: Beranda
+            // Periksa jika berada di root atau beranda
+            if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath.includes('beranda')) {
+                document.querySelector('.nav a[data-page="beranda"]').classList.add('active');
+            }
         }
+        
+        console.log('Path saat ini:', currentPath);
+        console.log('Menu aktif:', document.querySelector('.nav a.active')?.textContent);
+    }
+    
+    // Panggil fungsi saat halaman dimuat
+    setActiveNav();
+    
+    // Jika menggunakan SPA atau ada perubahan URL tanpa reload
+    // Tambahkan event listener untuk perubahan URL
+    window.addEventListener('popstate', setActiveNav);
+    
+    // Opsional: Tambahkan event click untuk semua nav link untuk testing
+    document.querySelectorAll('.nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            // Hapus semua active class
+            document.querySelectorAll('.nav a').forEach(item => {
+                item.classList.remove('active');
+            });
+            // Tambahkan active class ke link yang diklik
+            this.classList.add('active');
+        });
     });
 });
 </script>

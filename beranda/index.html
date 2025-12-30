@@ -956,23 +956,64 @@
         </div>
     </section>
     <!-- Stats Section (Tambahkan setelah Objek Kami) -->
-<section class="stats-section" id="stats">
-    <div class="stats-container">
-        <div class="stat-item">
-            <span class="stat-number" data-count="7">0</span>
-            <span class="stat-label">Desa di Kecamatan</span>
+<!-- Bagian Statistik -->
+<section class="stats-section">
+    <div class="section-header">
+        <h2 class="section-title">Data Spasial Kecamatan Purwokerto Selatan</h2>
+        <p class="section-subtitle">Ringkasan data geografis dan informasi wilayah dalam satu platform</p>
+    </div>
+    
+    <div class="stats-grid">
+        <!-- Card Desa -->
+        <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #3498DB, #1A5276);">
+                <i class="fas fa-village"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">7</div>
+                <div class="stat-title">Desa</div>
+                <div class="stat-desc">Wilayah administratif di Kecamatan</div>
+            </div>
+            <div class="stat-badge">Terdata</div>
         </div>
-        <div class="stat-item">
-            <span class="stat-number" data-count="45">0</span>
-            <span class="stat-label">Data Spasial</span>
+        
+        <!-- Card Data Spasial -->
+        <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">45</div>
+                <div class="stat-title">Data Spasial</div>
+                <div class="stat-desc">Informasi geografis lengkap</div>
+            </div>
+            <div class="stat-badge">Tersedia</div>
         </div>
-        <div class="stat-item">
-            <span class="stat-number" data-count="120">0</span>
-            <span class="stat-label">Layer Peta</span>
+        
+        <!-- Card Layer Peta -->
+        <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
+                <i class="fas fa-map"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">120+</div>
+                <div class="stat-title">Layer Peta</div>
+                <div class="stat-desc">Berbagai lapisan informasi</div>
+            </div>
+            <div class="stat-badge">Aktif</div>
         </div>
-        <div class="stat-item">
-            <span class="stat-number" data-count="4">0</span>
-            <span class="stat-label">Tempat Bersejarah</span>
+        
+        <!-- Card Tempat Bersejarah -->
+        <div class="stat-card">
+            <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">
+                <i class="fas fa-landmark"></i>
+            </div>
+            <div class="stat-content">
+                <div class="stat-number">4</div>
+                <div class="stat-title">Objek Kami</div>
+                <div class="stat-desc">Warisan budaya dilestarikan</div>
+            </div>
+            <div class="stat-badge">Terdaftar</div>
         </div>
     </div>
 </section>
@@ -999,7 +1040,7 @@
             
             <div class="map-info">
                 <h5>Desa Teluk - Peta Interaktif</h5>
-                <p>Peta ini menampilkan wilayah Kecamatan Purwokerto Selatan dengan fokus pada Desa Teluk. Gunakan kontrol di peta untuk zoom in/out, atau klik pada marker untuk informasi detail.</p>
+                <p>Peta ini menampilkan wilayah Kecamatan Purwokerto Selatan dengan fokus pada desa desa yang ada di Kecamatan Purwokerto Selatan. Gunakan kontrol di peta untuk zoom in/out, atau klik pada marker untuk informasi detail.</p>
                 
                 <div class="map-links">
                     <a href="../Kecamatan/" class="map-link-btn">
@@ -1023,29 +1064,113 @@
 
 
 <!-- Quick Access Section (Tambahkan sebelum footer) -->
-<section class="quick-access">
-    <h3><i class="fas fa-bolt"></i> Akses Cepat</h3>
+<!-- Bagian Akses Cepat -->
+<section class="quick-access-section">
+    <div class="section-header">
+        <h2 class="section-title">Akses Cepat</h2>
+        <p class="section-subtitle">Temukan informasi yang Anda butuhkan dengan cepat dan mudah</p>
+    </div>
+    
     <div class="quick-access-grid">
-        <a href="../Kecamatan/" class="quick-access-card">
-            <i class="fas fa-mountain"></i>
-            <h4>Peta Kecamatan</h4>
-            <p>Akses peta lengkap seluruh wilayah kecamatan dengan 7 desa</p>
-        </a>
-        <a href="../teluk/" class="quick-access-card">
-            <i class="fas fa-water"></i>
-            <h4>Peta Desa Teluk</h4>
-            <p>Detail peta Desa Teluk dengan data spasial lengkap</p>
-        </a>
-        <a href="#objek-kami" class="quick-access-card">
-            <i class="fas fa-landmark"></i>
-            <h4>Objek Wisata</h4>
-            <p>Temukan objek wisata dan tempat bersejarah di wilayah kami</p>
-        </a>
-        <a href="../tentang/" class="quick-access-card">
-            <i class="fas fa-info-circle"></i>
-            <h4>Tentang Kami</h4>
-            <p>Pelajari lebih lanjut tentang pengembang dan visi geoportal</p>
-        </a>
+        <!-- Card Peta Kecamatan -->
+        <div class="access-card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(135deg, #3498DB, #1A5276);">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <div class="card-badge">Lengkap</div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Peta Kecamatan</h3>
+                <p class="card-desc">Akses peta lengkap seluruh wilayah kecamatan dengan 7 desa dan informasi detail setiap wilayah</p>
+                <div class="card-features">
+                    <span class="feature-tag">7 Desa</span>
+                    <span class="feature-tag">45 Layer</span>
+                    <span class="feature-tag">Real-time</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="../Kecamatan/" class="access-btn">
+                    <span>Buka Peta</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Card Peta Desa Teluk -->
+        <div class="access-card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
+                    <i class="fas fa-water"></i>
+                </div>
+                <div class="card-badge">Detail</div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Peta Desa Teluk</h3>
+                <p class="card-desc">Detail peta Desa Teluk dengan data spasial lengkap, batas wilayah, dan fasilitas publik</p>
+                <div class="card-features">
+                    <span class="feature-tag">Detail</span>
+                    <span class="feature-tag">Fasilitas</span>
+                    <span class="feature-tag">Batas</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="../teluk/" class="access-btn">
+                    <span>Eksplorasi</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Card Objek Wisata -->
+        <div class="access-card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
+                    <i class="fas fa-umbrella-beach"></i>
+                </div>
+                <div class="card-badge">Populer</div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Objek Wisata</h3>
+                <p class="card-desc">Temukan objek wisata dan tempat bersejarah di wilayah kami dengan informasi lengkap</p>
+                <div class="card-features">
+                    <span class="feature-tag">4 Lokasi</span>
+                    <span class="feature-tag">Wisata</span>
+                    <span class="feature-tag">Sejarah</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="access-btn">
+                    <span>Jelajahi</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Card Tentang Kami -->
+        <div class="access-card">
+            <div class="card-header">
+                <div class="card-icon" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-badge">Info</div>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title">Tentang Kami</h3>
+                <p class="card-desc">Pelajari lebih lanjut tentang pengembang, visi misi, dan tujuan dari geoportal ini</p>
+                <div class="card-features">
+                    <span class="feature-tag">Tim</span>
+                    <span class="feature-tag">Visi</span>
+                    <span class="feature-tag">Kontak</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="../tentang/" class="access-btn">
+                    <span>Selengkapnya</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
     </div>
 </section>
     <!-- FOOTER -->

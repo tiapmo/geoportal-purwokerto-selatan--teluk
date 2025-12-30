@@ -983,4 +983,37 @@ body {
         width: 45px;
         height: 45px;
     }
+    /* Animasi untuk elemen yang muncul */
+.animate-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Style untuk stat-item dengan animasi */
+.stat-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.stat-item.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Efek hover untuk stat-item */
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
 }

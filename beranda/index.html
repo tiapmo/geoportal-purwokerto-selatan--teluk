@@ -1753,6 +1753,49 @@
             document.getElementById('reviewerName').value = '';
             document.getElementById('reviewComment').value = '';
         }
+    // Update star rating functionality
+function initStarRating() {
+    const starInputs = document.querySelectorAll('.star-input');
+    const ratingText = document.querySelector('.star-rating-text');
+    const selectedRatingInput = document.getElementById('selectedRating');
+    
+    const ratingTexts = [
+        "Pilih rating dengan mengklik bintang",
+        "Kurang memuaskan",
+        "Cukup memuaskan",
+        "Baik",
+        "Sangat baik",
+        "Luar biasa!"
+    ];
+    
+    starInputs.forEach(star => {
+        star.addEventListener('change', function() {
+            const rating = parseInt(this.value);
+            ratingText.textContent = ratingTexts[rating];
+            selectedRatingInput.value = rating;
+        });
+        
+        // Add hover effect
+        star.addEventListener('mouseenter', function() {
+            const rating = parseInt(this.value);
+            ratingText.textContent = ratingTexts[rating];
+        });
+    });
+    
+    // Reset on form cancel
+    document.getElementById('cancelReviewForm')?.addEventListener('click', function() {
+        ratingText.textContent = ratingTexts[0];
+        selectedRatingInput.value = 0;
+        starInputs.forEach(star => star.checked = false);
+    });
+}
+
+// Panggil fungsi ini saat modal dibuka
+function openModal(placeId) {
+    // ... existing code ...
+    initStarRating();
+    // ... existing code ...
+}
 
         // Elemen modal
         const modal = document.getElementById('placeModal');

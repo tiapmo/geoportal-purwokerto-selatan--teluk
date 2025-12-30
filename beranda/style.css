@@ -1162,235 +1162,216 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
-  /* PERBAIKAN TATA LETAK MODAL DETAIL */
+/* ===== PERBAIKAN TAMPILAN MODAL ===== */
 
-/* Perbaikan Header Modal */
-.modal-header {
-    position: relative;
-    height: 400px;
-    overflow: hidden;
-}
-
-.modal-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.modal-title-container {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    padding: 30px 30px 20px;
-    color: white;
-}
-
-.modal-title {
-    font-size: 2.2rem;
-    margin: 0 0 10px 0;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    color: white;
-    font-weight: 600;
-}
-
-/* Perbaikan Rating Section */
-.rating-overview {
+/* MODAL CONTAINER */
+.modal-content {
     background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    margin: -60px 30px 30px;
-    position: relative;
-    z-index: 1;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 32px 96px rgba(0, 0, 0, 0.25);
+    animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* HEADER RATING SECTION */
+.rating-overview {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 25px;
+    align-items: center;
+    padding: 30px 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
 }
 
 .rating-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-}
-
-.average-rating {
     text-align: center;
-    flex: 1;
+    min-width: 120px;
 }
 
-.rating-score-large {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #2c3e50;
+.rating-average {
+    font-size: 52px;
+    font-weight: 800;
     line-height: 1;
     margin-bottom: 5px;
+    font-feature-settings: "tnum";
 }
 
-.rating-stars-large {
+.rating-stars {
     display: flex;
-    justify-content: center;
     gap: 4px;
-    margin: 10px 0;
-}
-
-.rating-stars-large .star {
-    font-size: 1.8rem;
-}
-
-.rating-count-large {
-    color: #7f8c8d;
-    font-size: 0.95rem;
-}
-
-.rating-distribution-container {
-    flex: 2;
-    padding-left: 30px;
-}
-
-.distribution-title {
-    font-size: 1.1rem;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    font-weight: 600;
-}
-
-/* Perbaikan Rating Distribution Bar */
-.rating-distribution-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-}
-
-.distribution-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.distribution-stars {
-    display: flex;
-    gap: 2px;
+    justify-content: center;
     margin-bottom: 8px;
 }
 
-.distribution-stars .star {
-    font-size: 1.1rem;
+.rating-stars .star {
+    color: #FFD700;
+    font-size: 20px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
-.distribution-count {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 5px;
+.rating-count {
+    font-size: 14px;
+    opacity: 0.9;
+    font-weight: 500;
 }
 
-.distribution-label {
-    font-size: 0.85rem;
-    color: #7f8c8d;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Perbaikan Content Layout */
-.modal-body-content {
-    padding: 0 30px 30px;
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-}
-
-.main-content {
-    grid-column: 1;
-}
-
-.sidebar-content {
-    grid-column: 2;
-}
-
-/* Perbaikan Deskripsi */
-.description-section {
-    margin-bottom: 30px;
-}
-
-.section-title {
-    font-size: 1.3rem;
-    color: #2c3e50;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #3498db;
-    font-weight: 600;
-}
-
-.place-description {
-    line-height: 1.7;
-    color: #555;
-    font-size: 1.05rem;
-    text-align: justify;
-}
-
-/* Perbaikan Alamat */
-.address-section {
-    background: #f8f9fa;
+/* RATING DISTRIBUTION */
+.rating-distribution {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
     padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    border-left: 4px solid #3498db;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.address-content {
+.rating-bar {
+    display: grid;
+    grid-template-columns: 40px 1fr 40px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.rating-label {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 40px;
+}
+
+.rating-progress {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.rating-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFD700, #FFED4E);
+    border-radius: 4px;
+    transition: width 1s ease;
+}
+
+.rating-count-number {
+    font-size: 14px;
+    font-weight: 600;
+    text-align: right;
+    min-width: 40px;
+}
+
+/* CONTENT SECTIONS */
+.modal-info-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 30px 40px;
+    background: #f8fafc;
+}
+
+.description-section {
+    grid-column: 1 / -1;
+}
+
+.description-text {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #374151;
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.address-section {
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.address-header {
     display: flex;
-    align-items: flex-start;
-    gap: 15px;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
 }
 
 .address-icon {
-    font-size: 1.5rem;
-    color: #3498db;
-    flex-shrink: 0;
-    margin-top: 2px;
+    color: #ef4444;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    background: #fef2f2;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.address-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
 }
 
 .address-text {
-    color: #555;
+    color: #6b7280;
     line-height: 1.6;
-    font-size: 1rem;
+    font-size: 15px;
+    padding: 15px;
+    background: #f9fafb;
+    border-radius: 12px;
+    border-left: 4px solid #3b82f6;
 }
 
-/* Perbaikan Reviews Section */
-.reviews-container {
-    margin-top: 30px;
+/* REVIEWS SECTION */
+.reviews-section {
+    padding: 0 40px 30px;
 }
 
-.reviews-header {
+.section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e5e7eb;
 }
 
-.reviews-list {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
 }
 
+.section-title i {
+    color: #3b82f6;
+    font-size: 24px;
+}
+
+/* REVIEW ITEMS */
 .review-item {
-    padding: 20px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.2s;
+    padding: 25px;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
 }
 
 .review-item:hover {
-    background-color: #fafafa;
-}
-
-.review-item:last-child {
-    border-bottom: none;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+    border-color: #d1d5db;
 }
 
 .review-header {
@@ -1401,290 +1382,350 @@ body {
 }
 
 .reviewer-info {
-    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.reviewer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.reviewer-text {
+    display: flex;
+    flex-direction: column;
 }
 
 .reviewer-name {
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 5px;
-    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+    font-size: 16px;
+    margin-bottom: 4px;
 }
 
 .review-date {
-    color: #7f8c8d;
-    font-size: 0.9rem;
+    color: #9ca3af;
+    font-size: 14px;
+    font-weight: 500;
 }
 
-.review-stars {
+.review-rating {
     display: flex;
-    gap: 3px;
+    gap: 4px;
 }
 
-.review-stars .star {
-    font-size: 1.2rem;
+.review-rating .star {
+    color: #FFD700;
+    font-size: 18px;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
 }
 
 .review-comment {
-    color: #555;
-    line-height: 1.6;
-    margin: 0;
-    font-size: 1rem;
-}
-
-/* Perbaikan Sidebar */
-.sidebar-content {
-    background: #f8f9fa;
-    padding: 25px;
+    color: #4b5563;
+    line-height: 1.7;
+    font-size: 15.5px;
+    padding: 20px;
+    background: #f9fafb;
     border-radius: 12px;
-    height: fit-content;
-    position: sticky;
-    top: 20px;
+    border-left: 4px solid #10b981;
+    margin-top: 15px;
 }
 
-.action-buttons {
+/* ADD REVIEW BUTTON */
+.add-review-btn {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
     display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-bottom: 30px;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
 }
 
-.btn {
+.add-review-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+/* MAP BUTTON */
+.map-btn-container {
+    padding: 0 40px 40px;
+}
+
+.view-map-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
+    gap: 12px;
     transition: all 0.3s ease;
-    text-decoration: none;
-    text-align: center;
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
 }
 
-.btn-primary {
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: white;
+.view-map-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(239, 68, 68, 0.4);
 }
 
-.btn-primary:hover {
-    background: linear-gradient(135deg, #2980b9, #1c6ea4);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
-}
-
-.btn-success {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    color: white;
-}
-
-.btn-success:hover {
-    background: linear-gradient(135deg, #27ae60, #219653);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(46, 204, 113, 0.3);
-}
-
-.btn-secondary {
-    background: #95a5a6;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #7f8c8d;
-    transform: translateY(-2px);
-}
-
-.btn-icon {
-    font-size: 1.2rem;
-}
-
-/* Perbaikan Form Review */
+/* REVIEW FORM */
 .review-form-container {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    margin-top: 20px;
+    padding: 30px;
+    margin: 30px;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 20px;
+    border: 2px dashed #d1d5db;
+    animation: formSlideDown 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #2c3e50;
-    font-weight: 500;
-}
-
-.form-control {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-.form-control:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.rating-input-group {
-    text-align: center;
-}
-
-.stars-input-container {
+.form-title {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 25px;
+}
+
+.form-title i {
+    color: #8b5cf6;
+    font-size: 24px;
+}
+
+.review-input-group {
+    margin-bottom: 25px;
+}
+
+.review-input-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #4b5563;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
     gap: 8px;
-    margin: 15px 0;
+}
+
+.review-input-group label i {
+    color: #6366f1;
+    font-size: 16px;
+}
+
+.review-input-group input,
+.review-input-group textarea {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    background: white;
+    font-family: inherit;
+}
+
+.review-input-group input:focus,
+.review-input-group textarea:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+    background: #faf5ff;
+}
+
+.review-input-group textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+/* STAR RATING INPUT */
+.star-rating-input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: white;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+.star-container {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+    font-size: 42px;
 }
 
 .star-input {
-    font-size: 2.5rem;
-    color: #ddd;
+    display: none;
+}
+
+.star-label {
+    color: #e5e7eb;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.star-input:hover,
-.star-input.active {
+.star-input:checked ~ .star-label,
+.star-label:hover,
+.star-label:hover ~ .star-label {
     color: #FFD700;
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
-.rating-text {
+.star-rating-text {
+    font-size: 16px;
+    color: #6b7280;
+    font-weight: 500;
     text-align: center;
-    color: #7f8c8d;
-    font-size: 0.95rem;
-    min-height: 20px;
-    margin-top: 10px;
+    min-height: 24px;
 }
 
-.form-actions {
+/* FORM BUTTONS */
+.form-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 25px;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: 30px;
 }
 
-/* Perbaikan Tombol Close */
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.7);
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    color: white;
-    font-size: 1.5rem;
+.form-btn {
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
     display: flex;
     align-items: center;
+    gap: 10px;
+    min-width: 140px;
     justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s;
-    z-index: 10;
 }
 
-.close-modal:hover {
-    background: rgba(0, 0, 0, 0.9);
-    border-color: white;
-    transform: rotate(90deg);
+.cancel-btn {
+    background: #f3f4f6;
+    color: #6b7280;
+    border: 2px solid #e5e7eb;
 }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-    .modal-body-content {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-    
-    .sidebar-content {
-        order: -1;
-        position: static;
-        margin-bottom: 20px;
-    }
-    
-    .rating-distribution-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.cancel-btn:hover {
+    background: #e5e7eb;
+    color: #4b5563;
+    transform: translateY(-2px);
 }
 
+.submit-btn {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+}
+
+.submit-btn:hover {
+    background: linear-gradient(135deg, #4f46e5, #4338ca);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(99, 102, 241, 0.4);
+}
+
+/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
-    .modal-header {
-        height: 300px;
-    }
-    
-    .modal-title {
-        font-size: 1.8rem;
+    .modal-content {
+        width: 95%;
+        margin: 20px auto;
     }
     
     .rating-overview {
-        margin: -40px 20px 20px;
-        padding: 20px;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 25px 25px 20px;
     }
     
     .rating-summary {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
+        min-width: auto;
     }
     
-    .rating-distribution-container {
-        padding-left: 0;
+    .modal-info-sections {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 25px;
+    }
+    
+    .reviews-section {
+        padding: 0 25px 25px;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 20px;
+        align-items: stretch;
+    }
+    
+    .add-review-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .review-form-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    
+    .form-buttons {
+        flex-direction: column;
+    }
+    
+    .form-btn {
         width: 100%;
     }
     
-    .modal-body-content {
-        padding: 0 20px 20px;
-    }
-    
-    .distribution-item {
-        padding: 10px 5px;
-    }
-    
-    .distribution-stars .star {
-        font-size: 0.9rem;
-    }
-    
-    .distribution-count {
-        font-size: 1.3rem;
+    .map-btn-container {
+        padding: 0 25px 25px;
     }
 }
 
-@media (max-width: 576px) {
-    .rating-distribution-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-    
-    .action-buttons {
-        gap: 10px;
-    }
-    
-    .btn {
-        padding: 12px 15px;
-        font-size: 0.95rem;
-    }
-    
-    .form-actions {
-        flex-direction: column;
-    }
-}
-
-/* Animasi untuk modal */
-@keyframes slideUp {
+/* ANIMATIONS */
+@keyframes modalSlideUp {
     from {
         opacity: 0;
-        transform: translateY(50px);
+        transform: translateY(40px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes formSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -1692,26 +1733,104 @@ body {
     }
 }
 
-.modal-content {
-    animation: slideUp 0.4s ease-out;
+/* TYPOGRAPHY IMPROVEMENTS */
+.modal-place-name {
+    font-size: 28px;
+    font-weight: 800;
+    color: #111827;
+    line-height: 1.3;
+    padding: 30px 40px 0;
+    background: white;
+    margin: 0;
 }
 
-/* Scrollbar styling untuk modal */
+/* CLOSE BUTTON */
+.modal-close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    color: #374151;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.modal-close-btn:hover {
+    background: white;
+    transform: rotate(90deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* EMPTY STATE FOR REVIEWS */
+.empty-reviews {
+    text-align: center;
+    padding: 60px 40px;
+    background: white;
+    border-radius: 16px;
+    border: 2px dashed #d1d5db;
+}
+
+.empty-reviews i {
+    font-size: 48px;
+    color: #9ca3af;
+    margin-bottom: 20px;
+}
+
+.empty-reviews h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 10px;
+}
+
+.empty-reviews p {
+    color: #9ca3af;
+    font-size: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* STAR ICONS FIX */
+.star {
+    font-family: "Font Awesome 6 Free" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+}
+
+/* SMOOTH SCROLLING */
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #c7d2fe #f1f5f9;
+}
+
 .modal-content::-webkit-scrollbar {
     width: 8px;
 }
 
 .modal-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #f1f5f9;
+    border-radius: 4px;
 }
 
 .modal-content::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
+    background: #c7d2fe;
     border-radius: 4px;
 }
 
 .modal-content::-webkit-scrollbar-thumb:hover {
-    background: #a8a8a8;
+    background: #a5b4fc;
 }
 
 

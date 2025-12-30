@@ -971,8 +971,8 @@
                 <i class="fas fa-village"></i>
             </div>
             <div class="stat-content">
-                <div class="stat-number">7</div>
-                <div class="stat-title">Desa</div>
+                <div class="stat-number" data-count="7">0</div>
+                <div class="stat-title">Desa di Kecamatan</div>
                 <div class="stat-desc">Wilayah administratif di Kecamatan</div>
             </div>
             <div class="stat-badge">Terdata</div>
@@ -984,7 +984,7 @@
                 <i class="fas fa-layer-group"></i>
             </div>
             <div class="stat-content">
-                <div class="stat-number">45</div>
+                <div class="stat-number" data-count="45">0</div>
                 <div class="stat-title">Data Spasial</div>
                 <div class="stat-desc">Informasi geografis lengkap</div>
             </div>
@@ -997,7 +997,7 @@
                 <i class="fas fa-map"></i>
             </div>
             <div class="stat-content">
-                <div class="stat-number">120+</div>
+                <div class="stat-number" data-count="120+">0</div>
                 <div class="stat-title">Layer Peta</div>
                 <div class="stat-desc">Berbagai lapisan informasi</div>
             </div>
@@ -1010,7 +1010,7 @@
                 <i class="fas fa-landmark"></i>
             </div>
             <div class="stat-content">
-                <div class="stat-number">4</div>
+                <div class="stat-number"data-count="4" >0</div>
                 <div class="stat-title">Objek Kami</div>
                 <div class="stat-desc">Warisan budaya dilestarikan</div>
             </div>
@@ -1354,97 +1354,231 @@
     // Tambahkan di akhir script tag yang sudah ada
 <script>
 // Counter Animation
+// ===== ANIMASI COUNTER YANG DIPERBAIKI =====
 function animateCounters() {
     const counters = document.querySelectorAll('.stat-number');
     
+    // Reset semua counter ke 0 terlebih dahulu
     counters.forEach(counter => {
-        const target = parseInt(counter.getAttribute('data-count'));
-        const duration = 2000; // 2 seconds
-        const increment = target / (duration / 16); // 60fps
-        
-        let current = 0;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
+        counter.textContent = '0';
+    });
+    
+    // Buat observer untuk animasi saat scroll
+    const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const targetValue = counter.getAttribute('data-count');
+                
+                // Validasi dan parse nilai target
+                let target = 0;
+                if (targetValue.includes('+')) {
+                    // Tangani nilai seperti "120+"
+                    target = parseInt(targetValue.replace('+', ''));
+                    // Animasikan tanpa tanda +
+                    animateSingleCounter(counter, target, false);
+                } else {
+                    target = parseInt(targetValue);
+                    // Pastikan target adalah angka valid
+                    if (!isNaN(target) && target > 0) {
+                        animateSingleCounter(counter, target, false);
+                    } else {
+                        console.warn('Nilai data-count tidak valid:', targetValue);
+                        counter.textContent = targetValue; // Tampilkan nilai asli
+                    }
+                }
+                
+                // Hentikan observasi setelah dianimasikan
+                counterObserver.unobserve(counter);
             }
-            counter.textContent = Math.floor(current);
-        }, 16);
+        });
+    }, observerOptions);
+    
+    // Observasi setiap counter
+    counters.forEach(counter => {
+        counterObserver.observe(counter);
     });
 }
 
-// Scroll Progress Indicator
+// Fungsi untuk animasi satu counter
+function animateSingleCounter(counter, target, hasPlus = false) {
+    const duration = 1500; // 1.5 detik
+    const frameDuration = 16; // ~60fps
+    const totalFrames = Math.round(duration / frameDuration);
+    const easeOutQuad = t => t * (2 - t); // Fungsi easing
+    
+    let frame = 0;
+    
+    const countTo = target;
+    
+    // Counter interval
+    const counterInterval = setInterval(() => {
+        frame++;
+        
+        // Hitung progress (0-1)
+        const progress = easeOutQuad(frame / totalFrames);
+        const currentValue = Math.round(countTo * progress);
+        
+        // Tampilkan nilai
+        if (hasPlus && frame === totalFrames) {
+            counter.textContent = currentValue + '+';
+        } else {
+            counter.textContent = currentValue;
+        }
+        
+        // Hentikan saat selesai
+        if (frame === totalFrames) {
+            clearInterval(counterInterval);
+        }
+    }, frameDuration);
+}
+
+// ===== SCROLL PROGRESS INDICATOR =====
 function updateScrollProgress() {
     const scrollProgress = document.getElementById('scrollProgress');
     if (!scrollProgress) return;
     
     const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    
+    // Hindari pembagian dengan nol
+    if (windowHeight === 0) return;
+    
     const scrolled = (window.scrollY / windowHeight) * 100;
-    scrollProgress.style.width = scrolled + '%';
+    scrollProgress.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
 }
 
-// Back to Top Button
+// ===== BACK TO TOP BUTTON =====
 function setupBackToTop() {
     const backToTop = document.getElementById('backToTop');
     if (!backToTop) return;
     
-    window.addEventListener('scroll', () => {
+    // Fungsi toggle visibility
+    const toggleVisibility = () => {
         if (window.scrollY > 500) {
             backToTop.classList.add('visible');
         } else {
             backToTop.classList.remove('visible');
         }
-    });
+    };
     
+    // Event listener untuk scroll
+    window.addEventListener('scroll', toggleVisibility);
+    
+    // Event listener untuk klik
     backToTop.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
+    
+    // Inisialisasi
+    toggleVisibility();
 }
 
-// Intersection Observer untuk animasi
-function setupAnimations() {
+// ===== ANIMASI ELEMEN SAAT SCROLL =====
+function setupScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
+        rootMargin: '0px 0px -50px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                if (entry.target.classList.contains('stats-section')) {
-                    animateCounters();
-                }
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                // Tambahkan class untuk animasi
+                entry.target.classList.add('animate-in');
+                
+                // Hentikan observasi setelah animasi pertama
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
     
-    // Observe elements untuk animasi
-    document.querySelectorAll('.feature-card, .map-container, .quick-access-card, .stats-section').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    // Observasi elemen yang akan dianimasikan
+    const elementsToAnimate = document.querySelectorAll(
+        '.feature-card, .map-container, .quick-access-card, .stat-item, .stats-header'
+    );
+    
+    elementsToAnimate.forEach(el => {
         observer.observe(el);
     });
 }
 
-// Initialize semua fitur
-document.addEventListener('DOMContentLoaded', function() {
-    // ... kode yang sudah ada ...
+// ===== INISIALISASI SEMUA FITUR =====
+function initializeFeatures() {
+    console.log('Menginisialisasi fitur...');
     
-    // Tambahkan inisialisasi fitur baru
+    // 1. Setup animasi counter
+    animateCounters();
+    
+    // 2. Setup scroll progress indicator
     updateScrollProgress();
-    setupBackToTop();
-    setupAnimations();
     
-    // Event listener untuk scroll
+    // 3. Setup back to top button
+    setupBackToTop();
+    
+    // 4. Setup scroll animations
+    setupScrollAnimations();
+    
+    // 5. Event listener untuk scroll progress
     window.addEventListener('scroll', updateScrollProgress);
+    
+    // 6. Event listener untuk resize (update progress)
+    window.addEventListener('resize', updateScrollProgress);
+    
+    console.log('Semua fitur diinisialisasi');
+}
+
+// ===== EVENT LISTENER UNTUK DOM CONTENT LOADED =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Tunggu sedikit agar DOM benar-benar siap
+    setTimeout(initializeFeatures, 100);
+    
+    // Juga jalankan saat semua resource selesai dimuat
+    window.addEventListener('load', function() {
+        // Pastikan counter berjalan dengan benar
+        const counters = document.querySelectorAll('.stat-number');
+        counters.forEach(counter => {
+            const value = counter.getAttribute('data-count');
+            console.log(`Counter: ${value} -> ${counter.textContent}`);
+        });
+    });
 });
+
+// ===== FALLBACK UNTUK BROWSER LAMA =====
+// Jika IntersectionObserver tidak didukung
+if (!('IntersectionObserver' in window)) {
+    console.warn('IntersectionObserver tidak didukung, menggunakan fallback');
+    
+    // Animasikan counter langsung
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const targetValue = counter.getAttribute('data-count');
+                let target = 0;
+                
+                if (targetValue.includes('+')) {
+                    target = parseInt(targetValue.replace('+', ''));
+                    if (!isNaN(target)) {
+                        counter.textContent = target + '+';
+                    }
+                } else {
+                    target = parseInt(targetValue);
+                    if (!isNaN(target)) {
+                        counter.textContent = target;
+                    }
+                }
+            });
+        }, 500);
+    });
+}
 </script>
 </body>
 </html>

@@ -955,6 +955,28 @@
             </div>
         </div>
     </section>
+    <!-- Stats Section (Tambahkan setelah Objek Kami) -->
+<section class="stats-section" id="stats">
+    <div class="stats-container">
+        <div class="stat-item">
+            <span class="stat-number" data-count="7">0</span>
+            <span class="stat-label">Desa di Kecamatan</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="45">0</span>
+            <span class="stat-label">Data Spasial</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="120">0</span>
+            <span class="stat-label">Layer Peta</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" data-count="4">0</span>
+            <span class="stat-label">Tempat Bersejarah</span>
+        </div>
+    </div>
+</section>
+
 
     <!-- PETA INTERAKTIF LANGSUNG -->
     <section class="map-preview" id="peta-interaktif">
@@ -990,7 +1012,42 @@
             </div>
         </div>
     </section>
+<!--Stats Section-->
+    <!-- Scroll Progress Indicator -->
+<div class="scroll-progress" id="scrollProgress"></div>
 
+<!-- Back to Top Button -->
+<div class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+</div>
+
+
+<!-- Quick Access Section (Tambahkan sebelum footer) -->
+<section class="quick-access">
+    <h3><i class="fas fa-bolt"></i> Akses Cepat</h3>
+    <div class="quick-access-grid">
+        <a href="../Kecamatan/" class="quick-access-card">
+            <i class="fas fa-mountain"></i>
+            <h4>Peta Kecamatan</h4>
+            <p>Akses peta lengkap seluruh wilayah kecamatan dengan 7 desa</p>
+        </a>
+        <a href="../teluk/" class="quick-access-card">
+            <i class="fas fa-water"></i>
+            <h4>Peta Desa Teluk</h4>
+            <p>Detail peta Desa Teluk dengan data spasial lengkap</p>
+        </a>
+        <a href="#objek-kami" class="quick-access-card">
+            <i class="fas fa-landmark"></i>
+            <h4>Objek Wisata</h4>
+            <p>Temukan objek wisata dan tempat bersejarah di wilayah kami</p>
+        </a>
+        <a href="../tentang/" class="quick-access-card">
+            <i class="fas fa-info-circle"></i>
+            <h4>Tentang Kami</h4>
+            <p>Pelajari lebih lanjut tentang pengembang dan visi geoportal</p>
+        </a>
+    </div>
+</section>
     <!-- FOOTER -->
     <footer class="footer">
         <p>Dibuat menggunakan QGIS & Leaflet</p>
@@ -1168,5 +1225,100 @@
             });
         });
     </script>
+    // Tambahkan di akhir script tag yang sudah ada
+<script>
+// Counter Animation
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        
+        let current = 0;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                current = target;
+                clearInterval(timer);
+            }
+            counter.textContent = Math.floor(current);
+        }, 16);
+    });
+}
+
+// Scroll Progress Indicator
+function updateScrollProgress() {
+    const scrollProgress = document.getElementById('scrollProgress');
+    if (!scrollProgress) return;
+    
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (window.scrollY / windowHeight) * 100;
+    scrollProgress.style.width = scrolled + '%';
+}
+
+// Back to Top Button
+function setupBackToTop() {
+    const backToTop = document.getElementById('backToTop');
+    if (!backToTop) return;
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 500) {
+            backToTop.classList.add('visible');
+        } else {
+            backToTop.classList.remove('visible');
+        }
+    });
+    
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+// Intersection Observer untuk animasi
+function setupAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if (entry.target.classList.contains('stats-section')) {
+                    animateCounters();
+                }
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements untuk animasi
+    document.querySelectorAll('.feature-card, .map-container, .quick-access-card, .stats-section').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+}
+
+// Initialize semua fitur
+document.addEventListener('DOMContentLoaded', function() {
+    // ... kode yang sudah ada ...
+    
+    // Tambahkan inisialisasi fitur baru
+    updateScrollProgress();
+    setupBackToTop();
+    setupAnimations();
+    
+    // Event listener untuk scroll
+    window.addEventListener('scroll', updateScrollProgress);
+});
+</script>
 </body>
 </html>

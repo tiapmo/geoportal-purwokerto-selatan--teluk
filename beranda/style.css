@@ -64,6 +64,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 3px solid var(--white);
     background-color: var(--white);
+    flex-shrink: 0;
 }
 
 .logo-kecamatan img {

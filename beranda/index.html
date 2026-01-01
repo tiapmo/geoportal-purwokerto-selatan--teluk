@@ -61,6 +61,7 @@
             position: sticky;
             top: 0;
             z-index: 1000;
+             width: 100%;
         }
         
         .logo-container {
@@ -70,18 +71,19 @@
         }
         
         /* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */
-        .logo-kecamatan {
-            width: 60px;
-            height: 60px;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 3px solid var(--white);
-            background-color: var(--white);
-        }
+       .logo-kecamatan {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--white);
+    background-color: var(--white);
+    flex-shrink: 0;
+}
         
         .logo-kecamatan img {
             width: 100%;

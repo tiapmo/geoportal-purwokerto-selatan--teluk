@@ -1,18 +1,21 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geoportal Kecamatan Purwokerto Selatan</title>
+    
+    <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-          crossorigin="" />
+          crossorigin="">
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Inline CSS -->
     <style>
-        /* ===== VARIABLES & RESET ===== */
+        /* ===== VARIABLES ===== */
         :root {
             --primary: #1A5276;
             --secondary: #3498DB;
@@ -33,147 +36,7 @@
             --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
         
-        * { 
-            margin: 0; 
-            padding: 0; 
-            box-sizing: border-box; 
-        }
-        
-        body {
-            font-family: 'Nunito', sans-serif;
-            color: var(--text-dark);
-            background-color: var(--light-bg);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ===== HEADER YANG SIMPLE ===== */
-        .header {
-            background-color: var(--light-card);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: var(--shadow-subtle);
-            border-bottom: 2px solid var(--light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-             width: 100%;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        /* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */
-       .logo-kecamatan {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 3px solid var(--white);
-    background-color: var(--white);
-    flex-shrink: 0;
-}
-        
-        .logo-kecamatan img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            padding: 5px;
-        }
-        
-        /* LOGO GEOPORTAL - SIMPLE HANYA ICON */
-        .logo-geoportal {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .logo-geoportal-icon {
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--secondary), var(--accent));
-            border-radius: 10px;
-            color: var(--white);
-            font-size: 1.8rem;
-            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
-        }
-        
-        .logo-geoportal-text {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-geoportal-main {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-            font-size: 1.8rem;
-            color: var(--primary);
-            line-height: 1;
-        }
-        
-        .logo-geoportal-tagline {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            font-size: 0.85rem;
-            color: var(--dark-gray);
-            margin-top: 2px;
-        }
-        
-        /* NAVIGASI */
-        .nav {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .nav a {
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-dark);
-            background-color: transparent;
-            border: 2px solid var(--medium-gray);
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .nav a:hover {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .nav a.active {
-            background-color: var(--secondary);
-            color: var(--white);
-            border-color: var(--secondary);
-        }
-         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-        
-        /* ===== HERO SECTION DENGAN BACKGROUND ===== */
+        /* ===== HERO SECTION ===== */
         .hero {
             padding: 5rem 2rem;
             text-align: center;
@@ -278,460 +141,162 @@
             font-size: 1.4rem;
         }
 
-        /* ===== OBJEK KAMI ===== */
-        .features {
+        /* ===== STATS SECTION ===== */
+        .stats-section {
             padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: var(--light-card);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-subtle);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             margin-bottom: 4rem;
         }
         
-        .features h3 {
+        .section-header {
             text-align: center;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2.2rem;
             margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.5rem;
             color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
+            margin-bottom: 1rem;
         }
         
-        .features h3 i {
-            color: var(--accent);
+        .section-subtitle {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
-        .features-grid {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        .feature-card {
+        .stat-card {
             background: var(--white);
-            padding: 2rem;
             border-radius: var(--border-radius);
+            padding: 2rem;
             box-shadow: var(--shadow-subtle);
-            transition: all 0.3s ease;
-            text-align: left;
-            border: 1px solid var(--light-gray);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
+            text-align: center;
+            transition: transform 0.3s ease;
         }
         
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--secondary), var(--accent));
-            transition: width 0.3s ease;
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
         
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--secondary);
-        }
-        
-        .feature-card:hover::before {
-            width: 10px;
-        }
-        
-        .place-image {
-            width: 100%;
-            height: 200px;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 1.2rem;
-        }
-        
-        .place-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .feature-card:hover .place-image img {
-            transform: scale(1.05);
-        }
-        
-        .place-rating {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+            font-family: 'Poppins', sans-serif;
         }
         
-        .stars {
-            display: flex;
-            gap: 2px;
-        }
-        
-        .star {
-            color: var(--star-empty);
-            font-size: 1rem;
-        }
-        
-        .star.filled {
-            color: var(--star-color);
-        }
-        
-        .rating-value {
+        .stat-title {
+            font-size: 1.2rem;
             font-weight: 600;
             color: var(--text-dark);
-            margin-left: 5px;
+            margin-bottom: 0.5rem;
         }
         
-        .review-count {
+        .stat-desc {
             color: var(--text-light);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
         }
         
-        .feature-card h4 {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
+        .stat-badge {
+            display: inline-block;
+            background: var(--light-gray);
             color: var(--primary);
-            font-family: 'Poppins', sans-serif;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: 600;
         }
+
+        /* ===== QUICK ACCESS SECTION ===== */
+        .quick-access-section {
+            padding: 5rem 2rem;
+            background: var(--white);
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+        }
         
-        .feature-card p {
+        .quick-access-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .access-card {
+            background: var(--light-bg);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .access-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .card-desc {
             color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             flex-grow: 1;
         }
         
-        .place-address {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--dark-gray);
-        }
-        
-        .place-address i {
-            color: var(--secondary);
-            margin-top: 3px;
-        }
-        
-        .address-link {
-            color: var(--secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-            word-break: break-word;
-        }
-        
-        .address-link:hover {
-            color: var(--accent);
-            text-decoration: underline;
-        }
-
-        /* ===== PETA INTERAKTIF LANGSUNG ===== */
-        .map-preview {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto 5rem;
-            text-align: center;
-        }
-        
-        .map-preview h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 2.2rem;
-            margin-bottom: 2.5rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .map-preview h3 i {
-            color: var(--accent);
-        }
-        
-        .map-container {
-            background: var(--white);
-            border-radius: var(--border-radius);
-            padding: 0;
-            box-shadow: var(--shadow-subtle);
-            border: 1px solid var(--light-gray);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .map-header {
-            padding: 1.5rem 2rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .map-header h4 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin: 0;
-            display: flex;
+        .access-btn {
+            display: inline-flex;
             align-items: center;
             gap: 10px;
-        }
-        
-        .map-actions {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .map-action-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .map-action-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        #mainMap {
-            height: 500px;
-            width: 100%;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-        }
-        
-        .map-info {
-            padding: 1.5rem 2rem;
-            text-align: left;
-            background: var(--light-gray);
-            border-top: 1px solid var(--medium-gray);
-        }
-        
-        .map-info h5 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-            color: var(--primary);
-        }
-        
-        .map-info p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-        
-        .map-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .map-link-btn {
             background: var(--secondary);
             color: white;
-            text-decoration: none;
             padding: 0.8rem 1.5rem;
             border-radius: 6px;
+            text-decoration: none;
             font-weight: 600;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            width: fit-content;
         }
         
-        .map-link-btn:hover {
+        .access-btn:hover {
             background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .map-link-btn.outline {
-            background: transparent;
-            color: var(--secondary);
-            border: 2px solid var(--secondary);
-        }
-        
-        .map-link-btn.outline:hover {
-            background: var(--secondary);
-            color: white;
+            transform: translateX(5px);
         }
 
-        /* ===== FOOTER ===== */
-        .footer {
-            background-color: var(--primary);
-            color: var(--white);
-            text-align: center;
-            padding: 2.5rem;
-            margin-top: auto;
-            border-top: 1px solid var(--light-gray);
-        }
-        
-        .footer p {
-            margin-bottom: 0.8rem;
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .footer-links a:hover {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        
-        .footer-links a i {
-            font-size: 1.1rem;
-        }
-
-        /* ===== MODAL UNTUK DETAIL TEMPAT ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-        }
-        
-        .modal-content {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            position: relative;
-        }
-        
-        .modal-header {
-            padding: 1.5rem 2rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .modal-header h3 {
-            font-size: 1.5rem;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.8rem;
-            cursor: pointer;
-            padding: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            transition: background-color 0.3s ease;
-        }
-        
-        .close-modal:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
-            .header { 
-                flex-direction: column; 
-                gap: 1.5rem; 
-                padding: 1.5rem; 
-            }
-            
-            .logo-container {
-                flex-direction: column;
-                gap: 15px;
-                width: 100%;
-            }
-            
-            .logo-kecamatan,
-            .logo-geoportal {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .nav { 
-                flex-wrap: wrap; 
-                justify-content: center; 
-                width: 100%;
-            }
-            
             .hero h2 { 
                 font-size: 2.5rem; 
             }
             
-            .features-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-            }
-            
-            #mainMap {
-                height: 400px;
+            .stats-grid,
+            .quick-access-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
         @media (max-width: 768px) {
+            .hero {
+                padding: 3rem 1rem;
+            }
+            
             .hero h2 { 
                 font-size: 2rem; 
             }
@@ -740,100 +305,40 @@
                 font-size: 1.1rem;
             }
             
-            .features-grid { 
-                grid-template-columns: 1fr; 
-            }
-            
-            .nav a { 
-                padding: 0.7rem 1.2rem; 
-                font-size: 0.95rem; 
-            }
-            
-            .logo-kecamatan {
-                width: 50px;
-                height: 50px;
-            }
-            
-            .logo-geoportal-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.6rem;
-            }
-            
-            .logo-geoportal-main {
-                font-size: 1.6rem;
-            }
-            
-            #mainMap {
-                height: 350px;
-            }
-            
-            .map-header {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            .map-actions {
-                width: 100%;
-                justify-content: space-between;
-            }
-            
-            .map-links {
-                flex-direction: column;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .header {
-                padding: 1rem;
-            }
-            
-            .hero {
-                padding: 3rem 1rem;
+            .stats-grid,
+            .quick-access-grid {
+                grid-template-columns: 1fr;
             }
             
             .cta-button {
                 padding: 1rem 2rem;
                 font-size: 1.1rem;
             }
-            
-            .logo-kecamatan {
-                width: 45px;
-                height: 45px;
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2.5rem 1rem;
             }
             
-            .logo-geoportal-icon {
-                width: 40px;
-                height: 40px;
-                font-size: 1.4rem;
+            .hero h2 {
+                font-size: 1.8rem;
             }
             
-            .features {
+            .stats-section,
+            .quick-access-section {
                 padding: 2rem 1rem;
-            }
-            
-            .map-preview {
-                padding: 2rem 1rem;
-            }
-            
-            #mainMap {
-                height: 300px;
             }
         }
     </style>
 </head>
 <body>
-<!-- Footer di luar container -->
-<footer class="footer">...</footer>
-    <!-- HEADER DENGAN LOGO GAMBAR ASLI -->
+    <!-- HEADER -->
     <header class="header">
         <div class="logo-container">
-            <!-- LOGO KECAMATAN - HANYA GAMBAR SAJA -->
             <div class="logo-kecamatan">
                 <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
             </div>
-            <!-- LOGO GEOPORTAL -->
             <div class="logo-geoportal">
                 <div class="logo-geoportal-icon">
                     <i class="fas fa-map-marked-alt"></i>
@@ -845,16 +350,15 @@
             </div>
         </div>
         
-        <!-- NAVIGASI -->
         <nav class="nav">
-            <a href="./" class="nav-link"><i class="fas fa-home"></i> Beranda</a>
+            <a href="./" class="nav-link active"><i class="fas fa-home"></i> Beranda</a>
             <a href="../Kecamatan/" class="nav-link"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
             <a href="../teluk/" class="nav-link"><i class="fas fa-water"></i> Peta Desa Teluk</a>
             <a href="../tentang/" class="nav-link"><i class="fas fa-user-circle"></i> Tentang Kami</a>
         </nav>
     </header>
 
-    <!-- HERO SECTION DENGAN BACKGROUND -->
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-content">
             <h2>Portal <span>Data Spasial</span> Terpadu</h2>
@@ -964,78 +468,54 @@
             </div>
         </div>
     </section>
-    <!-- Stats Section (Tambahkan setelah Objek Kami) -->
-<!-- Bagian Statistik -->
-<section class="stats-section">
-    <div class="section-header">
-        <h2 class="section-title">Data Spasial Kecamatan Purwokerto Selatan</h2>
-        <p class="section-subtitle">Ringkasan data geografis dan informasi wilayah dalam satu platform</p>
-    </div>
-    
-    <div class="stats-grid">
-        <!-- Card Desa -->
-        <div class="stat-card">
-            <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #3498DB, #1A5276);">
-            </div>
-            <div class="stat-content">
-                <div class="stat-number" data-count="7">0</div>
-                <div class="stat-title">Desa di Kecamatan</div>
-                <div class="stat-desc">Wilayah administratif</div>
-            </div>
-            <div class="stat-badge">Terdata</div>
-        </div>
 
-          <!-- Card RT RW -->
-       <div class="stat-card">
-    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #2980B9, #1F618D);">
-    </div>
-    <div class="stat-content">
-        <div class="stat-number" data-count="353">0</div>
-        <div class="stat-title">Jumlah RT</div>
-        <div class="stat-desc">Rukun Tetangga</div>
-    </div>
-    <div class="stat-badge">Unit</div>
-</div>
-        <div class="stat-card">
-    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #8E44AD, #6C3483);">
-    </div>
-    <div class="stat-content">
-        <div class="stat-number" data-count="74">0</div>
-        <div class="stat-title">Jumlah RW</div>
-        <div class="stat-desc">Rukun Warga</div>
-    </div>
-    <div class="stat-badge">Unit</div>
-</div>
-        
-        <!-- Card Data Spasial -->
-        <div class="stat-card">
-            <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
-            </div>
-            <div class="stat-content">
-                <div class="stat-number" data-count="74.305">0</div>
-                <div class="stat-title">Jumlah Penduduk</div>
-                <div class="stat-desc">Informasi geografis lengkap</div>
-            </div>
-            <div class="stat-badge">Tersedia</div>
+    <!-- STATS SECTION -->
+    <section class="stats-section">
+        <div class="section-header">
+            <h2 class="section-title">Data Spasial Kecamatan Purwokerto Selatan</h2>
+            <p class="section-subtitle">Ringkasan data geografis dan informasi wilayah dalam satu platform</p>
         </div>
         
-        <!-- Card Luas Wilayah -->
-<div class="stat-card">
-    <div class="stat-icon-wrapper" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
-    </div>
-    <div class="stat-content">
-        <div class="stat-number" data-count="13.75">0</div>
-        <div class="stat-title">Luas Wilayah</div>
-        <div class="stat-desc">Kecamatan Purwokerto Selatan (km²)</div>
-    </div>
-    <div class="stat-badge">Aktif</div>
-</div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-number" data-count="7">0</div>
+                    <div class="stat-title">Desa di Kecamatan</div>
+                    <div class="stat-desc">Wilayah administratif</div>
+                </div>
+                <div class="stat-badge">Terdata</div>
+            </div>
 
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-number" data-count="353">0</div>
+                    <div class="stat-title">Jumlah RT</div>
+                    <div class="stat-desc">Rukun Tetangga</div>
+                </div>
+                <div class="stat-badge">Unit</div>
+            </div>
 
-</section>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-number" data-count="74">0</div>
+                    <div class="stat-title">Jumlah RW</div>
+                    <div class="stat-desc">Rukun Warga</div>
+                </div>
+                <div class="stat-badge">Unit</div>
+            </div>
 
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-number" data-count="74.305">0</div>
+                    <div class="stat-title">Jumlah Penduduk</div>
+                    <div class="stat-desc">Informasi geografis lengkap</div>
+                </div>
+                <div class="stat-badge">Tersedia</div>
+            </div>
+        </div>
+    </section>
 
-    <!-- PETA INTERAKTIF LANGSUNG -->
+    <!-- PETA INTERAKTIF -->
     <section class="map-preview" id="peta-interaktif">
         <h3><i class="fas fa-map-signs"></i> Peta Interaktif</h3>
         <div class="map-container">
@@ -1051,7 +531,6 @@
                 </div>
             </div>
             
-            <!-- Peta Leaflet akan ditampilkan di sini -->
             <div id="mainMap"></div>
             
             <div class="map-info">
@@ -1069,225 +548,52 @@
             </div>
         </div>
     </section>
-<!--Stats Section-->
-    <!-- Scroll Progress Indicator -->
-<div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- Back to Top Button -->
-<div class="back-to-top" id="backToTop">
-    <i class="fas fa-chevron-up"></i>
-</div>
-
-
-<!-- Quick Access Section (Tambahkan sebelum footer) -->
-<!-- Bagian Akses Cepat -->
-<section class="quick-access-section">
-    <div class="section-header">
-        <h2 class="section-title">Akses Cepat</h2>
-        <p class="section-subtitle">Temukan informasi yang Anda butuhkan dengan cepat dan mudah</p>
-    </div>
-    
-    <div class="quick-access-grid">
-        <!-- Card Peta Kecamatan -->
-        <div class="access-card">
-            <div class="card-header">
-                <div class="card-icon" style="background: linear-gradient(135deg, #3498DB, #1A5276);">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <div class="card-badge">Lengkap</div>
-            </div>
-            <div class="card-body">
+    <!-- QUICK ACCESS -->
+    <section class="quick-access-section">
+        <div class="section-header">
+            <h2 class="section-title">Akses Cepat</h2>
+            <p class="section-subtitle">Temukan informasi yang Anda butuhkan dengan cepat dan mudah</p>
+        </div>
+        
+        <div class="quick-access-grid">
+            <div class="access-card">
                 <h3 class="card-title">Peta Kecamatan</h3>
                 <p class="card-desc">Akses peta lengkap seluruh wilayah kecamatan dengan 7 desa dan informasi detail setiap wilayah</p>
-                <div class="card-features">
-                    <span class="feature-tag">7 Desa</span>
-                    <span class="feature-tag">45 Layer</span>
-                    <span class="feature-tag">Real-time</span>
-                </div>
-            </div>
-            <div class="card-footer">
                 <a href="../Kecamatan/" class="access-btn">
                     <span>Buka Peta</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-        </div>
-        
-        <!-- Card Peta Desa Teluk -->
-        <div class="access-card">
-            <div class="card-header">
-                <div class="card-icon" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
-                    <i class="fas fa-water"></i>
-                </div>
-                <div class="card-badge">Detail</div>
-            </div>
-            <div class="card-body">
+            
+            <div class="access-card">
                 <h3 class="card-title">Peta Desa Teluk</h3>
                 <p class="card-desc">Detail peta Desa Teluk dengan data spasial lengkap, batas wilayah, dan fasilitas publik</p>
-                <div class="card-features">
-                    <span class="feature-tag">Detail</span>
-                    <span class="feature-tag">Fasilitas</span>
-                    <span class="feature-tag">Batas</span>
-                </div>
-            </div>
-            <div class="card-footer">
                 <a href="../teluk/" class="access-btn">
                     <span>Eksplorasi</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-        </div>
-        
-        <!-- Card Objek Wisata -->
-        <div class="access-card">
-            <div class="card-header">
-                <div class="card-icon" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
-                    <i class="fas fa-umbrella-beach"></i>
-                </div>
-                <div class="card-badge">Populer</div>
-            </div>
-            <div class="card-body">
+            
+            <div class="access-card">
                 <h3 class="card-title">Objek Wisata</h3>
                 <p class="card-desc">Temukan objek wisata dan tempat bersejarah di wilayah kami dengan informasi lengkap</p>
-                <div class="card-features">
-                    <span class="feature-tag">4 Lokasi</span>
-                    <span class="feature-tag">Wisata</span>
-                    <span class="feature-tag">Sejarah</span>
-                </div>
-            </div>
-            <div class="card-footer">
                 <a href="#" class="access-btn">
                     <span>Jelajahi</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-        </div>
-        
-        <!-- Card Tentang Kami -->
-        <div class="access-card">
-            <div class="card-header">
-                <div class="card-icon" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="card-badge">Info</div>
-            </div>
-            <div class="card-body">
+            
+            <div class="access-card">
                 <h3 class="card-title">Tentang Kami</h3>
                 <p class="card-desc">Pelajari lebih lanjut tentang pengembang, visi misi, dan tujuan dari geoportal ini</p>
-                <div class="card-features">
-                    <span class="feature-tag">Tim</span>
-                    <span class="feature-tag">Visi</span>
-                    <span class="feature-tag">Kontak</span>
-                </div>
-            </div>
-            <div class="card-footer">
                 <a href="../tentang/" class="access-btn">
                     <span>Selengkapnya</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
-    </div>
-</section>
-    <!-- MODAL UNTUK DETAIL TEMPAT BERSEJARAH -->
-    <div class="modal" id="placeModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalPlaceName">Objek Kami</h3>
-                <button class="close-modal" id="closeModal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <div class="modal-image">
-                    <img id="modalPlaceImage" src="" alt="Gambar Tempat">
-                </div>
-                
-                <!-- Rating Summary -->
-                <div class="modal-rating-summary">
-                    <div class="average-rating">
-                        <div class="average-rating-value" id="averageRating">4.5</div>
-                        <div class="average-rating-stars" id="averageStars">
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star filled">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <div class="total-reviews" id="totalReviews">42 ulasan</div>
-                    </div>
-                    <div class="rating-distribution" id="ratingDistribution">
-                        <!-- Rating distribution will be generated by JavaScript -->
-                    </div>
-                </div>
-                
-                <p class="modal-description" id="modalPlaceDescription"></p>
-                <div class="modal-address">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span id="modalPlaceAddress"></span>
-                </div>
-                
-                <!-- Reviews Section -->
-                <div class="reviews-section">
-                    <div class="reviews-header">
-                        <h4>Ulasan Pengunjung</h4>
-                        <button class="add-review-btn" id="openReviewForm">
-                            <i class="fas fa-edit"></i> Tambah Ulasan
-                        </button>
-                    </div>
-                    
-                    <!-- Review Form (Initially Hidden) -->
-                    <div class="review-form" id="reviewForm" style="display: none;">
-                        <h4>Tulis Ulasan Anda</h4>
-                        <form id="newReviewForm">
-                            <div class="form-group">
-                                <label for="reviewerName">Nama</label>
-                                <input type="text" id="reviewerName" placeholder="Nama Anda" required>
-                            </div>
-                            <div class="form-group rating-input">
-                                <label>Rating</label>
-                                <div class="rating-stars-input" id="ratingStarsInput">
-                                    <span class="star-input" data-rating="1">★</span>
-                                    <span class="star-input" data-rating="2">★</span>
-                                    <span class="star-input" data-rating="3">★</span>
-                                    <span class="star-input" data-rating="4">★</span>
-                                    <span class="star-input" data-rating="5">★</span>
-                                </div>
-                                <div class="rating-text" id="ratingText">Pilih rating dengan mengklik bintang</div>
-                                <input type="hidden" id="selectedRating" value="0">
-                            </div>
-                            <div class="form-group">
-                                <label for="reviewComment">Ulasan</label>
-                                <textarea id="reviewComment" rows="4" placeholder="Bagikan pengalaman Anda mengunjungi tempat ini..." required></textarea>
-                            </div>
-                            <div class="form-buttons">
-                                <button type="submit" class="btn-submit">
-                                    <i class="fas fa-paper-plane"></i> Kirim Ulasan
-                                </button>
-                                <button type="button" class="btn-cancel" id="cancelReviewForm">
-                                    Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    
-                    <!-- Reviews List -->
-                    <div class="reviews-list" id="reviewsList">
-                        <!-- Reviews will be loaded here -->
-                    </div>
-                </div>
-                
-                <!-- Modal Action Buttons -->
-                <div class="modal-buttons">
-                    <button class="modal-btn btn-view-map" id="viewOnMap">
-                        <i class="fas fa-map-marked-alt"></i> Lihat di Peta
-                    </button>
-                    <button class="modal-btn btn-close" id="closeModalBtn">
-                        <i class="fas fa-times"></i> Tutup
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    </section>
 
     <!-- FOOTER -->
     <footer class="footer">
@@ -1306,7 +612,7 @@
             crossorigin=""></script>
 
     <script>
-        // Data tempat untuk peta
+        // Data untuk peta
         const places = [
             {
                 name: "Taman Andhang Pangrenan Purwokerto",
@@ -1345,17 +651,16 @@
             }
         ];
 
-        // Inisialisasi peta
+        // Inisialisasi aplikasi
         document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi peta dengan view ke Kecamatan Purwokerto Selatan
+            // Inisialisasi peta
             const map = L.map('mainMap').setView([-7.4444, 109.2390], 14);
             
-            // Tambahkan tile layer (OpenStreetMap)
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                attribution: '&copy; OpenStreetMap contributors'
             }).addTo(map);
             
-            // Tambahkan marker untuk setiap tempat
+            // Tambahkan marker
             places.forEach(place => {
                 const marker = L.marker([place.lat, place.lng]).addTo(map);
                 marker.bindPopup(`
@@ -1368,13 +673,12 @@
                     </div>
                 `);
                 
-                // Tambahkan klik event untuk zoom ke tempat
                 marker.on('click', function() {
                     map.setView([place.lat, place.lng], 16);
                 });
             });
             
-            // Tambahkan lingkaran untuk menunjukkan area Kecamatan
+            // Lingkaran wilayah
             L.circle([-7.4444, 109.2390], {
                 color: '#3498DB',
                 fillColor: '#3498DB',
@@ -1382,17 +686,16 @@
                 radius: 1000
             }).addTo(map).bindPopup('Wilayah Kecamatan Purwokerto Selatan');
             
-            // Tambahkan kontrol zoom
+            // Kontrol zoom
             L.control.zoom({
                 position: 'topright'
             }).addTo(map);
             
-            // Tombol reset view
+            // Event listener untuk tombol
             document.getElementById('resetView').addEventListener('click', function() {
                 map.setView([-7.4444, 109.2390], 14);
             });
             
-            // Tombol locate me
             document.getElementById('locateMe').addEventListener('click', function() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
@@ -1407,823 +710,29 @@
                 }
             });
             
-            // Dynamic year in footer
+            // Update tahun di footer
             document.getElementById('current-year').textContent = new Date().getFullYear();
             
-            // Highlight active page in navigation
-            const currentPage = window.location.pathname;
-            const navLinks = document.querySelectorAll('.nav a');
-            
-            navLinks.forEach(link => {
-                const linkPath = link.getAttribute('href');
+            // Animasi counter
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-count');
+                const increment = target / 100;
+                let current = 0;
                 
-                // Check if current page includes the link path
-                if (currentPage.endsWith(linkPath) || 
-                    (linkPath === './' && (currentPage.endsWith('/') || currentPage.endsWith('index.html')))) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.ceil(current);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.textContent = target;
                     }
-                });
-            });
-            
-            // Animation for feature cards on scroll
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, observerOptions);
-
-            // Observe feature cards
-            document.querySelectorAll('.feature-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
+                };
+                
+                updateCounter();
             });
         });
     </script>
-    // Tambahkan di akhir script tag yang sudah ada
-<script>
-     // Data tempat bersejarah
-       const placesData = {
-            1: {
-                name: "Taman Andhang Pangrenan Purwokerto",
-                image: "../img/taman-andhang-pangeran-purwokerto.jpg",
-                description: "Taman rekreasi ini dibangun pada tahun 2017 dengan konsep taman edukasi yang menggabungkan unsur budaya, sejarah, dan lingkungan. Nama taman ini berasal dari bahasa Jawa yang berarti 'taman yang mengajarkan' atau 'taman yang memberi petunjuk'. Taman ini menjadi salah satu ruang publik favorit warga Purwokerto untuk bersantai dan beraktivitas. Fasilitas yang tersedia meliputi area bermain anak, jogging track, taman bunga, dan ruang terbuka untuk berbagai kegiatan masyarakat.",
-                address: "Jalan Gerilya Purwokerto Selatan, Jl. Prof. M Yamin I, Windusara, Karangklesem, Kec. Banyumas, Kabupaten Banyumas, Jawa Tengah 53144",
-                mapLink: "teluk/?lat=-7.4417&lng=109.2385&zoom=16&place=Taman Andhang Pangrenan",
-                initialRating: 4.2,
-                initialReviews: 42
-            },
-            2: {
-                name: "Taman Satria Purwokerto",
-                image: "../img/Taman-Satria-Purwokerto.png",
-                description: "Taman Satria Berkoh Purwokerto merupakan salah satu RTH atau Taman Kota yang sudah 33 tahun menjadi paru-paru kota Purwokerto. Taman Satria Berkoh Purwokerto diresmikan pada Rabu, 15 Januari 1992 oleh Bupati KDH TK.II Banyumas Djoko Sudantoko. Taman ini memiliki fasilitas lengkap termasuk area bermain anak, jogging track, dan area pertemuan masyarakat. Taman ini sering menjadi lokasi kegiatan sosial, olahraga, dan rekreasi keluarga di akhir pekan.",
-                address: "Kebontebu, Berkoh, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53146",
-                mapLink: "teluk/?lat=-7.4432&lng=109.2401&zoom=16&place=Taman Satria",
-                initialRating: 4.8,
-                initialReviews: 67
-            },
-            3: {
-                name: "Bukit Cinta",
-                image: "../img/Bukit cinta.png",
-                description: "Bukit Cinta merupakan area perbukitan yang sejak lama dikenal oleh warga setempat sebagai tempat berkumpul dan berkegiatan sosial, terutama bagi generasi muda. Dari kebiasaan inilah tempat ini mendapat nama 'Bukit Cinta'. Tempat ini menawarkan pemandangan kota Purwokerto yang indah, terutama saat sore dan malam hari. Meskipun tidak memiliki fasilitas yang lengkap, keindahan alam dan udara segar membuat tempat ini tetap populer dikunjungi.",
-                address: "G7F4+5RJ, Dusun II Wiradadi, Wiradadi, Kec. Sokaraja, Kabupaten Banyumas, Jawa Tengah 53181",
-                mapLink: "teluk/?lat=-7.4398&lng=109.2352&zoom=16&place=Bukit Cinta",
-                initialRating: 3.5,
-                initialReviews: 28
-            },
-            4: {
-                name: "Terminal Bulupitu",
-                image: "../img/terminal-pwt.jpeg",
-                description: "Terminal Bulupitu di Purwokerto secara resmi berdiri pada 6 April 2006, ketika terminal bus dipindahkan dari lokasi lama ke Bulupitu sebagai terminal tipe A yang melayani angkutan kota, pedesaan, serta angkutan antarkota dalam dan antar provinsi. Terminal ini menjadi pusat transportasi utama di wilayah Banyumas dan sekitarnya. Meskipun lebih berfungsi sebagai terminal transportasi, bangunannya memiliki nilai sejarah sebagai titik penting perkembangan transportasi di Purwokerto.",
-                address: "H744+HHM, Karanggayam, Teluk, Kec. Purwokerto Sel., Kabupaten Banyumas, Jawa Tengah 53145",
-                mapLink: "teluk/?lat=-7.4465&lng=109.2428&zoom=16&place=Terminal Bulupitu",
-                initialRating: 2.8,
-                initialReviews: 51
-            }
-        };
-
-        // Reviews data (simulated - in real app this would come from a database)
-        let reviewsData = {
-            1: [
-                { id: 1, name: "Budi Santoso", rating: 5, comment: "Taman yang sangat nyaman dan bersih. Cocok untuk keluarga!", date: "2024-03-15" },
-                { id: 2, name: "Sari Indah", rating: 4, comment: "Fasilitas lengkap, tapi area bermain anak perlu perawatan lebih.", date: "2024-03-10" },
-                { id: 3, name: "Agus Prasetyo", rating: 4, comment: "Tempat favorit untuk jogging di pagi hari. Udara segar!", date: "2024-03-05" }
-            ],
-            2: [
-                { id: 1, name: "Dewi Lestari", rating: 5, comment: "Taman terbaik di Purwokerto! Sangat terawat dan asri.", date: "2024-03-18" },
-                { id: 2, name: "Rudi Hartono", rating: 5, comment: "Anak-anak sangat senang bermain di sini. Keamanan terjaga.", date: "2024-03-12" }
-            ],
-            3: [
-                { id: 1, name: "Fajar Nugroho", rating: 4, comment: "Pemandangan indah, tapi akses jalan agak sulit.", date: "2024-03-14" },
-                { id: 2, name: "Maya Sari", rating: 3, comment: "Tempat romantis untuk pasangan, tapi kurang fasilitas.", date: "2024-03-08" }
-            ],
-            4: [
-                { id: 1, name: "Joko Widodo", rating: 3, comment: "Terminal cukup luas tapi kadang ramai dan berisik.", date: "2024-03-16" },
-                { id: 2, name: "Linda Susanti", rating: 2, comment: "Parkir agak sempit, perlu penataan ulang.", date: "2024-03-09" }
-            ]
-        };
-
-        // Initialize localStorage if not exists
-        function initializeReviewsStorage() {
-            if (!localStorage.getItem('geoportalReviews')) {
-                localStorage.setItem('geoportalReviews', JSON.stringify(reviewsData));
-            } else {
-                reviewsData = JSON.parse(localStorage.getItem('geoportalReviews'));
-            }
-        }
-
-        // Save reviews to localStorage
-        function saveReviewsToStorage() {
-            localStorage.setItem('geoportalReviews', JSON.stringify(reviewsData));
-        }
-
-        // Calculate average rating
-        function calculateAverageRating(placeId) {
-            const reviews = reviewsData[placeId] || [];
-            if (reviews.length === 0) return placesData[placeId]?.initialRating || 0;
-            
-            const total = reviews.reduce((sum, review) => sum + review.rating, 0);
-            return (total / reviews.length).toFixed(1);
-        }
-
-        // Get total reviews
-        function getTotalReviews(placeId) {
-            const reviews = reviewsData[placeId] || [];
-            return reviews.length;
-        }
-
-        // Get rating distribution
-        function getRatingDistribution(placeId) {
-            const reviews = reviewsData[placeId] || [];
-            const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
-            
-            reviews.forEach(review => {
-                if (review.rating >= 1 && review.rating <= 5) {
-                    distribution[review.rating]++;
-                }
-            });
-            
-            return distribution;
-        }
-
-        // Render stars based on rating
-       // Update fungsi renderStars untuk menggunakan struktur HTML Anda
-function renderStars(rating, containerId, isEditable = false) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    // Clear existing stars
-    container.innerHTML = '';
-    
-    // Create stars based on rating
-    for (let i = 1; i <= 5; i++) {
-        const star = document.createElement('span');
-        star.className = 'star';
-        
-        if (i <= Math.floor(rating)) {
-            star.classList.add('filled');
-        } else if (i === Math.floor(rating) + 1 && rating % 1 >= 0.3) {
-            star.classList.add('filled');
-            star.style.opacity = '0.6'; // For half stars
-        }
-        
-        star.textContent = '★';
-        
-        // Add click handler if editable
-        if (isEditable) {
-            star.classList.add('star-input');
-            star.dataset.rating = i;
-            star.style.cursor = 'pointer';
-        }
-        
-        container.appendChild(star);
-    }
-}
-
-        // Render rating distribution
-       // Update rating distribution rendering
-function renderRatingDistribution(placeId) {
-    const container = document.getElementById('ratingDistribution');
-    if (!container) return;
-    
-    const distribution = getRatingDistribution(placeId);
-    const totalReviews = getTotalReviews(placeId);
-    
-    container.innerHTML = '';
-    
-    // Create bars for each rating (5 to 1)
-    for (let i = 5; i >= 1; i--) {
-        const percentage = totalReviews > 0 ? (distribution[i] / totalReviews * 100) : 0;
-        
-        const bar = document.createElement('div');
-        bar.className = 'rating-bar';
-        
-        bar.innerHTML = `
-            <div class="rating-label">${i} ★</div>
-            <div class="rating-progress">
-                <div class="rating-progress-fill" style="width: ${percentage}%"></div>
-            </div>
-            <div class="rating-count">${distribution[i]}</div>
-        `;
-        
-        container.appendChild(bar);
-    }
-}
-
-        // Render reviews list
-        function renderReviewsList(placeId) {
-            const container = document.getElementById('reviewsList');
-            if (!container) return;
-            
-            const reviews = reviewsData[placeId] || [];
-            
-            if (reviews.length === 0) {
-                container.innerHTML = '<p>Belum ada ulasan. Jadilah yang pertama memberikan ulasan!</p>';
-                return;
-            }
-            
-            container.innerHTML = '';
-            
-            // Sort reviews by date (newest first)
-            const sortedReviews = [...reviews].sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            sortedReviews.forEach(review => {
-                const reviewElement = document.createElement('div');
-                reviewElement.className = 'review-item';
-                
-                // Format date
-                const date = new Date(review.date);
-                const formattedDate = date.toLocaleDateString('id-ID', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                });
-                
-                // Render stars for this review
-                let starsHtml = '';
-                for (let i = 1; i <= 5; i++) {
-                    starsHtml += `<span class="star ${i <= review.rating ? 'filled' : ''}">★</span>`;
-                }
-                
-                reviewElement.innerHTML = `
-                    <div class="review-header">
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">${review.name}</div>
-                            <div class="review-date">${formattedDate}</div>
-                        </div>
-                        <div class="review-rating">
-                            ${starsHtml}
-                        </div>
-                    </div>
-                    <p class="review-comment">${review.comment}</p>
-                `;
-                
-                container.appendChild(reviewElement);
-            });
-        }
-
-        // Update rating display on card
-        function updateCardRating(placeId) {
-            const card = document.querySelector(`.feature-card[data-place="${placeId}"]`);
-            if (!card) return;
-            
-            const averageRating = calculateAverageRating(placeId);
-            const totalReviews = getTotalReviews(placeId);
-            
-            const ratingContainer = card.querySelector('.place-rating');
-            if (ratingContainer) {
-                const starsContainer = ratingContainer.querySelector('.stars');
-                const ratingValue = ratingContainer.querySelector('.rating-value');
-                const reviewCount = ratingContainer.querySelector('.review-count');
-                
-                if (starsContainer) {
-                    starsContainer.innerHTML = '';
-                    const fullStars = Math.floor(averageRating);
-                    
-                    for (let i = 1; i <= 5; i++) {
-                        const star = document.createElement('span');
-                        star.className = 'star';
-                        if (i <= fullStars) {
-                            star.classList.add('filled');
-                        }
-                        star.textContent = '★';
-                        starsContainer.appendChild(star);
-                    }
-                }
-                
-                if (ratingValue) ratingValue.textContent = averageRating;
-                if (reviewCount) reviewCount.textContent = `(${totalReviews} ulasan)`;
-            }
-        }
-
-        // Star input handlers
-        let selectedRating = 0;
-
-        function handleStarHover(e) {
-            const rating = parseInt(e.target.dataset.rating);
-            highlightStars(rating);
-            updateRatingText(rating);
-        }
-
-        function handleStarClick(e) {
-            selectedRating = parseInt(e.target.dataset.rating);
-            highlightStars(selectedRating);
-            updateRatingText(selectedRating);
-            document.getElementById('selectedRating').value = selectedRating;
-        }
-
-        function highlightStars(rating) {
-            const stars = document.querySelectorAll('#ratingStarsInput .star-input');
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
-            });
-        }
-
-        function updateRatingText(rating) {
-            const texts = [
-                "Pilih rating dengan mengklik bintang",
-                "Kurang memuaskan",
-                "Cukup memuaskan",
-                "Baik",
-                "Sangat baik",
-                "Luar biasa!"
-            ];
-            document.getElementById('ratingText').textContent = texts[rating];
-        }
-
-        // Reset star input
-        function resetStarInput() {
-            selectedRating = 0;
-            highlightStars(0);
-            updateRatingText(0);
-            document.getElementById('selectedRating').value = 0;
-            document.getElementById('reviewerName').value = '';
-            document.getElementById('reviewComment').value = '';
-        }
-    // Update star rating functionality
-function initStarRating() {
-    const starInputs = document.querySelectorAll('.star-input');
-    const ratingText = document.querySelector('.star-rating-text');
-    const selectedRatingInput = document.getElementById('selectedRating');
-    
-    const ratingTexts = [
-        "Pilih rating dengan mengklik bintang",
-        "Kurang memuaskan",
-        "Cukup memuaskan",
-        "Baik",
-        "Sangat baik",
-        "Luar biasa!"
-    ];
-    
-    starInputs.forEach(star => {
-        star.addEventListener('change', function() {
-            const rating = parseInt(this.value);
-            ratingText.textContent = ratingTexts[rating];
-            selectedRatingInput.value = rating;
-        });
-        
-        // Add hover effect
-        star.addEventListener('mouseenter', function() {
-            const rating = parseInt(this.value);
-            ratingText.textContent = ratingTexts[rating];
-        });
-    });
-    
-    // Reset on form cancel
-    document.getElementById('cancelReviewForm')?.addEventListener('click', function() {
-        ratingText.textContent = ratingTexts[0];
-        selectedRatingInput.value = 0;
-        starInputs.forEach(star => star.checked = false);
-    });
-}
-
-// Panggil fungsi ini saat modal dibuka
-function openModal(placeId) {
-    // ... existing code ...
-    initStarRating();
-    // ... existing code ...
-}
-    // Tambahkan ini di JavaScript Anda
-function applyConsistentModalStyles() {
-    const modal = document.getElementById('placeModal');
-    const modalContent = modal.querySelector('.modal-content');
-    
-    if (!modal || !modalContent) return;
-    
-    // Force apply base styles
-    modal.style.cssText = `
-        display: flex !important;
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        background: rgba(0,0,0,0.85) !important;
-        z-index: 9999 !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 20px !important;
-        overflow-y: auto !important;
-    `;
-    
-    modalContent.style.cssText = `
-        background: white !important;
-        border-radius: 20px !important;
-        overflow: hidden !important;
-        box-shadow: 0 30px 80px rgba(0,0,0,0.4) !important;
-        max-height: 90vh !important;
-        overflow-y: auto !important;
-        width: 90% !important;
-        max-width: 800px !important;
-        margin: 0 auto !important;
-    `;
-    
-    console.log('Modal styles forced for consistency');
-}
-
-// Panggil fungsi ini saat modal dibuka
-function openModal(placeId) {
-    // ... existing code ...
-    
-    // Force apply styles
-    setTimeout(applyConsistentModalStyles, 10);
-    
-    // ... rest of your code ...
-}
-
-// Juga panggil saat window resize
-window.addEventListener('resize', function() {
-    const modal = document.getElementById('placeModal');
-    if (modal && window.getComputedStyle(modal).display !== 'none') {
-        applyConsistentModalStyles();
-    }
-});
-
-        // Elemen modal
-        const modal = document.getElementById('placeModal');
-        const closeModalBtn = document.getElementById('closeModal');
-        const closeModalBtn2 = document.getElementById('closeModalBtn');
-        const viewOnMapBtn = document.getElementById('viewOnMap');
-        const openReviewFormBtn = document.getElementById('openReviewForm');
-        const reviewForm = document.getElementById('reviewForm');
-        const cancelReviewFormBtn = document.getElementById('cancelReviewForm');
-        const newReviewForm = document.getElementById('newReviewForm');
-        
-        // Elemen konten modal
-        const modalPlaceName = document.getElementById('modalPlaceName');
-        const modalPlaceImage = document.getElementById('modalPlaceImage');
-        const modalPlaceDescription = document.getElementById('modalPlaceDescription');
-        const modalPlaceAddress = document.getElementById('modalPlaceAddress');
-        const averageRatingElement = document.getElementById('averageRating');
-        const averageStarsElement = document.getElementById('averageStars');
-        const totalReviewsElement = document.getElementById('totalReviews');
-        
-        // Variabel untuk menyimpan data tempat yang sedang dilihat
-        let currentPlaceId = null;
-        let currentPlaceData = null;
-
-        // Fungsi untuk membuka modal
-        function openModal(placeId) {
-            const placeData = placesData[placeId];
-            if (!placeData) return;
-            
-            currentPlaceId = placeId;
-            currentPlaceData = placeData;
-            
-            // Isi konten modal
-            modalPlaceName.textContent = placeData.name;
-            modalPlaceImage.src = placeData.image;
-            modalPlaceImage.alt = placeData.name;
-            modalPlaceDescription.textContent = placeData.description;
-            modalPlaceAddress.textContent = placeData.address;
-            
-            // Update rating information
-            const averageRating = calculateAverageRating(placeId);
-            const totalReviews = getTotalReviews(placeId);
-            
-            averageRatingElement.textContent = averageRating;
-            totalReviewsElement.textContent = `${totalReviews} ulasan`;
-            
-            // Render stars
-            renderStars(averageRating, 'averageStars');
-            
-            // Render rating distribution
-            renderRatingDistribution(placeId);
-            
-            // Render reviews list
-            renderReviewsList(placeId);
-            
-            // Hide review form
-            reviewForm.style.display = 'none';
-            
-            // Reset star input
-            resetStarInput();
-            
-            // Tampilkan modal
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Fungsi untuk menutup modal
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-            currentPlaceId = null;
-            currentPlaceData = null;
-        }
-
-        // Event listener untuk kartu tempat bersejarah
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('click', function(e) {
-                // Cegah klik pada link alamat agar tidak membuka modal
-                if (e.target.tagName === 'A' || e.target.closest('a')) {
-                    return;
-                }
-                
-                const placeId = this.getAttribute('data-place');
-                openModal(placeId);
-            });
-        });
-
-        // Event listener untuk tombol tutup modal
-        closeModalBtn.addEventListener('click', closeModal);
-        closeModalBtn2.addEventListener('click', closeModal);
-        
-        // Event listener untuk tombol lihat di peta
-        viewOnMapBtn.addEventListener('click', function() {
-            if (currentPlaceData && currentPlaceData.mapLink) {
-                window.location.href = currentPlaceData.mapLink;
-            }
-        });
-
-        // Event listener untuk tombol tambah ulasan
-        openReviewFormBtn.addEventListener('click', function() {
-            reviewForm.style.display = 'block';
-            this.style.display = 'none';
-        });
-
-        // Event listener untuk tombol batal form ulasan
-        cancelReviewFormBtn.addEventListener('click', function() {
-            reviewForm.style.display = 'none';
-            openReviewFormBtn.style.display = 'flex';
-            resetStarInput();
-        });
-
-        // Event listener untuk form ulasan baru
-        newReviewForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('reviewerName').value.trim();
-            const rating = parseInt(document.getElementById('selectedRating').value);
-            const comment = document.getElementById('reviewComment').value.trim();
-            
-            if (!name || !rating || rating < 1 || rating > 5 || !comment) {
-                alert('Harap isi semua field dengan benar!');
-                return;
-            }
-            
-            // Add new review
-            const newReview = {
-                id: Date.now(),
-                name: name,
-                rating: rating,
-                comment: comment,
-                date: new Date().toISOString().split('T')[0]
-            };
-            
-            if (!reviewsData[currentPlaceId]) {
-                reviewsData[currentPlaceId] = [];
-            }
-            
-            reviewsData[currentPlaceId].push(newReview);
-            saveReviewsToStorage();
-            
-            // Update UI
-            const averageRating = calculateAverageRating(currentPlaceId);
-            const totalReviews = getTotalReviews(currentPlaceId);
-            
-            averageRatingElement.textContent = averageRating;
-            totalReviewsElement.textContent = `${totalReviews} ulasan`;
-            renderStars(averageRating, 'averageStars');
-            renderRatingDistribution(currentPlaceId);
-            renderReviewsList(currentPlaceId);
-            updateCardRating(currentPlaceId);
-            
-            // Reset form
-            resetStarInput();
-            reviewForm.style.display = 'none';
-            openReviewFormBtn.style.display = 'flex';
-            
-            alert('Ulasan Anda telah berhasil dikirim! Terima kasih.');
-        });
-
-        // Tutup modal saat klik di luar konten modal
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-// Counter Animation
-// ===== ANIMASI COUNTER YANG DIPERBAIKI =====
-function animateCounters() {
-    const counters = document.querySelectorAll('.stat-number');
-    
-    counters.forEach(counter => {
-        const targetValue = counter.getAttribute('data-count');
-        
-        // Reset ke 0 dulu
-        counter.textContent = '0';
-        
-        // Periksa jika ada tanda +
-        if (targetValue.includes('+')) {
-            const numericValue = parseInt(targetValue);
-            animateCounter(counter, numericValue, true);
-        } else {
-            const numericValue = parseInt(targetValue);
-            if (!isNaN(numericValue)) {
-                animateCounter(counter, numericValue, false);
-            }
-        }
-    });
-}
-
-function animateCounter(counter, target, hasPlus = false) {
-    const duration = 1500;
-    const frameDuration = 16;
-    const totalFrames = Math.round(duration / frameDuration);
-    
-    let frame = 0;
-    
-    const timer = setInterval(() => {
-        frame++;
-        const progress = frame / totalFrames;
-        
-        // Fungsi easing
-        const easeOut = progress * (2 - progress);
-        const currentValue = Math.round(target * easeOut);
-        
-        // Update counter
-        if (hasPlus && frame === totalFrames) {
-            counter.textContent = currentValue + '+';
-        } else {
-            counter.textContent = currentValue;
-        }
-        
-        // Selesai
-        if (frame >= totalFrames) {
-            clearInterval(timer);
-            if (hasPlus) {
-                counter.textContent = target + '+';
-            }
-        }
-    }, frameDuration);
-}
-
-// ===== SCROLL PROGRESS INDICATOR =====
-function updateScrollProgress() {
-    const scrollProgress = document.getElementById('scrollProgress');
-    if (!scrollProgress) return;
-    
-    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    
-    // Hindari pembagian dengan nol
-    if (windowHeight === 0) return;
-    
-    const scrolled = (window.scrollY / windowHeight) * 100;
-    scrollProgress.style.width = Math.min(100, Math.max(0, scrolled)) + '%';
-}
-
-// ===== BACK TO TOP BUTTON =====
-function setupBackToTop() {
-    const backToTop = document.getElementById('backToTop');
-    if (!backToTop) return;
-    
-    // Fungsi toggle visibility
-    const toggleVisibility = () => {
-        if (window.scrollY > 500) {
-            backToTop.classList.add('visible');
-        } else {
-            backToTop.classList.remove('visible');
-        }
-    };
-    
-    // Event listener untuk scroll
-    window.addEventListener('scroll', toggleVisibility);
-    
-    // Event listener untuk klik
-    backToTop.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    // Inisialisasi
-    toggleVisibility();
-}
-
-// ===== ANIMASI ELEMEN SAAT SCROLL =====
-function setupScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Tambahkan class untuk animasi
-                entry.target.classList.add('animate-in');
-                
-                // Hentikan observasi setelah animasi pertama
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    // Observasi elemen yang akan dianimasikan
-    const elementsToAnimate = document.querySelectorAll(
-        '.feature-card, .map-container, .quick-access-card, .stat-item, .stats-header'
-    );
-    
-    elementsToAnimate.forEach(el => {
-        observer.observe(el);
-    });
-}
-
-// ===== INISIALISASI SEMUA FITUR =====
-function initializeFeatures() {
-    console.log('Menginisialisasi fitur...');
-    
-    // 1. Setup animasi counter
-    animateCounters();
-    
-    // 2. Setup scroll progress indicator
-    updateScrollProgress();
-    
-    // 3. Setup back to top button
-    setupBackToTop();
-    
-    // 4. Setup scroll animations
-    setupScrollAnimations();
-    
-    // 5. Event listener untuk scroll progress
-    window.addEventListener('scroll', updateScrollProgress);
-    
-    // 6. Event listener untuk resize (update progress)
-    window.addEventListener('resize', updateScrollProgress);
-    
-    console.log('Semua fitur diinisialisasi');
-}
-
-// ===== EVENT LISTENER UNTUK DOM CONTENT LOADED =====
-document.addEventListener('DOMContentLoaded', function() {
-    // Tunggu sedikit agar DOM benar-benar siap
-    setTimeout(initializeFeatures, 100);
-    
-    // Juga jalankan saat semua resource selesai dimuat
-    window.addEventListener('load', function() {
-        // Pastikan counter berjalan dengan benar
-        const counters = document.querySelectorAll('.stat-number');
-        counters.forEach(counter => {
-            const value = counter.getAttribute('data-count');
-            console.log(`Counter: ${value} -> ${counter.textContent}`);
-        });
-    });
-});
-
-// ===== FALLBACK UNTUK BROWSER LAMA =====
-// Jika IntersectionObserver tidak didukung
-if (!('IntersectionObserver' in window)) {
-    console.warn('IntersectionObserver tidak didukung, menggunakan fallback');
-    
-    // Animasikan counter langsung
-    document.addEventListener('DOMContentLoaded', function() {
-         setTimeout(animateCounters, 500);
-    
-    // Animasikan saat scroll ke bagian stats
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounters();
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    const statsSection = document.querySelector('.stats-section');
-    if (statsSection) observer.observe(statsSection);
-});
-}
-</script>
 </body>
 </html>

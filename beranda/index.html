@@ -1810,6 +1810,61 @@ function openModal(placeId) {
     initStarRating();
     // ... existing code ...
 }
+    // Tambahkan ini di JavaScript Anda
+function applyConsistentModalStyles() {
+    const modal = document.getElementById('placeModal');
+    const modalContent = modal.querySelector('.modal-content');
+    
+    if (!modal || !modalContent) return;
+    
+    // Force apply base styles
+    modal.style.cssText = `
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background: rgba(0,0,0,0.85) !important;
+        z-index: 9999 !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 20px !important;
+        overflow-y: auto !important;
+    `;
+    
+    modalContent.style.cssText = `
+        background: white !important;
+        border-radius: 20px !important;
+        overflow: hidden !important;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.4) !important;
+        max-height: 90vh !important;
+        overflow-y: auto !important;
+        width: 90% !important;
+        max-width: 800px !important;
+        margin: 0 auto !important;
+    `;
+    
+    console.log('Modal styles forced for consistency');
+}
+
+// Panggil fungsi ini saat modal dibuka
+function openModal(placeId) {
+    // ... existing code ...
+    
+    // Force apply styles
+    setTimeout(applyConsistentModalStyles, 10);
+    
+    // ... rest of your code ...
+}
+
+// Juga panggil saat window resize
+window.addEventListener('resize', function() {
+    const modal = document.getElementById('placeModal');
+    if (modal && window.getComputedStyle(modal).display !== 'none') {
+        applyConsistentModalStyles();
+    }
+});
 
         // Elemen modal
         const modal = document.getElementById('placeModal');

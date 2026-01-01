@@ -440,10 +440,9 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+@media (min-width: 1024px) {
+  .container { max-width: 1200px; margin: auto; }
+  /* Atur ulang layout, font size, padding, dll */
 }
 
 @media (max-width: 768px) {
@@ -1905,3 +1904,482 @@ textarea {
     }
 }
 </style>
+    /* =========================================== */
+/* ===== PERBAIKAN RESPONSIF UNTUK DESKTOP ===== */
+/* =========================================== */
+
+/* CONTAINER UTAMA UNTUK SEMUA HALAMAN */
+.main-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ===== DESKTOP BESAR (≥1400px) ===== */
+@media (min-width: 1400px) {
+    /* HEADER */
+    .header {
+        padding: 1.5rem 5rem;
+    }
+    
+    .logo-container {
+        gap: 40px;
+    }
+    
+    .logo-geoportal-main {
+        font-size: 2.2rem;
+    }
+    
+    .nav {
+        gap: 20px;
+    }
+    
+    .nav a {
+        padding: 1rem 2.2rem;
+        font-size: 1.2rem;
+    }
+    
+    /* HERO SECTION */
+    .hero {
+        padding: 8rem 5rem;
+        margin: 3rem auto 4rem;
+        border-radius: 24px;
+        max-width: 1400px;
+    }
+    
+    .hero h2 {
+        font-size: 4.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1.5rem;
+        max-width: 900px;
+        margin-bottom: 3rem;
+    }
+    
+    .cta-button {
+        padding: 1.5rem 4rem;
+        font-size: 1.4rem;
+    }
+    
+    /* FEATURES - 4 KOLOM */
+    .features {
+        padding: 6rem 5rem;
+        max-width: 1400px;
+        margin: 0 auto 6rem;
+        border-radius: 24px;
+    }
+    
+    .features h3 {
+        font-size: 2.8rem;
+        margin-bottom: 4rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3.5rem;
+    }
+    
+    .feature-card {
+        border-radius: 20px;
+    }
+    
+    .place-image {
+        height: 250px;
+    }
+    
+    .feature-card h4 {
+        font-size: 1.6rem;
+    }
+    
+    /* QUICK ACCESS - 4 KOLOM */
+    .quick-access {
+        padding: 6rem 5rem;
+        max-width: 1400px;
+        margin: 0 auto 7rem;
+    }
+    
+    .quick-access h3 {
+        font-size: 2.8rem;
+        margin-bottom: 4rem;
+    }
+    
+    .quick-access-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3.5rem;
+    }
+    
+    .quick-access-card {
+        padding: 3rem 2.5rem;
+        border-radius: 20px;
+    }
+    
+    .quick-access-card i {
+        font-size: 3.5rem;
+    }
+    
+    .quick-access-card h4 {
+        font-size: 1.6rem;
+    }
+    
+    /* STATS SECTION - 4 KOLOM */
+    .stats-section {
+        padding: 7rem 5rem;
+    }
+    
+    .section-title {
+        font-size: 2.8rem;
+    }
+    
+    .section-subtitle {
+        font-size: 1.2rem;
+        max-width: 800px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3.5rem;
+        max-width: 1400px;
+    }
+    
+    .stat-card {
+        padding: 3rem;
+        border-radius: 24px;
+    }
+    
+    .stat-icon {
+        width: 90px;
+        height: 90px;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 4.5rem;
+    }
+    
+    .stat-title {
+        font-size: 1.4rem;
+    }
+    
+    /* MAP PREVIEW */
+    .map-preview {
+        padding: 5rem;
+        max-width: 1400px;
+        margin: 0 auto 7rem;
+    }
+    
+    .map-preview h3 {
+        font-size: 2.8rem;
+        margin-bottom: 3rem;
+    }
+    
+    .map-container {
+        border-radius: 20px;
+    }
+    
+    #mainMap {
+        height: 650px;
+    }
+    
+    .map-header {
+        padding: 2rem 3rem;
+    }
+    
+    .map-header h4 {
+        font-size: 1.5rem;
+    }
+    
+    .map-action-btn {
+        padding: 0.8rem 1.8rem;
+        font-size: 1.1rem;
+    }
+    
+    .map-info {
+        padding: 2rem 3rem;
+    }
+    
+    .map-links {
+        gap: 20px;
+    }
+    
+    .map-link-btn {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+    }
+    
+    /* FOOTER */
+    .footer {
+        padding: 4rem 5rem;
+    }
+    
+    .footer p {
+        font-size: 1.1rem;
+    }
+    
+    .footer-links {
+        gap: 4rem;
+        margin-top: 2rem;
+    }
+    
+    .footer-links a {
+        padding: 0.8rem 1.5rem;
+        font-size: 1.1rem;
+    }
+    
+    /* BACK TO TOP */
+    .back-to-top {
+        width: 60px;
+        height: 60px;
+        font-size: 1.8rem;
+        bottom: 40px;
+        right: 40px;
+    }
+}
+
+/* ===== DESKTOP STANDAR (≥1200px) ===== */
+@media (min-width: 1200px) and (max-width: 1399px) {
+    .header {
+        padding: 1.5rem 4rem;
+    }
+    
+    .hero {
+        padding: 7rem 4rem;
+        margin: 3rem auto;
+        border-radius: 20px;
+        max-width: 1200px;
+    }
+    
+    .hero h2 {
+        font-size: 4rem;
+    }
+    
+    .hero p {
+        font-size: 1.4rem;
+        max-width: 850px;
+    }
+    
+    .features-grid,
+    .quick-access-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 3rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3rem;
+    }
+    
+    .features,
+    .quick-access,
+    .stats-section,
+    .map-preview {
+        padding: 5rem 4rem;
+        max-width: 1200px;
+    }
+    
+    #mainMap {
+        height: 600px;
+    }
+}
+
+/* ===== DESKTOP KECIL (≥1024px) ===== */
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .header {
+        padding: 1.5rem 3rem;
+    }
+    
+    .hero {
+        padding: 6rem 3rem;
+        margin: 3rem auto;
+        border-radius: 18px;
+        max-width: 1100px;
+    }
+    
+    .hero h2 {
+        font-size: 3.5rem;
+    }
+    
+    .features-grid,
+    .quick-access-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+    
+    .features,
+    .quick-access,
+    .stats-section,
+    .map-preview {
+        padding: 4rem 3rem;
+        max-width: 1100px;
+    }
+    
+    #mainMap {
+        height: 550px;
+    }
+    
+    .stat-card {
+        padding: 2rem;
+    }
+    
+    .stat-number {
+        font-size: 3.8rem;
+    }
+}
+
+/* ===== FIX UNTUK TABLET LANDSCAPE ===== */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+    .header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .logo-container {
+        flex-direction: row;
+        gap: 20px;
+    }
+    
+    .nav {
+        flex-wrap: nowrap;
+        width: auto;
+    }
+    
+    .hero {
+        padding: 5rem 3rem;
+    }
+    
+    .hero h2 {
+        font-size: 2.8rem;
+    }
+    
+    .features-grid,
+    .quick-access-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+}
+
+/* ===== PERBAIKAN UNTUK LAYAR SANGAT LEBAR ===== */
+@media (min-width: 1600px) {
+    .main-container {
+        max-width: 1500px;
+    }
+    
+    .hero {
+        max-width: 1500px;
+    }
+    
+    .features,
+    .quick-access,
+    .stats-grid,
+    .map-preview {
+        max-width: 1500px;
+    }
+    
+    .features-grid,
+    .quick-access-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4rem;
+    }
+    
+    .hero h2 {
+        font-size: 5rem;
+    }
+}
+
+/* ===== PERBAIKAN KONTEN TULISAN DI DESKTOP ===== */
+@media (min-width: 1024px) {
+    /* Optimalkan ukuran font untuk readability */
+    body {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+    
+    h1, h2, h3, h4 {
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+    
+    p {
+        line-height: 1.8;
+        max-width: 75ch; /* Membatasi lebar paragraf untuk readability */
+    }
+    
+    /* Pastikan kontainer utama ada untuk semua elemen */
+    section:not(.hero):not(.footer):not(.stats-section) {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Perbaikan spacing antar section */
+    section {
+        margin-bottom: 4rem;
+    }
+}
+
+/* ===== FIX UNTUK GAMBAR DAN MEDIA ===== */
+@media (min-width: 768px) {
+    img, video, iframe {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+    
+    /* Pastikan gambar tidak melebihi container */
+    .place-image img,
+    .modal-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+/* ===== PERBAIKAN MODAL UNTUK DESKTOP ===== */
+@media (min-width: 1024px) {
+    #placeModal .modal-content {
+        max-width: 900px !important;
+        margin: 2rem auto !important;
+    }
+    
+    .modal-header h3 {
+        font-size: 32px !important;
+    }
+    
+    .modal-image {
+        height: 350px !important;
+    }
+    
+    .modal-rating-summary {
+        grid-template-columns: 1fr 2fr !important;
+        gap: 30px !important;
+    }
+    
+    .average-rating-value {
+        font-size: 56px !important;
+    }
+}
+
+/* ===== HIDDEN ELEMENTS PADA DESKTOP ===== */
+@media (min-width: 1024px) {
+    .mobile-only {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1023px) {
+    .desktop-only {
+        display: none !important;
+    }
+}

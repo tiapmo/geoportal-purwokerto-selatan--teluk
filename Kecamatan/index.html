@@ -143,6 +143,495 @@
             margin: 0;
         }
         </style>
+		<style>
+        /* ===== STYLE KHUSUS HALAMAN KECAMATAN ===== */
+        .kecamatan-page {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin: 2rem 0 3rem;
+        }
+        
+        .page-header h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .page-header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Peta Utama Kecamatan */
+        .main-kecamatan-map {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            margin-bottom: 3rem;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .map-title-bar {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .map-title-bar h2 {
+            margin: 0;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .map-export-options {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .export-btn-small {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .export-btn-small:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Container Peta Besar */
+        .big-map-container {
+            padding: 2rem;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+        }
+        
+        .big-map-wrapper {
+            max-width: 100%;
+            max-height: 500px;
+            position: relative;
+        }
+        
+        .big-map {
+            max-width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Kontrol Peta */
+        .big-map-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .big-map-btn {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .big-map-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        /* Informasi di bawah peta */
+        .map-info-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            padding: 1.5rem 2rem;
+            background: white;
+        }
+        
+        .map-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-card {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* Legenda */
+        .legend-sidebar {
+            background: var(--light-bg);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .legend-sidebar h4 {
+            margin-top: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* ===== BAGIAN 7 DESA ===== */
+        .desa-section {
+            margin: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title h2 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .section-title p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Grid 7 Desa */
+        .desa-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        /* Kartu Desa */
+        .desa-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-subtle);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .desa-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--secondary);
+        }
+        
+        .desa-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+        }
+        
+        .desa-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            backdrop-filter: blur(5px);
+        }
+        
+        .desa-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .desa-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .desa-title-text h3 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .desa-title-text p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        /* Peta Desa Mini */
+        .desa-map-preview {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+        }
+        
+        .mini-map {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .desa-card:hover .mini-map {
+            transform: scale(1.03);
+        }
+        
+        /* Info Desa */
+        .desa-info {
+            padding: 1.2rem 1.5rem;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .desa-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .desa-stat {
+            text-align: center;
+        }
+        
+        .desa-stat-value {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .desa-stat-label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .desa-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+        
+        .feature-tag {
+            background: var(--light-bg);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            border: 1px solid var(--light-gray);
+        }
+        
+        /* Tombol Action */
+        .desa-actions {
+            padding: 0 1.5rem 1.5rem;
+        }
+        
+        .desa-btn {
+            display: block;
+            text-align: center;
+            background: var(--secondary);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .desa-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.3);
+        }
+        
+        /* Map Overview */
+        .map-overview {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            box-shadow: var(--shadow-subtle);
+        }
+        
+        .overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .overview-header h3 {
+            color: var(--primary);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .desa-list-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .desa-list-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0.8rem;
+            background: var(--light-bg);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .desa-list-item:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .desa-list-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--white);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .desa-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .map-info-row {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .desa-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-title-bar {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .map-export-options {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .big-map-container {
+                padding: 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .desa-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .desa-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
         <title></title>
     </head>
 <!-- Di bagian sebelum </body> -->
@@ -389,6 +878,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+    <!-- KONTEN UTAMA -->
+    <main class="kecamatan-page">
+        <!-- Header Halaman -->
+        <div class="page-header">
+            <h1><i class="fas fa-map"></i> Peta Kecamatan Purwokerto Selatan</h1>
+            <p>Visualisasi lengkap wilayah Kecamatan Purwokerto Selatan beserta 7 desa yang ada di dalamnya</p>
+        </div>
 
         <div id="map">
         </div>
@@ -1812,6 +2308,569 @@ document.addEventListener('DOMContentLoaded', function() {
             resetLabels([layer_JalanKecamatan_9,layer_JalanKabupaten_10,layer_JalanProvinsi_11,layer_Kelurahan_13]);
         });
 				   console.log('Halaman peta kecamatan siap');
+        });
+			  <!-- BAGIAN 2: 7 DESA DI KECAMATAN -->
+        <div class="desa-section">
+            <div class="section-title">
+                <h2><i class="fas fa-layer-group"></i> 7 Desa di Kecamatan</h2>
+                <p>Berikut adalah detail masing-masing desa yang ada di wilayah Kecamatan Purwokerto Selatan</p>
+            </div>
+            
+            <!-- Grid 7 Desa -->
+            <div class="desa-grid">
+                <!-- Desa 1: Teluk -->
+                <div class="desa-card">
+                    <div class="desa-header">
+                        <span class="desa-number">1</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-water"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Desa Teluk</h3>
+                                <p>Bagian Utara Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-teluk.png" 
+                             alt="Peta Desa Teluk" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">2.5 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">15.234</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">24 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Terminal</span>
+                            <span class="feature-tag">Puskesmas</span>
+                            <span class="feature-tag">5 Sekolah</span>
+                            <span class="feature-tag">Pasar</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="../teluk/" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desa 2: Karanglewas -->
+                <div class="desa-card">
+                    <div class="desa-header" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
+                        <span class="desa-number">2</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Desa Karanglewas</h3>
+                                <p>Bagian Timur Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-karanglewas.png" 
+                             alt="Peta Desa Karanglewas" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">3.2 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">12.567</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">18 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Pertanian</span>
+                            <span class="feature-tag">Wisata Alam</span>
+                            <span class="feature-tag">3 Sekolah</span>
+                            <span class="feature-tag">Masjid Besar</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="#" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desa 3: Berkoh -->
+                <div class="desa-card">
+                    <div class="desa-header" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
+                        <span class="desa-number">3</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-tree"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Desa Berkoh</h3>
+                                <p>Bagian Tengah Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-berkoh.png" 
+                             alt="Peta Desa Berkoh" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">2.8 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">18.432</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">22 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Taman Satria</span>
+                            <span class="feature-tag">Kantor Kecamatan</span>
+                            <span class="feature-tag">8 Sekolah</span>
+                            <span class="feature-tag">Pusat Perbelanjaan</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="#" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desa 4: Purwokerto Kulon -->
+                <div class="desa-card">
+                    <div class="desa-header" style="background: linear-gradient(135deg, #E74C3C, #C0392B);">
+                        <span class="desa-number">4</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-city"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Purwokerto Kulon</h3>
+                                <p>Bagian Barat Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-pwk-kulon.png" 
+                             alt="Peta Desa Purwokerto Kulon" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">2.1 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">12.345</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">20 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Permukiman Padat</span>
+                            <span class="feature-tag">Pusat Bisnis</span>
+                            <span class="feature-tag">6 Sekolah</span>
+                            <span class="feature-tag">Rumah Sakit</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="#" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desa 5: Purwokerto Lor -->
+                <div class="desa-card">
+                    <div class="desa-header" style="background: linear-gradient(135deg, #3498DB, #2980B9);">
+                        <span class="desa-number">5</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Purwokerto Lor</h3>
+                                <p>Bagian Utara Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-pwk-lor.png" 
+                             alt="Peta Desa Purwokerto Lor" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">1.9 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">11.234</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">18 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Pemerintahan</span>
+                            <span class="feature-tag">Pendidikan</span>
+                            <span class="feature-tag">4 Sekolah</span>
+                            <span class="feature-tag">Perkantoran</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="#" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desa 6: Karangpucung -->
+                <div class="desa-card">
+                    <div class="desa-header" style="background: linear-gradient(135deg, #F39C12, #D35400);">
+                        <span class="desa-number">6</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Karangpucung</h3>
+                                <p>Bagian Selatan Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-karangpucung.png" 
+                             alt="Peta Desa Karangpucung" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">3.5 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">9.876</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">15 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Perbukitan</span>
+                            <span class="feature-tag">Perkebunan</span>
+                            <span class="feature-tag">2 Sekolah</span>
+                            <span class="feature-tag">Wisata</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="#" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Desa 7: Tanjung -->
+                <div class="desa-card">
+                    <div class="desa-header" style="background: linear-gradient(135deg, #16A085, #0E6655);">
+                        <span class="desa-number">7</span>
+                        <div class="desa-title">
+                            <div class="desa-icon">
+                                <i class="fas fa-umbrella-beach"></i>
+                            </div>
+                            <div class="desa-title-text">
+                                <h3>Tanjung</h3>
+                                <p>Bagian Barat Daya Kecamatan</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-map-preview">
+                        <img src="../img/peta-desa-tanjung.png" 
+                             alt="Peta Desa Tanjung" 
+                             class="mini-map">
+                    </div>
+                    
+                    <div class="desa-info">
+                        <div class="desa-stats">
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">2.3 km²</span>
+                                <span class="desa-stat-label">Luas Wilayah</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">8.765</span>
+                                <span class="desa-stat-label">Jiwa</span>
+                            </div>
+                            <div class="desa-stat">
+                                <span class="desa-stat-value">16 RT</span>
+                                <span class="desa-stat-label">Rukun Tetangga</span>
+                            </div>
+                        </div>
+                        
+                        <div class="desa-features">
+                            <span class="feature-tag">Pesisir</span>
+                            <span class="feature-tag">Perikanan</span>
+                            <span class="feature-tag">3 Sekolah</span>
+                            <span class="feature-tag">Pelabuhan</span>
+                        </div>
+                    </div>
+                    
+                    <div class="desa-actions">
+                        <a href="#" class="desa-btn">
+                            <i class="fas fa-map-marked-alt"></i> Lihat Peta Detail
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Overview Semua Desa -->
+            <div class="map-overview">
+                <div class="overview-header">
+                    <h3><i class="fas fa-globe-asia"></i> Overview Semua Desa</h3>
+                    <a href="#" class="export-btn-small">
+                        <i class="fas fa-download"></i> Download Semua Peta
+                    </a>
+                </div>
+                
+                <div class="desa-list-compact">
+                    <a href="../teluk/" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <div>
+                            <strong>Desa Teluk</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">2.5 km² • 15.234 Jiwa</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <div>
+                            <strong>Desa Karanglewas</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">3.2 km² • 12.567 Jiwa</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-tree"></i>
+                        </div>
+                        <div>
+                            <strong>Desa Berkoh</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">2.8 km² • 18.432 Jiwa</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-city"></i>
+                        </div>
+                        <div>
+                            <strong>Purwokerto Kulon</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">2.1 km² • 12.345 Jiwa</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div>
+                            <strong>Purwokerto Lor</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">1.9 km² • 11.234 Jiwa</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <div>
+                            <strong>Karangpucung</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">3.5 km² • 9.876 Jiwa</p>
+                        </div>
+                    </a>
+                    
+                    <a href="#" class="desa-list-item">
+                        <div class="desa-list-icon">
+                            <i class="fas fa-umbrella-beach"></i>
+                        </div>
+                        <div>
+                            <strong>Tanjung</strong>
+                            <p style="margin: 3px 0 0 0; font-size: 0.85rem; opacity: 0.8;">2.3 km² • 8.765 Jiwa</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2024 Geoportal Kecamatan Purwokerto Selatan</p>
+        <p>Dibuat dengan QGIS & Leaflet</p>
+        <div class="footer-links">
+            <a href="https://github.com/tiapmo" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+            <a href="mailto:contoh@email.com"><i class="fas fa-envelope"></i> Kontak</a>
+            <a href="../tentang/"><i class="fas fa-user-circle"></i> Tentang Kami</a>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Zoom Functionality untuk Peta Kecamatan
+        document.addEventListener('DOMContentLoaded', function() {
+            const kecamatanMap = document.getElementById('kecamatanMap');
+            const zoomInBtn = document.getElementById('zoomInBtn');
+            const zoomOutBtn = document.getElementById('zoomOutBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            
+            let currentScale = 1;
+            const minScale = 0.5;
+            const maxScale = 3;
+            const scaleStep = 0.2;
+            
+            // Zoom In
+            zoomInBtn.addEventListener('click', function() {
+                if (currentScale < maxScale) {
+                    currentScale += scaleStep;
+                    updateMapScale();
+                }
+            });
+            
+            // Zoom Out
+            zoomOutBtn.addEventListener('click', function() {
+                if (currentScale > minScale) {
+                    currentScale -= scaleStep;
+                    updateMapScale();
+                }
+            });
+            
+            // Reset
+            resetBtn.addEventListener('click', function() {
+                currentScale = 1;
+                updateMapScale();
+            });
+            
+            function updateMapScale() {
+                kecamatanMap.style.transform = `scale(${currentScale})`;
+                kecamatanMap.style.transformOrigin = 'center center';
+                
+                // Disable/enable buttons
+                zoomInBtn.disabled = currentScale >= maxScale;
+                zoomOutBtn.disabled = currentScale <= minScale;
+            }
+            
+            // Mouse wheel zoom
+            kecamatanMap.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                if (e.deltaY < 0) {
+                    // Scroll up - zoom in
+                    if (currentScale < maxScale) {
+                        currentScale += scaleStep;
+                        updateMapScale();
+                    }
+                } else {
+                    // Scroll down - zoom out
+                    if (currentScale > minScale) {
+                        currentScale -= scaleStep;
+                        updateMapScale();
+                    }
+                }
+            });
+            
+            // Drag functionality
+            let isDragging = false;
+            let startX, startY;
+            let translateX = 0, translateY = 0;
+            
+            kecamatanMap.addEventListener('mousedown', function(e) {
+                if (currentScale > 1) {
+                    isDragging = true;
+                    startX = e.clientX - translateX;
+                    startY = e.clientY - translateY;
+                    kecamatanMap.style.cursor = 'grabbing';
+                }
+            });
+            
+            document.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                
+                translateX = e.clientX - startX;
+                translateY = e.clientY - startY;
+                
+                kecamatanMap.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+            });
+            
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+                kecamatanMap.style.cursor = currentScale > 1 ? 'grab' : 'default';
+            });
+            
+            // Initialize
+            updateMapScale();
         });
         </script>        
     </body>

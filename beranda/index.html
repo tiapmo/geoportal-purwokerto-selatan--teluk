@@ -522,68 +522,354 @@
             transform: translateY(-2px);
         }
         
-        #mainMap {
-            height: 500px;
-            width: 100%;
-            border-radius: 0 0 var(--border-radius) var(--border-radius);
-        }
-        
-        .map-info {
-            padding: 1.5rem 2rem;
-            text-align: left;
-            background: var(--light-gray);
-            border-top: 1px solid var(--medium-gray);
-        }
-        
-        .map-info h5 {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.1rem;
-            margin-bottom: 0.8rem;
-            color: var(--primary);
-        }
-        
-        .map-info p {
-            color: var(--text-light);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-        
-        .map-links {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .map-link-btn {
-            background: var(--secondary);
-            color: white;
-            text-decoration: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .map-link-btn:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-subtle);
-        }
-        
-        .map-link-btn.outline {
-            background: transparent;
-            color: var(--secondary);
-            border: 2px solid var(--secondary);
-        }
-        
-        .map-link-btn.outline:hover {
-            background: var(--secondary);
-            color: white;
-        }
+      /* ==== GANTI DARI SINI ==== */
+/* Hapus #mainMap dan ganti dengan: */
 
+.map-image-container {
+    width: 100%;
+    height: 550px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f0f2f5;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.map-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-image {
+    max-width: 95%;
+    max-height: 95%;
+    object-fit: contain;
+    cursor: move;
+    transition: transform 0.2s ease;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.map-image:active {
+    cursor: grabbing;
+}
+
+/* Map controls */
+.map-controls {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+.zoom-btn {
+    width: 42px;
+    height: 42px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #374151;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+}
+
+.zoom-btn:hover {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.reset-view-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #374151;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.reset-view-btn:hover {
+    background: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+    transform: translateY(-1px);
+}
+
+/* Map Legend */
+.map-legend {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    padding: 0.8rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    max-width: 180px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(209, 213, 219, 0.5);
+}
+
+.legend-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #1A5276;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+}
+
+.legend-header i {
+    font-size: 0.9rem;
+}
+
+.legend-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.legend-text {
+    font-size: 0.8rem;
+    color: #374151;
+    line-height: 1.3;
+}
+        .map-info {
+    padding: 1.8rem 2rem;
+    text-align: left;
+    background: var(--white);
+}
+
+.map-info h5 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.map-info h5 i {
+    color: var(--secondary);
+    font-size: 1.1rem;
+}
+
+.map-info p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* Desa List */
+.desa-list {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    border: 1px solid #e9ecef;
+}
+
+.desa-group h6 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: var(--primary);
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.desa-group h6 i {
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.desa-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.desa-item {
+    background: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    border: 1px solid #dee2e6;
+    transition: all 0.2s ease;
+}
+
+.desa-item:hover {
+    background: var(--secondary);
+    color: white;
+    border-color: var(--secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+.map-footer-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 1rem;
+    margin-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    color: #6c757d;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.map-footer-note i {
+    color: var(--secondary);
+    margin-top: 2px;
+    font-size: 0.9rem;
+}
+        /* Responsive untuk peta gambar */
+@media (max-width: 1200px) {
+    .map-image-container {
+        height: 500px;
+    }
+}
+
+@media (max-width: 992px) {
+    .map-image-container {
+        height: 450px;
+    }
+    
+    .map-legend {
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 768px) {
+    .map-image-container {
+        height: 400px;
+    }
+    
+    .map-legend {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin: 1rem auto;
+        max-width: 100%;
+        width: auto;
+        display: inline-block;
+    }
+    
+    .desa-items {
+        justify-content: center;
+    }
+    
+    .map-controls {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .reset-view-btn {
+        top: 15px;
+        right: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .map-image-container {
+        height: 350px;
+    }
+    
+    .map-info {
+        padding: 1.5rem;
+    }
+    
+    .desa-item {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .map-legend {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+    }
+    
+    .legend-header {
+        font-size: 0.85rem;
+    }
+    
+    .legend-text {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .map-image-container {
+        height: 300px;
+    }
+    
+    .map-controls {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .reset-view-btn {
+        top: 10px;
+        right: 10px;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .zoom-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}
+/* ==== SAMPAI SINI ==== */
         /* ===== FOOTER ===== */
         .footer {
             background-color: var(--primary);
@@ -1041,31 +1327,97 @@
         <div class="map-container">
             <div class="map-header">
                 <h4><i class="fas fa-map"></i> Peta Wilayah Kecamatan Purwokerto Selatan</h4>
-                <div class="map-actions">
-                    <button class="map-action-btn" id="resetView">
-                        <i class="fas fa-sync-alt"></i> Reset Peta
-                    </button>
-                    <button class="map-action-btn" id="locateMe">
-                        <i class="fas fa-location-arrow"></i> Lokasi Saya
-                    </button>
+                 <div class="map-actions">
+                <button class="map-action-btn" id="downloadMap">
+                    <i class="fas fa-download"></i> Download Peta
+                </button>
+                <button class="map-action-btn" id="openFullScreen">
+                    <i class="fas fa-expand"></i> Layar Penuh
+                </button>
                 </div>
             </div>
             
             <!-- Peta Leaflet akan ditampilkan di sini -->
-            <div id="mainMap"></div>
-            
+               <div class="map-image-container" id="mapImageContainer">
+            <div class="map-image-wrapper">
+                <img src="../img/peta-kecamatan.png" 
+                     alt="Peta Kecamatan Purwokerto Selatan" 
+                     class="map-image" 
+                     id="mapImage"
+                     loading="lazy">
+                
+                <!-- Kontrol Zoom -->
+                <div class="map-controls">
+                    <button class="zoom-btn" id="zoomIn" title="Zoom In">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button class="zoom-btn" id="zoomOut" title="Zoom Out">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+                  <button class="reset-view-btn" id="resetImageView">
+                    <i class="fas fa-sync-alt"></i> Reset Peta
+                </button>
+              <div class="map-legend">
+                    <div class="legend-header">
+                        <i class="fas fa-key"></i> Legenda
+                    </div>
+                    <div class="legend-content">
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #1A5276;"></span>
+                            <span class="legend-text">Wilayah Kecamatan</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #2ECC71;"></span>
+                            <span class="legend-text">Desa/Desa</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #E74C3C;"></span>
+                            <span class="legend-text">Fasilitas Publik</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #F39C12;"></span>
+                            <span class="legend-text">Jalan Utama</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="map-info">
                 <h5>Desa Teluk - Peta Interaktif</h5>
                 <p>Peta ini menampilkan wilayah Kecamatan Purwokerto Selatan dengan fokus pada desa desa yang ada di Kecamatan Purwokerto Selatan. Gunakan kontrol di peta untuk zoom in/out, atau klik pada marker untuk informasi detail.</p>
-                
-                <div class="map-links">
-                    <a href="../Kecamatan/" class="map-link-btn">
-                        <i class="fas fa-mountain"></i> Peta Kecamatan Lengkap
-                    </a>
-                    <a href="../teluk/" class="map-link-btn outline">
-                        <i class="fas fa-water"></i> Detail Peta Desa Teluk
-                    </a>
+                 <div class="desa-list">
+                <div class="desa-group">
+                    <h6><i class="fas fa-map-marker-alt"></i> Desa di Kecamatan:</h6>
+                    <div class="desa-items">
+                        <span class="desa-item">Teluk</span>
+                        <span class="desa-item">Karanglewas</span>
+                        <span class="desa-item">Berkoh</span>
+                        <span class="desa-item">Purwokerto Kulon</span>
+                        <span class="desa-item">Purwokerto Lor</span>
+                        <span class="desa-item">Karangpucung</span>
+                        <span class="desa-item">Tanjung</span>
+                    </div>
                 </div>
+                 </div>
+            
+            <div class="map-links">
+                <a href="../Kecamatan/" class="map-link-btn">
+                    <i class="fas fa-map-marked-alt"></i> Peta Kecamatan Lengkap
+                </a>
+                <a href="../teluk/" class="map-link-btn outline">
+                    <i class="fas fa-water"></i> Detail Peta Desa Teluk
+                </a>
+                <a href="../img/peta-kecamatan.png" 
+                   class="map-link-btn outline" 
+                   download="peta-kecamatan-purwokerto-selatan.png">
+                    <i class="fas fa-download"></i> Download Peta
+                </a>
+            </div>
+                <div class="map-footer-note">
+                <i class="fas fa-info-circle"></i>
+                <span>Peta ini diekspor dari QGIS dengan data terbaru tahun 2024. © Geoportal Purwokerto Selatan</span>
+            </div>
             </div>
         </div>
     </section>

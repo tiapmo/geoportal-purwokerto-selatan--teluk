@@ -889,6 +889,57 @@ html, body {
 <!-- Di bagian sebelum </body> -->
 <script src="../js/main.js"></script>
 <script src="../js/map-integration.js"></script>
+	<script>
+// BRUTAL OVERRIDE - PASTI BERHASIL
+setTimeout(() => {
+    // 1. Reset semua
+    const allNavLinks = document.querySelectorAll('.nav a');
+    allNavLinks.forEach(link => {
+        link.classList.remove('active');
+        link.style.backgroundColor = '';
+        link.style.color = '';
+        link.style.borderColor = '';
+    });
+    
+    // 2. Target menu Kecamatan
+    const targetMenu = document.querySelector('a[href*="Kecamatan"], a[data-page="kecamatan"]');
+    
+    if (targetMenu) {
+        // 3. Tambah class
+        targetMenu.classList.add('active');
+        
+        // 4. Apply style langsung
+        targetMenu.style.backgroundColor = '#3498DB';
+        targetMenu.style.color = 'white';
+        targetMenu.style.borderColor = '#3498DB';
+        targetMenu.style.fontWeight = 'bold';
+        
+        // 5. Lock dengan attribute
+        targetMenu.setAttribute('data-force-active', 'true');
+        
+        console.log('🎯 Kecamatan menu LOCKED as active');
+    }
+    
+    // 6. Monitor perubahan (optional)
+    const observer = new MutationObserver(() => {
+        const kecamatanMenu = document.querySelector('[data-page="kecamatan"]');
+        if (kecamatanMenu && !kecamatanMenu.classList.contains('active')) {
+            console.log('⚠️ Active class removed! Re-adding...');
+            kecamatanMenu.classList.add('active');
+            kecamatanMenu.style.backgroundColor = '#3498DB';
+        }
+    });
+    
+    // Observe perubahan class
+    const kecamatanMenu = document.querySelector('[data-page="kecamatan"]');
+    if (kecamatanMenu) {
+        observer.observe(kecamatanMenu, { 
+            attributes: true, 
+            attributeFilter: ['class'] 
+        });
+    }
+}, 500); // Tunggu lebih lama
+</script>
     <body>
 		 <!-- File: navbar.html -->
 <!-- File: navbar.html -->

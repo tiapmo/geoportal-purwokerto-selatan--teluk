@@ -700,13 +700,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="card-body">
                         <ul class="desa-list">
-                            <li><strong>Bancarkembar</strong> - Stasiun Purwokerto & RSUD</li>
-                            <li><strong>Sumampir</strong> - Wilayah perkantoran</li>
-                            <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan</li>
-                            <li><strong>Purwokerto Kidul</strong> - Alun-Alun & Masjid Agung</li>
-                            <li><strong>Teluk</strong> - Pemandangan sungai</li>
-                            <li><strong>Karangpucung</strong> - Area perbukitan</li>
-                            <li><strong>Grenggeng</strong> - Pertanian & perbukitan</li>
+                            <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)/li>
+                            <li><strong>Tanjung</strong> -  Wilayah permukiman dan perkantoran lokal</li>
+                            <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas<</li>
+                            <li><strong>Purwokerto Kidul</strong> -  Kawasan permukiman dan pusat aktivitas sosial masyarakat</li></li>
+                            <li><strong>Teluk</strong> - Taman Andhang Pangrenan & Bukit Cinta</li>
+                            <li><strong>Karangklesem</strong> - Area perbukitan</li>
+                            <li><strong>KarangPucung</strong> - Pertanian & perbukitan</li>
                         </ul>
                         
                         <div class="info-box">
@@ -722,14 +722,34 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <span class="legend-color" style="background-color: rgba(53,121,177,1.0);"></span>
                                 <span>Batas Kecamatan</span>
                             </div>
+							<div class="legend-item">
+						        <span class="legend-color" style="background-color: #1f77b4;"></span>
+						        <span>Nama Desa Berkoh</span>
+						    </div>
+							<div class="legend-item">
+						        <span class="legend-color" style="background-color: #ff7f0e;"></span>
+						        <span>Nama Desa Tanjung</span>
+						    </div>
+							<div class="legend-item">
+						        <span class="legend-color" style="background-color: #2ca02c;"></span>
+						        <span>Nama Desa Pwt Kulon</span>
+						    </div>
+							<div class="legend-item">
+						        <span class="legend-color" style="background-color: #d62728;"></span>
+						        <span>Nama Desa Pwt Kidul</span>
+						    </div>
                             <div class="legend-item">
-                                <span class="legend-color" style="background-color: rgba(72,183,183,1.0);"></span>
-                                <span>Desa Karangpucung</span>
+                                <span class="legend-color" style="background-color: #9467bd;"></span>
+       							 <span>Nama Desa Teluk</span>
                             </div>
                             <div class="legend-item">
-                                <span class="legend-color" style="background-color: rgba(60,177,213,1.0);"></span>
-                                <span>Desa Karangklesem</span>
+                               <span class="legend-color" style="background-color: #8c564b;"></span>
+      						 	<span>Nama Desa Karangklasem</span>
                             </div>
+							 <div class="legend-item">
+						        <span class="legend-color" style="background-color: #e377c2;"></span>
+						        <span>Nama Desa Karangpucung</span>
+						    </div>
                             <!-- Tambahkan legend item lainnya sesuai layer peta -->
                         </div>
                     </div>
@@ -865,6 +885,98 @@ document.addEventListener('DOMContentLoaded', function() {
              if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
                  rows[i].parentNode.removeChild(rows[i]);
              }
+			 // Fungsi untuk mengubah warna layer sesuai legenda
+function updateLayerColors() {
+    // 1. Nama_DesaBerkoh_8 - Warna sesuai legenda
+    if (layer_Nama_DesaBerkoh_8) {
+        layer_Nama_DesaBerkoh_8.setStyle({
+            fillColor: '#1f77b4', // Biru tua
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 2. Nama_DesaTanjung_7
+    if (layer_Nama_DesaTanjung_7) {
+        layer_Nama_DesaTanjung_7.setStyle({
+            fillColor: '#ff7f0e', // Jingga
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 3. Nama_DesaPwtKulon_6
+    if (layer_Nama_DesaPwtKulon_6) {
+        layer_Nama_DesaPwtKulon_6.setStyle({
+            fillColor: '#2ca02c', // Hijau
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 4. Nama_DesaPwtKidul_5
+    if (layer_Nama_DesaPwtKidul_5) {
+        layer_Nama_DesaPwtKidul_5.setStyle({
+            fillColor: '#d62728', // Merah
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 5. Nama_DesaTeluk_4
+    if (layer_Nama_DesaTeluk_4) {
+        layer_Nama_DesaTeluk_4.setStyle({
+            fillColor: '#9467bd', // Ungu
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 6. Nama_DesaKarangklesem_3
+    if (layer_Nama_DesaKarangklesem_3) {
+        layer_Nama_DesaKarangklesem_3.setStyle({
+            fillColor: '#8c564b', // Coklat
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 7. Nama_DesaKarangpucung_2
+    if (layer_Nama_DesaKarangpucung_2) {
+        layer_Nama_DesaKarangpucung_2.setStyle({
+            fillColor: '#e377c2', // Pink
+            color: '#000000',
+            weight: 1,
+            fillOpacity: 0.7
+        });
+    }
+    
+    // 8. bataskecamatan_1
+    if (layer_bataskecamatan_1) {
+        layer_bataskecamatan_1.setStyle({
+            color: '#000000', // Hitam
+            weight: 3,
+            fillOpacity: 0
+        });
+    }
+    
+    // 9. JalanKecamatan_9
+    if (layer_JalanKecamatan_9) {
+        layer_JalanKecamatan_9.setStyle({
+            color: '#7f7f7f', // Abu-abu
+            weight: 2,
+            fillOpacity: 0
+        });
+    }
+    
+    console.log('Warna layer telah diupdate sesuai legenda');
+}
          }
          return tempDiv.innerHTML;
         }

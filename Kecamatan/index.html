@@ -3,9 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.1">		<meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+		<link rel="stylesheet" href="css/leaflet.css">
 		<link rel="stylesheet" href="css/navbar.css">
         <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
         <link rel="stylesheet" href="css/L.Control.Locate.min.css">
@@ -433,6 +432,225 @@ html, body {
     .desa-list li strong {
         min-width: 120px;
     }
+	/* ===== RESPONSIVE IMPROVEMENTS ===== */
+
+/* Responsif untuk HP kecil (max-width: 480px) */
+@media (max-width: 480px) {
+    /* Header dan navigasi */
+    .header {
+        padding: 0.5rem 1rem;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .logo-container {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .logo-kecamatan {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-geoportal-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+    
+    .logo-geoportal-main {
+        font-size: 1.4rem;
+    }
+    
+    .logo-geoportal-tagline {
+        font-size: 0.75rem;
+    }
+    
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+    }
+    
+    .nav a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 20px;
+    }
+    
+    /* Konten utama */
+    .main-container {
+        padding: 0 10px;
+        margin: 10px auto;
+    }
+    
+    .page-header {
+        padding: 15px 10px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .page-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .page-header p {
+        font-size: 0.9rem;
+    }
+    
+    /* Grid layout */
+    .content-grid {
+        gap: 15px;
+    }
+    
+    /* Card */
+    .card-header {
+        padding: 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .card-header h2 {
+        font-size: 1.1rem;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    /* Map container */
+    .map-card .card-body {
+        height: 300px;
+    }
+    
+    #map {
+        min-height: 300px;
+    }
+    
+    /* List desa */
+    .desa-list li {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .desa-list li strong {
+        min-width: 100px;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    /* Legend */
+    .legend-item {
+        font-size: 0.85rem;
+    }
+    
+    /* Statistik grid */
+    .stats-grid {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        padding: 15px;
+    }
+    
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .stat-info h3 {
+        font-size: 1.4rem;
+    }
+    
+    /* Tombol kontrol peta */
+    .map-controls {
+        align-self: stretch;
+        justify-content: space-between;
+    }
+    
+    .btn-control {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Responsif untuk tablet (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .header {
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .nav a {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+    }
+    
+    .map-card .card-body {
+        height: 350px;
+    }
+    
+    #map {
+        min-height: 350px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Perbaikan untuk layar sangat kecil (max-width: 360px) */
+@media (max-width: 360px) {
+    .logo-geoportal-main {
+        font-size: 1.2rem;
+    }
+    
+    .nav a {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.7rem;
+    }
+    
+    .page-header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .map-card .card-body {
+        height: 250px;
+    }
+    
+    #map {
+        min-height: 250px;
+    }
+    
+    .desa-list li strong {
+        min-width: 90px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Perbaikan untuk kontrol leaflet di mobile */
+.leaflet-control-zoom,
+.leaflet-control-locate,
+.leaflet-control-measure {
+    margin-top: 60px !important;
+}
+
+.leaflet-control-search {
+    margin-top: 100px !important;
+}
+
+/* Header sticky */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: white;
+}
 }
         </style>
 		
@@ -681,6 +899,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+	// ===== MOBILE OPTIMIZATION =====
+function optimizeForMobile() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile && map) {
+        // Sesuaikan tampilan peta untuk mobile
+        map.invalidateSize(); // Refresh ukuran peta
+        
+        // Sembunyikan kontrol yang tidak penting di mobile
+        const measureControl = document.querySelector('.leaflet-control-measure');
+        if (measureControl) {
+            measureControl.style.display = 'none';
+        }
+        
+        // Zoom yang lebih sesuai untuk mobile
+        if (map.getZoom() > 15) {
+            map.setZoom(15);
+        }
+    }
+}
+
+// Jalankan saat load dan resize
+window.addEventListener('load', optimizeForMobile);
+window.addEventListener('resize', optimizeForMobile);
+setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
 </script>
   <div class="main-container">
             <!-- Judul halaman -->
@@ -699,10 +942,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="card-body">
                         <ul class="desa-list">
-                            <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)/li>
+                            <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)</li>
                             <li><strong>Tanjung</strong> -  Wilayah permukiman dan perkantoran lokal</li>
-                            <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas<</li>
-                            <li><strong>Purwokerto Kidul</strong> -  Kawasan permukiman dan pusat aktivitas sosial masyarakat</li></li>
+                            <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas</li>
+                            <li><strong>Purwokerto Kidul</strong> -  Kawasan permukiman dan pusat aktivitas sosial masyarakat</li>
                             <li><strong>Teluk</strong> - Taman Andhang Pangrenan & Bukit Cinta</li>
                             <li><strong>Karangklesem</strong> - Area perbukitan</li>
                             <li><strong>KarangPucung</strong> - Pertanian & perbukitan</li>
@@ -771,7 +1014,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                     <div class="card-body">
-                        <div id="map"></div>
                     </div>
                     <div class="card-footer">
                         <p><i class="fas fa-mouse-pointer"></i> Klik pada area berwarna untuk info detail</p>

@@ -1,1 +1,0 @@
-var json_KelTanjung_14 = {"type":"FeatureCollection","name":"KelTanjung_14","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"id":"1","Nama":"Kelurahan Tanjung"},"geometry":{"type":"Point","coordinates":[109.224650946280732,-7.438323470307695]}}]}

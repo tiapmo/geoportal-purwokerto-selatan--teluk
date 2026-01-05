@@ -700,7 +700,7 @@ html, body {
 
 .desa-maps-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
 
@@ -824,23 +824,12 @@ html, body {
 }
 
 /* Responsive untuk card desa */
-@media (max-width: 1200px) {
-    .desa-maps-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-			
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (max-width: 992px) {
     .desa-maps-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
-
-@media (max-width: 767px) {
-    .desa-maps-grid {
-        grid-template-columns: 1fr;
-    }
-}
+			
 @media (max-width: 768px) {
     .desa-maps-section {
         padding: 20px 15px;

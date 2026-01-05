@@ -700,7 +700,7 @@ html, body {
 
 .desa-maps-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 25px;
 }
 
@@ -824,12 +824,23 @@ html, body {
 }
 
 /* Responsive untuk card desa */
-@media (max-width: 992px) {
+@media (max-width: 1200px) {
+    .desa-maps-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+			
+@media (min-width: 768px) and (max-width: 1199px) {
     .desa-maps-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
+@media (max-width: 767px) {
+    .desa-maps-grid {
+        grid-template-columns: 1fr;
+    }
+}
 @media (max-width: 768px) {
     .desa-maps-section {
         padding: 20px 15px;
@@ -1372,7 +1383,7 @@ setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
                                 <span><i class="fas fa-home"></i> RT: 15</span>
                             </div>
                         </div>
-							<a href="../../Berkoh/" class="desa-map-button">
+							<a href="../Berkoh/" class="desa-map-button">
 								<i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
                         </a>
                     </div>
@@ -1399,7 +1410,7 @@ setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
                                 <span><i class="fas fa-home"></i> RT: 12</span>
                             </div>
                         </div>
-                        <a href="../PwtKidul/" class="desa-map-button">
+								<a href="../PwtKidul/" class="desa-map-button">
                             <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
                         </a>
                     </div>
@@ -1431,6 +1442,114 @@ setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
                         </a>
                     </div>
                 </div>
+				<!-- Tambahkan setelah 3 desa pertama -->
+<!-- Desa Purwokerto Kulon -->
+<div class="desa-map-card">
+    <div class="desa-map-header" style="background: linear-gradient(135deg, #2ca02c, #27ae60);">
+        <div class="desa-map-icon">
+            <i class="fas fa-landmark"></i>
+        </div>
+        <div class="desa-map-title">
+            <h3>Desa Purwokerto Kulon</h3>
+            <p>Pusat Pemerintahan Kabupaten</p>
+        </div>
+    </div>
+    <div class="desa-map-preview">
+        <img src="img/PwtKulon.png" alt="Peta Desa Pwt Kulon"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/2ca02c/ffffff?text=Peta+Purwokerto+Kulon'">
+    </div>
+    <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Pusat pemerintahan Kabupaten Banyumas</p>
+        <div class="desa-map-stats">
+            <span><i class="fas fa-road"></i> Jalan: 50 km</span>
+            <span><i class="fas fa-home"></i> RT: 20</span>
+        </div>
+    </div>
+    <a href="../PwtKulon/" class="desa-map-button">
+        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+    </a>
+</div>
+
+<!-- Desa Teluk -->
+<div class="desa-map-card">
+    <div class="desa-map-header" style="background: linear-gradient(135deg, #9467bd, #9b59b6);">
+        <div class="desa-map-icon">
+            <i class="fas fa-water"></i>
+        </div>
+        <div class="desa-map-title">
+            <h3>Desa Teluk</h3>
+            <p>Taman Andhang Pangrenan & Bukit Cinta</p>
+        </div>
+    </div>
+    <div class="desa-map-preview">
+        <img src="img/Teluk.png" alt="Peta Desa Teluk"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/9467bd/ffffff?text=Peta+Desa+Teluk'">
+    </div>
+    <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Taman Andhang Pangrenan & Bukit Cinta</p>
+        <div class="desa-map-stats">
+            <span><i class="fas fa-road"></i> Jalan: 35 km</span>
+            <span><i class="fas fa-home"></i> RT: 8</span>
+        </div>
+    </div>
+    <a href="../Teluk/" class="desa-map-button">
+        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+    </a>
+</div>
+
+<!-- Desa Karangklesem -->
+<div class="desa-map-card">
+    <div class="desa-map-header" style="background: linear-gradient(135deg, #8c564b, #a35c3a);">
+        <div class="desa-map-icon">
+            <i class="fas fa-mountain"></i>
+        </div>
+        <div class="desa-map-title">
+            <h3>Desa Karangklesem</h3>
+            <p>Area Perbukitan</p>
+        </div>
+    </div>
+    <div class="desa-map-preview">
+        <img src="img/Karangklesem.png" alt="Peta Desa Karangklesem"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/8c564b/ffffff?text=Peta+Karangklesem'">
+    </div>
+    <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Area perbukitan dengan pemandangan alam</p>
+        <div class="desa-map-stats">
+            <span><i class="fas fa-road"></i> Jalan: 40 km</span>
+            <span><i class="fas fa-home"></i> RT: 9</span>
+        </div>
+    </div>
+    <a href="../Karangklesem/" class="desa-map-button">
+        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+    </a>
+</div>
+
+<!-- Desa Karangpucung -->
+<div class="desa-map-card">
+    <div class="desa-map-header" style="background: linear-gradient(135deg, #e377c2, #e84393);">
+        <div class="desa-map-icon">
+            <i class="fas fa-tractor"></i>
+        </div>
+        <div class="desa-map-title">
+            <h3>Desa Karangpucung</h3>
+            <p>Pertanian & Perbukitan</p>
+        </div>
+    </div>
+    <div class="desa-map-preview">
+        <img src="img/Karangpucung.png" alt="Peta Desa Karangpucung"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/e377c2/ffffff?text=Peta+Karangpucung'">
+    </div>
+    <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Kawasan pertanian dan perbukitan</p>
+        <div class="desa-map-stats">
+            <span><i class="fas fa-road"></i> Jalan: 30 km</span>
+            <span><i class="fas fa-home"></i> RT: 7</span>
+        </div>
+    </div>
+    <a href="../Karangpucung/" class="desa-map-button">
+        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+    </a>
+</div>
             </div>
         </div>
 		

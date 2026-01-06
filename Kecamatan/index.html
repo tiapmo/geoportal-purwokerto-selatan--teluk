@@ -1266,19 +1266,6 @@ function optimizeForMobile() {
             map.setZoom(15);
         }
     }
-	function toggleSidebar() {
-  document.getElementById("mapSidebar").classList.toggle("active");
-  setTimeout(() => map.invalidateSize(), 300);
-}
-map.on('fullscreenchange', function () {
-  document.body.classList.toggle('map-fullscreen');
-  map.invalidateSize();
-});
-map.on('click', function () {
-  if (window.innerWidth < 992) {
-    document.getElementById("mapSidebar").classList.remove("active");
-  }
-});
 
 }
 
@@ -1373,19 +1360,10 @@ setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
                             <button class="btn-control" onclick="map.zoomOut()" title="Zoom Out">
                                 <i class="fas fa-minus"></i>
                             </button>
-                            <button class="btn-control" onclick="toggleSidebar()" title="Menu">
-						        <i class="fas fa-bars"></i>
-						      </button>
-						
-						      <button class="btn-control" onclick="map.toggleFullscreen()" title="Fullscreen">
-						        <i class="fas fa-expand"></i>
-						      </button>
                         </div>
                     </div>
-                    <div class="card-body map-wrapper">
+                    <div class="card-body ">
 						   <div id="map"></div>
-						<div id="mapSidebar" class="map-sidebar">
-						</div>
                     </div>
                     <div class="card-footer">
                         <p><i class="fas fa-mouse-pointer"></i> Klik pada area berwarna untuk info detail</p>

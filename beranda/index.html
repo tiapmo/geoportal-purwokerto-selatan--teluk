@@ -722,6 +722,23 @@
     font-size: 0.95rem;
     line-height: 1.6;
 }
+        @media (max-width: 768px) {
+  .map-legend {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    transform: translateX(50%);
+    width: calc(100% - 20px);
+    font-size: 12px;
+  }
+
+  .legend-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+}
+
 
 /* Desa List */
 .desa-list {

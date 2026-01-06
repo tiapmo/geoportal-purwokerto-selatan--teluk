@@ -711,6 +711,7 @@ html, body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
     border: 1px solid #e1e8ed;
+	
 }
 
 .desa-map-card:hover {
@@ -749,7 +750,7 @@ html, body {
 }
 
 .desa-map-preview {
-    height: 180px;
+    height: 200px;
     overflow: hidden;
 }
 
@@ -765,7 +766,7 @@ html, body {
 }
 
 .desa-map-info {
-    padding: 20px;
+    flex-grow: 1;
 }
 
 .desa-map-info p {
@@ -822,6 +823,13 @@ html, body {
 .desa-map-button i {
     margin-right: 8px;
 }
+			
+.desa-map-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
 
 /* Responsive untuk card desa */
 @media (max-width: 992px) {
@@ -846,7 +854,9 @@ html, body {
     }
     
     .desa-map-preview {
-        height: 160px;
+        width: 100%;
+		height: 100%;
+		object-fit: cover;
     }
 }
 
@@ -873,13 +883,17 @@ html, body {
     }
     
     .desa-map-info {
-        padding: 15px;
+        padding: 12px;
+		flex-grow: 1;
     }
     
     .desa-map-stats {
         flex-direction: column;
         gap: 8px;
     }
+	.map-links {
+  padding: 12px;
+}
 }
 
 </style>
@@ -1342,215 +1356,168 @@ setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
                     </div>
                 </div>
             </div>
-	              <!-- ===== PETA DESA DALAM KECAMATAN ===== -->
-            <div class="desa-maps-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-map-marked-alt"></i> Peta Detail Desa</h2>
-                    <p>Klik untuk melihat peta detail masing-masing desa</p>
-                </div>
-                
-                <div class="desa-maps-grid">
-                    <!-- Card Peta Desa Berkoh -->
-                    <div class="desa-map-card">
-                        <div class="desa-map-header" style="background: linear-gradient(135deg, #1f77b4, #2c8fd6);">
-                            <div class="desa-map-icon">
-                                <i class="fas fa-university"></i>
-                            </div>
-                            <div class="desa-map-title">
-                                <h3>Desa Berkoh</h3>
-                                <p>Taman Satria & Kawasan Pendidikan</p>
-                            </div>
-                        </div>
-                        <div class="desa-map-preview">
-                            <img src="../img/Berkoh.png" alt="Peta Desa Berkoh" 
-                                 onerror="this.src='https://via.placeholder.com/400x200/1f77b4/ffffff?text=Peta+Berkoh'">
-                        </div>
-                        <div class="desa-map-info">
-                            <p><i class="fas fa-info-circle"></i> Memiliki kawasan pendidikan dan permukiman padat</p>
-                            <div class="desa-map-stats">
-                                <span><i class="fas fa-road"></i> Jalan: 45 km</span>
-                                <span><i class="fas fa-home"></i> RT: 15</span>
-                            </div>
-                        </div>
-						 <div class="map-links">
-               <a href="../Berkoh/" class="desa-map-button">
-								<i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-                        </a>
-                </a>
-              
-							 </div>
-                    </div>
-                    
-                    <!-- Card Peta Desa Purwokerto Kidul -->
-                    <div class="desa-map-card">
-                        <div class="desa-map-header" style="background: linear-gradient(135deg, #d62728, #e74c3c);">
-                            <div class="desa-map-icon">
-                                <i class="fas fa-city"></i>
-                            </div>
-                            <div class="desa-map-title">
-                                <h3>Desa Purwokerto Kidul</h3>
-                                <p>Permukiman & Aktivitas Sosial</p>
-                            </div>
-                        </div>
-                        <div class="desa-map-preview">
-                            <img src="../img/PwtKidul.png" alt="Peta Desa Pwt Kidul"
-                                 onerror="this.src='https://via.placeholder.com/400x200/d62728/ffffff?text=Peta+Purwokerto+Kidul'">
-                        </div>
-                        <div class="desa-map-info">
-                            <p><i class="fas fa-info-circle"></i> Kawasan permukiman dan pusat aktivitas masyarakat</p>
-                            <div class="desa-map-stats">
-                                <span><i class="fas fa-road"></i> Jalan: 38 km</span>
-                                <span><i class="fas fa-home"></i> RT: 12</span>
-                            </div>
-                        </div>
-						 <div class="map-links">
-								<a href="../PwtKidul/" class="desa-map-button">
-                            <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-                        </a>
-                    </div>
-					</div>
-                    
-                    <!-- Card Peta Desa Tanjung -->
-                    <div class="desa-map-card">
-                        <div class="desa-map-header" style="background: linear-gradient(135deg, #ff7f0e, #f39c12);">
-                            <div class="desa-map-icon">
-                                <i class="fas fa-building"></i>
-                            </div>
-                            <div class="desa-map-title">
-                                <h3>Desa Tanjung</h3>
-                                <p>Permukiman & Perkantoran Lokal</p>
-                            </div>
-                        </div>
-                        <div class="desa-map-preview">
-                            <img src="../img/Tanjung.png" alt="Peta Desa Tanjung"
-                                 onerror="this.src='https://via.placeholder.com/400x200/ff7f0e/ffffff?text=Peta+Tanjung'">
-                        </div>
-                        <div class="desa-map-info">
-                            <p><i class="fas fa-info-circle"></i> Wilayah permukiman dan perkantoran lokal</p>
-                            <div class="desa-map-stats">
-                                <span><i class="fas fa-road"></i> Jalan: 42 km</span>
-                                <span><i class="fas fa-home"></i> RT: 10</span>
-                            </div>
-                        </div>
-						<div class="map-links">
-                        <a href="../Tanjung/" class="desa-map-button">
-                            <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-                        </a>
-                    </div>
-					</div>
-                </div>
-				<!-- Tambahkan setelah 3 desa pertama -->
-<!-- Desa Purwokerto Kulon -->
-<div class="desa-map-card">
-    <div class="desa-map-header" style="background: linear-gradient(135deg, #2ca02c, #27ae60);">
-        <div class="desa-map-icon">
-            <i class="fas fa-landmark"></i>
-        </div>
+	             <!-- ===== PETA DESA DALAM KECAMATAN ===== -->
+<div class="desa-maps-section">
+  <div class="section-header">
+    <h2><i class="fas fa-map-marked-alt"></i> Peta Detail Desa</h2>
+    <p>Klik untuk melihat peta detail masing-masing desa</p>
+  </div>
+
+  <div class="desa-maps-grid">
+
+    <!-- Desa Berkoh -->
+    <div class="desa-map-card">
+      <div class="desa-map-header" style="background: linear-gradient(135deg,#1f77b4,#2c8fd6);">
+        <div class="desa-map-icon"><i class="fas fa-university"></i></div>
         <div class="desa-map-title">
-            <h3>Desa Purwokerto Kulon</h3>
-            <p>Pusat Pemerintahan Kabupaten</p>
+          <h3>Desa Berkoh</h3>
+          <p>Taman Satria & Kawasan Pendidikan</p>
         </div>
-    </div>
-    <div class="desa-map-preview">
-        <img src="../img/PwtKulon.png" alt="Peta Desa Pwt Kulon"
-             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/2ca02c/ffffff?text=Peta+Purwokerto+Kulon'">
-    </div>
-    <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Pusat pemerintahan Kabupaten Banyumas</p>
+      </div>
+
+      <div class="desa-map-preview">
+        <img src="../img/Berkoh.png"
+             onerror="this.src='https://via.placeholder.com/400x200/1f77b4/ffffff?text=Peta+Berkoh'">
+      </div>
+
+      <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Kawasan pendidikan dan permukiman padat</p>
         <div class="desa-map-stats">
-            <span><i class="fas fa-road"></i> Jalan: 50 km</span>
-            <span><i class="fas fa-home"></i> RT: 20</span>
+          <span><i class="fas fa-road"></i> Jalan: 45 km</span>
+          <span><i class="fas fa-home"></i> RT: 15</span>
         </div>
+      </div>
+
+      <div class="map-links">
+        <a href="../Berkoh/" class="desa-map-button">
+          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+        </a>
+      </div>
     </div>
-    <a href="../PwtKulon/" class="desa-map-button">
-        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-    </a>
+
+    <!-- Purwokerto Kidul -->
+    <div class="desa-map-card">
+      <div class="desa-map-header" style="background: linear-gradient(135deg,#d62728,#e74c3c);">
+        <div class="desa-map-icon"><i class="fas fa-city"></i></div>
+        <div class="desa-map-title">
+          <h3>Desa Purwokerto Kidul</h3>
+          <p>Permukiman & Aktivitas Sosial</p>
+        </div>
+      </div>
+
+      <div class="desa-map-preview">
+        <img src="../img/PwtKidul.png"
+             onerror="this.src='https://via.placeholder.com/400x200/d62728/ffffff?text=Pwt+Kidul'">
+      </div>
+
+      <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Pusat aktivitas masyarakat</p>
+        <div class="desa-map-stats">
+          <span><i class="fas fa-road"></i> Jalan: 38 km</span>
+          <span><i class="fas fa-home"></i> RT: 12</span>
+        </div>
+      </div>
+
+      <div class="map-links">
+        <a href="../PwtKidul/" class="desa-map-button">
+          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+        </a>
+      </div>
+    </div>
+
+    <!-- Tanjung -->
+    <div class="desa-map-card">
+      <div class="desa-map-header" style="background: linear-gradient(135deg,#ff7f0e,#f39c12);">
+        <div class="desa-map-icon"><i class="fas fa-building"></i></div>
+        <div class="desa-map-title">
+          <h3>Desa Tanjung</h3>
+          <p>Permukiman & Perkantoran Lokal</p>
+        </div>
+      </div>
+
+      <div class="desa-map-preview">
+        <img src="../img/Tanjung.png"
+             onerror="this.src='https://via.placeholder.com/400x200/ff7f0e/ffffff?text=Tanjung'">
+      </div>
+
+      <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Permukiman dan perkantoran</p>
+        <div class="desa-map-stats">
+          <span><i class="fas fa-road"></i> Jalan: 42 km</span>
+          <span><i class="fas fa-home"></i> RT: 10</span>
+        </div>
+      </div>
+
+      <div class="map-links">
+        <a href="../Tanjung/" class="desa-map-button">
+          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+        </a>
+      </div>
+    </div>
+
+    <!-- Purwokerto Kulon -->
+    <div class="desa-map-card">
+      <div class="desa-map-header" style="background: linear-gradient(135deg,#2ca02c,#27ae60);">
+        <div class="desa-map-icon"><i class="fas fa-landmark"></i></div>
+        <div class="desa-map-title">
+          <h3>Desa Purwokerto Kulon</h3>
+          <p>Pusat Pemerintahan Kabupaten</p>
+        </div>
+      </div>
+
+      <div class="desa-map-preview">
+        <img src="../img/PwtKulon.png"
+             onerror="this.src='https://via.placeholder.com/400x200/2ca02c/ffffff?text=Pwt+Kulon'">
+      </div>
+
+      <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Pusat pemerintahan Banyumas</p>
+        <div class="desa-map-stats">
+          <span><i class="fas fa-road"></i> Jalan: 50 km</span>
+          <span><i class="fas fa-home"></i> RT: 20</span>
+        </div>
+      </div>
+
+      <div class="map-links">
+        <a href="../PwtKulon/" class="desa-map-button">
+          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+        </a>
+      </div>
+    </div>
+
+    <!-- Teluk -->
+    <div class="desa-map-card">
+      <div class="desa-map-header" style="background: linear-gradient(135deg,#9467bd,#9b59b6);">
+        <div class="desa-map-icon"><i class="fas fa-water"></i></div>
+        <div class="desa-map-title">
+          <h3>Desa Teluk</h3>
+          <p>Taman Andhang & Bukit Cinta</p>
+        </div>
+      </div>
+
+      <div class="desa-map-preview">
+        <img src="../img/Teluk.png"
+             onerror="this.src='https://via.placeholder.com/400x200/9467bd/ffffff?text=Teluk'">
+      </div>
+
+      <div class="desa-map-info">
+        <p><i class="fas fa-info-circle"></i> Wisata dan ruang hijau</p>
+        <div class="desa-map-stats">
+          <span><i class="fas fa-road"></i> Jalan: 35 km</span>
+          <span><i class="fas fa-home"></i> RT: 8</span>
+        </div>
+      </div>
+
+      <div class="map-links">
+        <a href="../Teluk/" class="desa-map-button">
+          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+        </a>
+      </div>
+    </div>
+
+  </div>
 </div>
 
-<!-- Desa Teluk -->
-<div class="desa-map-card">
-    <div class="desa-map-header" style="background: linear-gradient(135deg, #9467bd, #9b59b6);">
-        <div class="desa-map-icon">
-            <i class="fas fa-water"></i>
-        </div>
-        <div class="desa-map-title">
-            <h3>Desa Teluk</h3>
-            <p>Taman Andhang Pangrenan & Bukit Cinta</p>
-        </div>
-    </div>
-    <div class="desa-map-preview">
-        <img src="../img/Teluk.png" alt="Peta Desa Teluk"
-             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/9467bd/ffffff?text=Peta+Desa+Teluk'">
-    </div>
-    <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Taman Andhang Pangrenan & Bukit Cinta</p>
-        <div class="desa-map-stats">
-            <span><i class="fas fa-road"></i> Jalan: 35 km</span>
-            <span><i class="fas fa-home"></i> RT: 8</span>
-        </div>
-    </div>
-	<div class="map-links">
- <a href="../Teluk/" class="desa-map-button">
-        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-    </a>
-	</div>
-</div>
-
-<!-- Desa Karangklesem -->
-<div class="desa-map-card">
-    <div class="desa-map-header" style="background: linear-gradient(135deg, #8c564b, #a35c3a);">
-        <div class="desa-map-icon">
-            <i class="fas fa-mountain"></i>
-        </div>
-        <div class="desa-map-title">
-            <h3>Desa Karangklesem</h3>
-            <p>Area Perbukitan</p>
-        </div>
-    </div>
-    <div class="desa-map-preview">
-        <img src="../img/Karangklesem.png" alt="Peta Desa Karangklesem"
-             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/8c564b/ffffff?text=Peta+Karangklesem'">
-    </div>
-    <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Area perbukitan dengan pemandangan alam</p>
-        <div class="desa-map-stats">
-            <span><i class="fas fa-road"></i> Jalan: 40 km</span>
-            <span><i class="fas fa-home"></i> RT: 9</span>
-        </div>
-    </div>
-    <a href="../Karangklesem/" class="desa-map-button">
-        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-    </a>
-</div>
-
-<!-- Desa Karangpucung -->
-<div class="desa-map-card">
-    <div class="desa-map-header" style="background: linear-gradient(135deg, #e377c2, #e84393);">
-        <div class="desa-map-icon">
-            <i class="fas fa-tractor"></i>
-        </div>
-        <div class="desa-map-title">
-            <h3>Desa Karangpucung</h3>
-            <p>Pertanian & Perbukitan</p>
-        </div>
-    </div>
-    <div class="desa-map-preview">
-        <img src="../img/Karangpucung.png" alt="Peta Desa Karangpucung"
-             onerror="this.onerror=null; this.src='https://via.placeholder.com/400x200/e377c2/ffffff?text=Peta+Karangpucung'">
-    </div>
-    <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Kawasan pertanian dan perbukitan</p>
-        <div class="desa-map-stats">
-            <span><i class="fas fa-road"></i> Jalan: 30 km</span>
-            <span><i class="fas fa-home"></i> RT: 7</span>
-        </div>
-    </div>
-    <a href="../Karangpucung/" class="desa-map-button">
-        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-    </a>
-</div>
-            </div>
-        </div>
 		
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>

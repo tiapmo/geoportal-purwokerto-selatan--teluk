@@ -602,10 +602,19 @@
                 font-size: 1.8rem;
             }
             
-            /* Grid layout */
-            .content-grid {
-                grid-template-columns: 1fr;
-            }
+          .info-section-below {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+/* Di desktop, info bisa jadi 2 kolom */
+@media (min-width: 992px) {
+    .info-section-below {
+        grid-template-columns: 1fr 1fr;
+    }
+}
             
             .map-card .card-body {
                 height: 400px;
@@ -695,6 +704,206 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #a1a1a1;
         }
+		/* ===== LAYOUT BARU - INFORMASI DI BAWAH PETA ===== */
+.below-map-content {
+    margin-top: 30px;
+}
+
+.info-section {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 1px solid #e1e8ed;
+    margin-bottom: 25px;
+}
+
+.desa-info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+@media (min-width: 992px) {
+    .desa-info-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.desa-column h3, .info-column h3 {
+    color: #2C3E50;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.kecamatan-info {
+    margin-bottom: 25px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #3498DB;
+}
+
+.info-item i {
+    font-size: 1.2rem;
+    color: #3498DB;
+    min-width: 30px;
+}
+
+.info-item strong {
+    display: block;
+    color: #2C3E50;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+}
+
+.info-item p {
+    margin: 0;
+    color: #555;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.legend-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+@media (max-width: 768px) {
+    .legend-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ===== TOMBOL FULL SCREEN ===== */
+.map-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-control {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background-color: white;
+    color: #3498DB;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.btn-control:hover {
+    background-color: #3498DB;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ===== FULL SCREEN STYLE ===== */
+.map-card {
+    position: relative;
+}
+
+.map-card.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    border-radius: 0;
+    margin: 0;
+}
+
+.map-card.fullscreen .card-body {
+    height: calc(100vh - 120px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .content-grid {
+        margin-bottom: 20px;
+    }
+    
+    .map-card .card-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .map-controls {
+        align-self: flex-start;
+    }
+    
+    .desa-info-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .info-item {
+        padding: 10px;
+    }
+}
+		/* STYLE UNTUK CARD FOOTER YANG BISA DIKLIK */
+.clickable-footer {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #2C3E50;
+    color: white;
+}
+
+.clickable-footer:hover {
+    background-color: #3498DB;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.clickable-footer p {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.clickable-footer i {
+    font-size: 1.1rem;
+}
+
+/* Efek klik */
+.clickable-footer:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+		.fullscreen-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.fullscreen-link:hover .clickable-footer {
+    background-color: #3498DB;
+    color: white;
+}
     </style>
 		
          <title>Peta Kecamatan Purwokerto Selatan</title>
@@ -733,70 +942,7 @@
             <h1><i class="fas fa-map-marked-alt"></i> Peta Kecamatan Purwokerto Selatan</h1>
             <p>Visualisasi lengkap wilayah beserta 7 desa di dalamnya</p>
         </div>
-        
-        <!-- GRID UNTUK KONTEN UTAMA -->
-        <div class="content-grid">
-            <!-- PANEL INFORMASI (KIRI) -->
-            <div class="info-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-list"></i> Desa di Kecamatan</h2>
-                    <span class="badge">7 Desa</span>
-                </div>
-                <div class="card-body">
-                    <ul class="desa-list">
-                        <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)</li>
-                        <li><strong>Tanjung</strong> - Wilayah permukiman dan perkantoran lokal</li>
-                        <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas</li>
-                        <li><strong>Purwokerto Kidul</strong> - Kawasan permukiman dan pusat aktivitas sosial masyarakat</li>
-                        <li><strong>Teluk</strong> - Taman Andhang Pangrenan & Bukit Cinta</li>
-                        <li><strong>Karangklesem</strong> - Area perbukitan</li>
-                        <li><strong>Karangpucung</strong> - Pertanian & perbukitan</li>
-                    </ul>
-                    
-                    <div class="info-box">
-                        <h3><i class="fas fa-info-circle"></i> Informasi Kecamatan</h3>
-                        <p>• Luas Wilayah: 2.145 Ha</p>
-                        <p>• Jumlah Penduduk: ± 85.000 jiwa</p>
-                        <p>• Pusat Pemerintahan: Purwokerto Kulon</p>
-                    </div>
-                    
-                    <div class="legend-card">
-                        <h3><i class="fas fa-layer-group"></i> Legenda Peta</h3>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: rgba(53,121,177,1.0);"></span>
-                            <span>Batas Kecamatan</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #1f77b4;"></span>
-                            <span>Nama Desa Berkoh</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #ff7f0e;"></span>
-                            <span>Nama Desa Tanjung</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #2ca02c;"></span>
-                            <span>Nama Desa Pwt Kulon</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #d62728;"></span>
-                            <span>Nama Desa Pwt Kidul</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #9467bd;"></span>
-                            <span>Nama Desa Teluk</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #8c564b;"></span>
-                            <span>Nama Desa Karangklasem</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background-color: #e377c2;"></span>
-                            <span>Nama Desa Karangpucung</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    
             
             <!-- PANEL PETA (KANAN) -->
             <div class="map-card">
@@ -814,12 +960,145 @@
                 <div class="card-body">
                     <div id="map"></div>
                 </div>
-                <div class="card-footer">
-                    <p><i class="fas fa-mouse-pointer"></i> Klik pada area berwarna untuk info detail</p>
+             <div class="card-footer clickable-footer" 
+     onclick="window.open('fullscreen-kecamatanpwtsel.html', '_blank')">
+    <p><i class="fas fa-expand"></i> Buka Peta Layar Penuh</p>
+</div>
+            </div>
+        </div>
+        <!-- INFORMASI DAN DESKRIPSI DI BAWAH PETA -->
+<div class="below-map-content">
+    <!-- INFORMASI DESA DAN KECAMATAN -->
+    <div class="info-section">
+        <div class="info-card">
+            <div class="card-header">
+                <h2><i class="fas fa-list"></i> Desa di Kecamatan Purwokerto Selatan</h2>
+                <span class="badge">7 Desa</span>
+            </div>
+            <div class="card-body">
+                <div class="desa-info-grid">
+                    <div class="desa-column">
+                        <h3><i class="fas fa-map-marker-alt"></i> Daftar Desa</h3>
+                        <ul class="desa-list">
+                            <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)</li>
+                            <li><strong>Tanjung</strong> - Wilayah permukiman dan perkantoran lokal</li>
+                            <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas</li>
+                            <li><strong>Purwokerto Kidul</strong> - Kawasan permukiman dan pusat aktivitas sosial masyarakat</li>
+                            <li><strong>Teluk</strong> - Taman Andhang Pangrenan & Bukit Cinta</li>
+                            <li><strong>Karangklesem</strong> - Area perbukitan</li>
+                            <li><strong>Karangpucung</strong> - Pertanian & perbukitan</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-column">
+                        <h3><i class="fas fa-info-circle"></i> Informasi Kecamatan</h3>
+                        <div class="kecamatan-info">
+                            <div class="info-item">
+                                <i class="fas fa-ruler-combined"></i>
+                                <div>
+                                    <strong>Luas Wilayah</strong>
+                                    <p>2.145 Hektar</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-users"></i>
+                                <div>
+                                    <strong>Jumlah Penduduk</strong>
+                                    <p>± 85.000 jiwa</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-landmark"></i>
+                                <div>
+                                    <strong>Pusat Pemerintahan</strong>
+                                    <p>Desa Purwokerto Kulon</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="legend-card">
+                            <h3><i class="fas fa-layer-group"></i> Legenda Peta</h3>
+                            <div class="legend-grid">
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: rgba(53,121,177,1.0);"></span>
+                                    <span>Batas Kecamatan</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #1f77b4;"></span>
+                                    <span>Desa Berkoh</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #ff7f0e;"></span>
+                                    <span>Desa Tanjung</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #2ca02c;"></span>
+                                    <span>Desa Pwt Kulon</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #d62728;"></span>
+                                    <span>Desa Pwt Kidul</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #9467bd;"></span>
+                                    <span>Desa Teluk</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #8c564b;"></span>
+                                    <span>Desa Karangklesem</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color" style="background-color: #e377c2;"></span>
+                                    <span>Desa Karangpucung</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        
+    </div>
+    
+    <!-- STATISTIK -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background-color: #3498db;">
+                <i class="fas fa-home"></i>
+            </div>
+            <div class="stat-info">
+                <h3>7 Desa</h3>
+                <p>Wilayah Administratif</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background-color: #2ecc71;">
+                <i class="fas fa-road"></i>
+            </div>
+            <div class="stat-info">
+                <h3>3 Jenis Jalan</h3>
+                <p>Provinsi, Kabupaten, Kecamatan</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background-color: #9b59b6;">
+                <i class="fas fa-water"></i>
+            </div>
+            <div class="stat-info">
+                <h3>Sungai</h3>
+                <p>Jaringan perairan</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background-color: #e74c3c;">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="stat-info">
+                <h3>14 Layer</h3>
+                <p>Data spasial lengkap</p>
+            </div>
+        </div>
+    </div>
+</div>
         <!-- CARD STATISTIK -->
         <div class="stats-grid">
             <div class="stat-card">
@@ -2347,6 +2626,66 @@ function updateLayerColors() {
                 interactive: true,
             }
         }
+				  // Fungsi untuk Full Screen
+function openFullscreenMap() {
+    // Buka di tab baru
+  window.open('fullscreen-kecamatanpwtsel.html', '_blank');
+    
+    // ATAU buka di tab yang sama:
+    // window.location.href = 'fullscreen.html';
+}
+
+// Fungsi untuk reset view peta
+function resetMapView() {
+    map.fitBounds([[-7.479600655353725,109.19761271670096],[-7.424357834601983,109.29593569541696]]);
+    map.setZoom(13);
+}
+
+// Fungsi untuk buka fullscreen di halaman yang sama
+function toggleFullscreen() {
+    const mapCard = document.querySelector('.map-card');
+    const fullscreenBtn = document.querySelector('.btn-control[title="Full Screen"] i');
+    
+    if (!document.fullscreenElement) {
+        if (mapCard.requestFullscreen) {
+            mapCard.requestFullscreen();
+        } else if (mapCard.webkitRequestFullscreen) {
+            mapCard.webkitRequestFullscreen();
+        } else if (mapCard.msRequestFullscreen) {
+            mapCard.msRequestFullscreen();
+        }
+        fullscreenBtn.className = 'fas fa-compress';
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+        fullscreenBtn.className = 'fas fa-expand';
+    }
+}
+
+// Event listener untuk fullscreen change
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+function handleFullscreenChange() {
+    const mapCard = document.querySelector('.map-card');
+    const fullscreenBtn = document.querySelector('.btn-control[title="Full Screen"] i');
+    
+    if (document.fullscreenElement || 
+        document.webkitFullscreenElement || 
+        document.msFullscreenElement) {
+        mapCard.classList.add('fullscreen');
+        fullscreenBtn.className = 'fas fa-compress';
+    } else {
+        mapCard.classList.remove('fullscreen');
+        fullscreenBtn.className = 'fas fa-expand';
+    }
+}
         map.createPane('pane_pointteluk_14');
         map.getPane('pane_pointteluk_14').style.zIndex = 414;
         map.getPane('pane_pointteluk_14').style['mix-blend-mode'] = 'normal';

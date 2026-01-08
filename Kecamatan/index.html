@@ -41,11 +41,26 @@
             align-items: center;
             box-shadow: var(--shadow-subtle);
             border-bottom: 2px solid var(--light-gray);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            z-index: 100;
         }
+		/* UNTUK DESKTOP (header tetap sticky) */
+@media (min-width: 769px) {
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+}
 
+/* UNTUK MOBILE (header tidak sticky) */
+@media (max-width: 768px) {
+    .header {
+        position: relative; /* ← INI YANG PENTING */
+        top: auto;
+        z-index: auto;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Kurangi shadow */
+    }
+}
         .logo-container {
             display: flex;
             align-items: center;
@@ -132,6 +147,20 @@
             border: 2px solid var(--medium-gray);
             font-family: 'Poppins', sans-serif;
         }
+		@media (max-width: 480px) {
+    .header {
+        padding: 0.8rem;
+    }
+    
+    .nav a {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85rem;
+    }
+    
+    .logo-geoportal-main {
+        font-size: 1.4rem;
+    }
+}
 
         .nav a:hover {
             background-color: var(--secondary);
@@ -177,6 +206,7 @@
             max-width: 700px;
             margin: 0 auto;
         }
+		
 
         /* ===== CONTENT GRID ===== */
         .content-grid {

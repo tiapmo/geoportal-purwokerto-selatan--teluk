@@ -1,1023 +1,713 @@
 <!Doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-		<link rel="stylesheet" href="css/leaflet.css">
-		<link rel="stylesheet" href="css/navbar.css">
-        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
-        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css">
-        <link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-search.css">
-        <link rel="stylesheet" href="css/leaflet.photon.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+    <link rel="stylesheet" href="css/L.Control.Locate.min.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/leaflet-search.css">
+    <link rel="stylesheet" href="css/leaflet.photon.css">
+    <link rel="stylesheet" href="css/leaflet-measure.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-		
-		
-        <style>
-			/* Style untuk navbar */
-        .navbar {
-            background-color: #2c3e50;
-            overflow: hidden;
-            padding: 0 20px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    <style>
+        /* ===== VARIABLES ===== */
+        :root {
+            --primary: #1A5276;
+            --secondary: #3498DB;
+            --accent: #2ECC71;
+            --light-bg: #F8F9FA;
+            --light-card: #FFFFFF;
+            --light-gray: #ECF0F1;
+            --medium-gray: #BDC3C7;
+            --dark-gray: #7F8C8D;
+            --text-dark: #2C3E50;
+            --text-light: #95A5A6;
+            --white: #FFFFFF;
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        
-        .navbar-container {
+
+        /* ===== HEADER STYLES ===== */
+        .header {
+            background-color: var(--light-card);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
+            box-shadow: var(--shadow-subtle);
+            border-bottom: 2px solid var(--light-gray);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo-kecamatan {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--white);
+            background-color: var(--white);
+        }
+
+        .logo-kecamatan img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+
+        .logo-geoportal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-geoportal-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 1.8rem;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
+        }
+
+        .logo-geoportal-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-geoportal-main {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .logo-geoportal-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            margin-top: 2px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav a {
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dark);
+            background-color: transparent;
+            border: 2px solid var(--medium-gray);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav a:hover {
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .nav a.active {
+            background-color: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+        }
+
+        /* ===== MAIN CONTAINER ===== */
+        .main-container {
+            max-width: 1400px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #1A5276, #3498DB);
+            border-radius: 15px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(26, 82, 118, 0.2);
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
             margin: 0 auto;
         }
-        
-        .logo {
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 15px 0;
-            text-decoration: none;
+
+        /* ===== CONTENT GRID ===== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
         }
-        
-        .nav-menu {
+
+        @media (min-width: 992px) {
+            .content-grid {
+                grid-template-columns: 350px 1fr;
+            }
+        }
+
+        /* ===== CARD STYLING ===== */
+        .info-card, .map-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            border: 1px solid #e1e8ed;
+            height: auto;
+        }
+
+        .card-header {
+            padding: 20px 25px;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #e1e8ed;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            color: #2C3E50;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            background-color: #3498DB;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .map-card .card-body {
+            padding: 0;
+            height: 500px;
+            position: relative;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            border-radius: 0;
+        }
+
+        .card-footer {
+            padding: 15px 25px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e1e8ed;
+            text-align: center;
+            color: #7F8C8D;
+            font-size: 0.9rem;
+        }
+
+        /* ===== MAP CONTROLS ===== */
+        .map-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-control {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background-color: white;
+            color: #3498DB;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-control:hover {
+            background-color: #3498DB;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ===== DESA LIST ===== */
+        .desa-list {
             list-style: none;
             margin: 0;
             padding: 0;
         }
-        
-        .nav-item {
-            margin-left: 10px;
-        }
-        
-        .nav-link {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 20px 15px;
-            text-decoration: none;
-            font-size: 16px;
+
+        .desa-list li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #3498DB;
             transition: all 0.3s ease;
+        }
+
+        .desa-list li:hover {
+            background-color: #e3f2fd;
+            transform: translateX(5px);
+        }
+
+        .desa-list li strong {
+            color: #1A5276;
+            display: inline-block;
+            min-width: 150px;
+        }
+
+        /* ===== INFO BOX & LEGEND ===== */
+        .info-box, .legend-card {
+            background-color: #f0f8ff;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #d1e7ff;
+            margin-top: 20px;
+        }
+
+        .info-box h3, .legend-card h3 {
+            color: #2C3E50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
             border-radius: 4px;
+            border: 1px solid #ddd;
         }
-        
-        .nav-link:hover {
-            background-color: #34495e;
-            transform: translateY(-2px);
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
         }
-        
-        .nav-link.active {
-            background-color: #3498db;
-            font-weight: bold;
+
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
-        
-        /* Responsive design */
-        .menu-toggle {
-            display: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 15px;
-        }
-        
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-            }
-            
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background-color: #2c3e50;
-                flex-direction: column;
-            }
-            
-            .nav-menu.active {
-                display: flex;
-            }
-            
-            .nav-item {
-                margin: 0;
-                width: 100%;
-            }
-            
-            .nav-link {
-                padding: 15px;
-                text-align: left;
-                border-bottom: 1px solid #34495e;
-            }
-		}
-			 .content {
+
+        .stat-card {
+            background-color: white;
+            border-radius: 12px;
             padding: 20px;
-            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e1e8ed;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .stat-info h3 {
+            margin: 0 0 5px 0;
+            color: #2C3E50;
+            font-size: 1.8rem;
+        }
+
+        .stat-info p {
+            margin: 0;
+            color: #7F8C8D;
+            font-size: 0.9rem;
+        }
+
+        /* ===== DESA MAPS SECTION ===== */
+        .desa-maps-section {
+            margin-top: 40px;
+            padding: 25px;
+            background-color: #f8fafc;
+            border-radius: 15px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            color: #2C3E50;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .section-header p {
+            color: #7F8C8D;
+            font-size: 1rem;
+            max-width: 600px;
             margin: 0 auto;
         }
-        
-        .map-container {
-            margin-top: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+
+        .desa-maps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .desa-map-card {
+            background-color: white;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
         }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 20px;
+
+        .desa-map-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
         }
-			/* Turunkan z-index peta */
-.leaflet-container {
-  z-index: 10 !important; /* rendah */
-  position: relative; /* pastikan ini */
-}
 
-/* Naikkan z-index navbar/header */
-.navbar {
-  position: relative; /* atau sticky jika mau nempel */
-  z-index: 1000 !important;
-}
-    
-			/* ===== STYLE UNTUK CARD LAYOUT ===== */
-.main-container {
-    max-width: 1400px;
-    margin: 20px auto;
-    padding: 0 20px;
-}
-
-.page-header {
-    text-align: center;
-    margin-bottom: 30px;
-    padding: 25px;
-    background: linear-gradient(135deg, #1A5276, #3498DB);
-    border-radius: 15px;
-    color: white;
-    box-shadow: 0 8px 25px rgba(26, 82, 118, 0.2);
-}
-
-.page-header h1 {
-    font-size: 2.2rem;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.page-header p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 25px;
-    margin-bottom: 30px;
-}
-
-@media (min-width: 992px) {
-    .content-grid {
-        grid-template-columns: 350px 1fr;
-    }
-}
-
-/* Card styling */
-.info-card, .map-card {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    border: 1px solid #e1e8ed;
-}
-
-.card-header {
-    padding: 20px 25px;
-    background-color: #f8f9fa;
-    border-bottom: 2px solid #e1e8ed;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-header h2 {
-    margin: 0;
-    color: #2C3E50;
-    font-size: 1.4rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.badge {
-    background-color: #3498DB;
-    color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-}
-
-.card-body {
-    padding: 25px;
-}
-
-.map-card .card-body {
-    padding: 0;
-    height: 500px;
-    position: relative;
-}
-
-#map {
-    width: 100%;
-    height: 100%;
-    min-height: 500px;
-    border-radius: 0;
-}
-
-.card-footer {
-    padding: 15px 25px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e1e8ed;
-    text-align: center;
-    color: #7F8C8D;
-    font-size: 0.9rem;
-}
-
-/* Map controls */
-.map-controls {
-    display: flex;
-    gap: 8px;
-}
-
-.btn-control {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background-color: white;
-    color: #3498DB;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-}
-
-.btn-control:hover {
-    background-color: #3498DB;
-    color: white;
-    transform: translateY(-2px);
-}
-
-/* Desa list */
-.desa-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.desa-list li {
-    padding: 12px 15px;
-    margin-bottom: 8px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border-left: 4px solid #3498DB;
-    transition: all 0.3s ease;
-}
-
-.desa-list li:hover {
-    background-color: #e3f2fd;
-    transform: translateX(5px);
-}
-
-.desa-list li strong {
-    color: #1A5276;
-    display: inline-block;
-    min-width: 150px;
-}
-
-/* Info box */
-.info-box, .legend-card {
-    background-color: #f0f8ff;
-    padding: 18px;
-    border-radius: 10px;
-    border: 1px solid #d1e7ff;
-    margin-top: 20px;
-}
-
-.info-box h3, .legend-card h3 {
-    color: #2C3E50;
-    margin-bottom: 15px;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.info-box p {
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 8px;
-}
-
-/* Legend */
-.legend-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 10px;
-    padding: 8px 0;
-}
-
-.legend-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
-/* Stats grid */
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 30px;
-}
-
-@media (min-width: 768px) {
-    .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-.stat-card {
-    background-color: white;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e1e8ed;
-    transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.stat-icon {
-    width: 60px;
-    height: 60px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.8rem;
-}
-
-.stat-info h3 {
-    margin: 0 0 5px 0;
-    color: #2C3E50;
-    font-size: 1.8rem;
-}
-
-.stat-info p {
-    margin: 0;
-    color: #7F8C8D;
-    font-size: 0.9rem;
-}
-
-/* Scroll behavior */
-html, body {
-    height: 100%;
-    overflow-y: auto;
-    background-color: #f5f7fa;
-}
-			
-
-/* Responsive */
-@media (max-width: 768px) {
-    .main-container {
-        padding: 0 15px;
-        margin: 15px auto;
-    } 
-
-
-    
-    .page-header {
-        padding: 20px 15px;
-    }
-    
-    .page-header h1 {
-        font-size: 1.8rem;
-    }
-    
-    .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .map-controls {
-        align-self: flex-start;
-    }
-    
-    .map-card .card-body {
-        height: 400px;
-    }
-    
-    #map {
-        min-height: 400px;
-    }
-    
-    .desa-list li strong {
-        min-width: 120px;
-    }
-}
-	/* ===== RESPONSIVE IMPROVEMENTS ===== */
-
-/* Responsif untuk HP kecil (max-width: 480px) */
-@media (max-width: 480px) {
-    /* Header dan navigasi */
-    .header {
-        padding: 0.5rem 1rem;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .logo-container {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-    
-    .logo-kecamatan {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .logo-geoportal-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.5rem;
-    }
-    
-    .logo-geoportal-main {
-        font-size: 1.4rem;
-    }
-    
-    .logo-geoportal-tagline {
-        font-size: 0.75rem;
-    }
-    
-    .nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-    }
-    
-    .nav a {
-        padding: 0.5rem 0.8rem;
-        font-size: 0.85rem;
-        border-radius: 20px;
-    }
-    
-    /* Konten utama */
-    .main-container {
-        padding: 0 10px;
-        margin: 10px auto;
-    }
-    
-    .page-header {
-        padding: 15px 10px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .page-header h1 {
-        font-size: 1.4rem;
-    }
-    
-    .page-header p {
-        font-size: 0.9rem;
-    }
-    
-    /* Grid layout */
-    .content-grid {
-        gap: 15px;
-    }
-    
-    /* Card */
-    .card-header {
-        padding: 15px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-    
-    .card-header h2 {
-        font-size: 1.1rem;
-    }
-    
-    .card-body {
-        padding: 15px;
-    }
-    
-    /* Map container */
-    .map-card .card-body {
-        height: 300px;
-    }
-    
-    #map {
-        min-height: 300px;
-    }
-    
-    /* List desa */
-    .desa-list li {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-    }
-    
-    .desa-list li strong {
-        min-width: 100px;
-        display: block;
-        margin-bottom: 5px;
-    }
-    
-    /* Legend */
-    .legend-item {
-        font-size: 0.85rem;
-    }
-    
-    /* Statistik grid */
-    .stats-grid {
-        grid-template-columns: 1fr !important;
-        gap: 10px;
-    }
-    
-    .stat-card {
-        padding: 15px;
-    }
-    
-    .stat-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-    
-    .stat-info h3 {
-        font-size: 1.4rem;
-    }
-    
-    /* Tombol kontrol peta */
-    .map-controls {
-        align-self: stretch;
-        justify-content: space-between;
-    }
-    
-    .btn-control {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1rem;
-    }
-}
-
-/* Responsif untuk tablet (481px - 768px) */
-@media (min-width: 481px) and (max-width: 768px) {
-    .header {
-        padding: 0.8rem 1.5rem;
-    }
-    
-    .nav a {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-    }
-    
-    .map-card .card-body {
-        height: 350px;
-    }
-    
-    #map {
-        min-height: 350px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Perbaikan untuk layar sangat kecil (max-width: 360px) */
-@media (max-width: 360px) {
-    .logo-geoportal-main {
-        font-size: 1.2rem;
-    }
-    
-    .nav a {
-        font-size: 0.8rem;
-        padding: 0.4rem 0.7rem;
-    }
-    
-    .page-header h1 {
-        font-size: 1.2rem;
-    }
-    
-    .map-card .card-body {
-        height: 250px;
-    }
-    
-    #map {
-        min-height: 250px;
-    }
-    
-    .desa-list li strong {
-        min-width: 90px;
-        font-size: 0.85rem;
-    }
-}
-
-/* Perbaikan untuk kontrol leaflet di mobile */
-.leaflet-control-zoom,
-.leaflet-control-locate,
-.leaflet-control-measure {
-    margin-top: 60px !important;
-}
-
-.leaflet-control-search {
-    margin-top: 100px !important;
-}
-
-/* Header sticky */
-.header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: white;
-}
-
-/* ===== STYLE UNTUK CARD PETA DESA ===== */
-.desa-maps-section {
-    margin-top: 40px;
-    padding: 25px;
-    background-color: #f8fafc;
-    border-radius: 15px;
-    border: 1px solid #e1e8ed;
-}
-
-.section-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.section-header h2 {
-    color: #2C3E50;
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.section-header p {
-    color: #7F8C8D;
-    font-size: 1rem;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.desa-maps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-}
-
-.desa-map-card {
-    background-color: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    border: 1px solid #e1e8ed;
-	
-}
-
-.desa-map-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-}
-
-.desa-map-header {
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    color: white;
-}
-
-.desa-map-icon {
-    width: 50px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-}
-
-.desa-map-title h3 {
-    margin: 0;
-    font-size: 1.3rem;
-}
-
-.desa-map-title p {
-    margin: 5px 0 0 0;
-    opacity: 0.9;
-    font-size: 0.9rem;
-}
-
-.desa-map-preview {
-    height: 200px;
-    overflow: hidden;
-}
-
-.desa-map-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.desa-map-card:hover .desa-map-preview img {
-    transform: scale(1.05);
-}
-
-.desa-map-info {
-    flex-grow: 1;
-}
-
-.desa-map-info p {
-    margin: 0 0 15px 0;
-    color: #555;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-}
-
-.desa-map-info p i {
-    margin-top: 3px;
-    color: #3498DB;
-}
-
-.desa-map-stats {
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
-}
-
-.desa-map-stats span {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    color: #7F8C8D;
-    font-size: 0.85rem;
-}
-
-.desa-map-stats i {
-    color: #3498DB;
-}
-
-.desa-map-button {
-    display: block;
-    text-align: center;
-    padding: 15px;
-    background-color: #2C3E50;
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    border-top: 1px solid #e1e8ed;
-    transition: all 0.3s ease;
-}
-
-.desa-map-button:hover {
-    background-color: #3498DB;
-    color: white;
-}
-
-.desa-map-button i {
-    margin-right: 8px;
-}
-			
-.desa-map-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-}
-
-
-/* Responsive untuk card desa */
-@media (max-width: 992px) {
-    .desa-maps-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-			
-@media (max-width: 768px) {
-    .desa-maps-section {
-        padding: 20px 15px;
-        margin-top: 30px;
-    }
-    
-    .section-header h2 {
-        font-size: 1.5rem;
-    }
-    
-    .desa-maps-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .desa-map-preview {
-        width: 100%;
-		height: 100%;
-		object-fit: cover;
-    }
-}
-
-@media (max-width: 480px) {
-    .desa-maps-section {
-        padding: 15px 10px;
-    }
-    
-    .section-header h2 {
-        font-size: 1.3rem;
-        flex-direction: column;
-        gap: 5px;
-    }
-    
-    .desa-map-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-        padding: 15px;
-    }
-    
-    .desa-map-title h3 {
-        font-size: 1.2rem;
-    }
-    
-    .desa-map-info {
-        padding: 12px;
-		flex-grow: 1;
-    }
-    
-    .desa-map-stats {
-        flex-direction: column;
-        gap: 8px;
-    }
-	.map-links {
-  padding: 12px;
-}
-}
-.map-wrapper {
-  position: relative;
-  height: 500px;
-}
-.map-sidebar {
-  position: absolute;
-  top: 0px;
-  left: 0;
-  width: 300px;
-  height: 100%;
-  background: #fff;
-  box-shadow: 2px 0 10px rgba(0,0,0,0.15);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-  z-index: 1001;
-  overflow-y: auto;
-}
-
-.map-sidebar.active {
-  transform: translateX(0);
-}
-
-@media (max-width: 768px) {
-  .map-sidebar {
-    width: 85%;
-  }
-}
-@media (min-width: 992px) {
-  .map-sidebar {
-    position: relative;
-    transform: translateX(0);
-  }
-
-  .map-sidebar:not(.active) {
-    display: none;
-  }
-}
-
-/* ===== MOBILE ===== */
-@media (max-width: 991px) {
-  .map-sidebar {
-    width: 85%;
-    max-width: 320px;
-  }
-}
-.map-fullscreen .map-sidebar,
-.map-fullscreen .map-bottom-panel {
-  display: none !important;
-}
-#map {
-  width: 100%;
-  height: 100%;
-}
-
-</style>
+        .desa-map-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+        }
+
+        .desa-map-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .desa-map-title h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .desa-map-title p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .desa-map-preview {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .desa-map-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .desa-map-card:hover .desa-map-preview img {
+            transform: scale(1.05);
+        }
+
+        .desa-map-info {
+            padding: 15px;
+        }
+
+        .desa-map-info p {
+            margin: 0 0 15px 0;
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .desa-map-info p i {
+            margin-top: 3px;
+            color: #3498DB;
+        }
+
+        .desa-map-stats {
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        .desa-map-stats span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #7F8C8D;
+            font-size: 0.85rem;
+        }
+
+        .desa-map-stats i {
+            color: #3498DB;
+        }
+
+        .desa-map-button {
+            display: block;
+            text-align: center;
+            padding: 15px;
+            background-color: #2C3E50;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-top: 1px solid #e1e8ed;
+            transition: all 0.3s ease;
+        }
+
+        .desa-map-button:hover {
+            background-color: #3498DB;
+            color: white;
+        }
+
+        .desa-map-button i {
+            margin-right: 8px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 1200px) {
+            .desa-maps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Header */
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+            
+            .logo-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            /* Main content */
+            .main-container {
+                padding: 0 15px;
+            }
+            
+            .page-header {
+                padding: 20px 15px;
+            }
+            
+            .page-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            /* Grid layout */
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-card .card-body {
+                height: 400px;
+            }
+            
+            #map {
+                min-height: 400px;
+            }
+            
+            /* Stats */
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Desa maps */
+            .desa-maps-section {
+                padding: 20px 15px;
+            }
+            
+            .desa-maps-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .desa-map-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .map-card .card-body {
+                height: 350px;
+            }
+            
+            #map {
+                min-height: 350px;
+            }
+            
+            .desa-list li strong {
+                min-width: 120px;
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+
+        /* ===== TURUNKAN Z-INDEX PETA ===== */
+        .leaflet-container {
+            z-index: 10 !important;
+        }
+
+        /* ===== BODY STYLING ===== */
+        html, body {
+            height: 100%;
+            overflow-y: auto;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ===== SCROLLBAR STYLING ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+    </style>
 		
-        <title></title>
-    </head>
-<!-- Di bagian sebelum </body> -->
-<script src="../js/main.js"></script>
-<script src="../js/map-integration.js"></script>
-	<script>
-// BRUTAL OVERRIDE - PASTI BERHASIL
-setTimeout(() => {
-    // 1. Reset semua
-    const allNavLinks = document.querySelectorAll('.nav a');
-    allNavLinks.forEach(link => {
-        link.classList.remove('active');
-        link.style.backgroundColor = '';
-        link.style.color = '';
-        link.style.borderColor = '';
-    });
-    
-    // 2. Target menu Kecamatan
-    const targetMenu = document.querySelector('a[href*="Kecamatan"], a[data-page="kecamatan"]');
-    
-    if (targetMenu) {
-        // 3. Tambah class
-        targetMenu.classList.add('active');
-        
-        // 4. Apply style langsung
-        targetMenu.style.backgroundColor = '#3498DB';
-        targetMenu.style.color = 'white';
-        targetMenu.style.borderColor = '#3498DB';
-        targetMenu.style.fontWeight = 'bold';
-        
-        // 5. Lock dengan attribute
-        targetMenu.setAttribute('data-force-active', 'true');
-        
-        console.log('🎯 Kecamatan menu LOCKED as active');
-    }
-    
-    // 6. Monitor perubahan (optional)
-    const observer = new MutationObserver(() => {
-        const kecamatanMenu = document.querySelector('[data-page="kecamatan"]');
-        if (kecamatanMenu && !kecamatanMenu.classList.contains('active')) {
-            console.log('⚠️ Active class removed! Re-adding...');
-            kecamatanMenu.classList.add('active');
-            kecamatanMenu.style.backgroundColor = '#3498DB';
-        }
-    });
-    
-    // Observe perubahan class
-    const kecamatanMenu = document.querySelector('[data-page="kecamatan"]');
-    if (kecamatanMenu) {
-        observer.observe(kecamatanMenu, { 
-            attributes: true, 
-            attributeFilter: ['class'] 
-        });
-    }
-}, 500); // Tunggu lebih lama
-</script>
-    <body>
-		 <!-- File: navbar.html -->
-<!-- File: navbar.html -->
-<header class="header">
-    <div class="logo-container">
-        <!-- LOGO KECAMATAN - HANYA GAMBAR SAJA -->
-        <div class="logo-kecamatan">
-            <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
-        </div>
-        <!-- LOGO GEOPORTAL -->
-        <div class="logo-geoportal">
+         <title>Peta Kecamatan Purwokerto Selatan</title>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-kecamatan">
+                <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
+            </div>
+            <div class="logo-geoportal">
                 <div class="logo-geoportal-icon">
                     <i class="fas fa-map-marked-alt"></i>
                 </div>
@@ -1026,613 +716,328 @@ setTimeout(() => {
                     <div class="logo-geoportal-tagline">Data Spasial Digital</div>
                 </div>
             </div>
-    </div>
-    
-    <!-- NAVIGASI -->
-    <nav class="nav">
-<a href="../" class="nav-link" data-page="beranda"><i class="fas fa-home"></i> Beranda</a>
-<a href="../Kecamatan/" class="nav-link" data-page="kecamatan"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
-<a href="../teluk/" class="nav-link" data-page="desa"><i class="fas fa-water"></i> Peta Desa Teluk</a>
-<a href="../tentang/" class="nav-link" data-page="tentang"><i class="fas fa-user-circle"></i> Tentang Kami</a>
-</nav>
-</header>
-
-<style>
-/* ===== VARIABLES ===== */
-:root {
-    --primary: #1A5276;
-    --secondary: #3498DB;
-    --accent: #2ECC71;
-    --light-bg: #F8F9FA;
-    --light-card: #FFFFFF;
-    --light-gray: #ECF0F1;
-    --medium-gray: #BDC3C7;
-    --dark-gray: #7F8C8D;
-    --text-dark: #2C3E50;
-    --text-light: #95A5A6;
-    --white: #FFFFFF;
-    --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* ===== HEADER STYLES (SAMA PERSIS DENGAN BERANDA) ===== */
-.header {
-    background-color: var(--light-card);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: var(--shadow-subtle);
-    border-bottom: 2px solid var(--light-gray);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.logo-kecamatan {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: 3px solid var(--white);
-    background-color: var(--white);
-}
-
-.logo-kecamatan img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 5px;
-}
-
-.logo-geoportal {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.logo-geoportal-icon {
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, var(--secondary), var(--accent));
-    border-radius: 10px;
-    color: var(--white);
-    font-size: 1.8rem;
-    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
-}
-
-.logo-geoportal-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-geoportal-main {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: var(--primary);
-    line-height: 1;
-}
-
-.logo-geoportal-tagline {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 0.85rem;
-    color: var(--dark-gray);
-    margin-top: 2px;
-}
-
-.nav {
-    display: flex;
-    gap: 10px;
-}
-
-.nav a {
-    padding: 0.8rem 1.5rem;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--text-dark);
-    background-color: transparent;
-    border: 2px solid var(--medium-gray);
-    font-family: 'Poppins', sans-serif;
-}
-
-.nav a:hover {
-    background-color: var(--secondary);
-    color: var(--white);
-    border-color: var(--secondary);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-subtle);
-}
-
-.nav a.active {
-    background-color: var(--secondary);
-    color: var(--white);
-    border-color: var(--secondary);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
-    }
-    
-    .logo-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .nav {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .nav a {
-        padding: 0.6rem 1rem;
-        font-size: 0.9rem;
-    }
-}
-</style>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Fungsi untuk mengatur menu aktif berdasarkan halaman saat ini
-    function setActiveNav() {
-        // Dapatkan path URL saat ini
-        const currentPath = window.location.pathname;
+        </div>
         
-        // Hapus class active dari semua link
-        document.querySelectorAll('.nav a').forEach(link => {
-            link.classList.remove('active');
-        });
-        
-        // Tentukan halaman aktif berdasarkan path
-        if (currentPath.includes('Kecamatan')) {
-            // Jika berada di halaman Peta Kecamatan
-            document.querySelector('.nav a[data-page="kecamatan"]').classList.add('active');
-        } else if (currentPath.includes('teluk')) {
-            // Jika berada di halaman Peta Desa Teluk
-            document.querySelector('.nav a[data-page="desa"]').classList.add('active');
-        } else if (currentPath.includes('tentang')) {
-            // Jika berada di halaman Tentang Kami
-            document.querySelector('.nav a[data-page="tentang"]').classList.add('active');
-        } else {
-            // Default: Beranda
-            // Periksa jika berada di root atau beranda
-            if (currentPath === '/' || currentPath.endsWith('index.html') || currentPath.endsWith('/') || currentPath.includes('beranda')) {
-                document.querySelector('.nav a[data-page="beranda"]').classList.add('active');
-            }
-        }
-        
-        console.log('Path saat ini:', currentPath);
-        console.log('Menu aktif:', document.querySelector('.nav a.active')?.textContent);
-    }
-    
-    // Panggil fungsi saat halaman dimuat
-    setActiveNav();
-    
-    // Jika menggunakan SPA atau ada perubahan URL tanpa reload
-    // Tambahkan event listener untuk perubahan URL
-    window.addEventListener('popstate', setActiveNav);
-    
-    // Opsional: Tambahkan event click untuk semua nav link untuk testing
-    document.querySelectorAll('.nav a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            // Hapus semua active class
-            document.querySelectorAll('.nav a').forEach(item => {
-                item.classList.remove('active');
-            });
-            // Tambahkan active class ke link yang diklik
-            this.classList.add('active');
-        });
-    });
-});
-	// ===== MOBILE OPTIMIZATION =====
-function optimizeForMobile() {
-    const isMobile = window.innerWidth <= 768;
-    
-    if (isMobile && map) {
-        // Sesuaikan tampilan peta untuk mobile
-        map.invalidateSize(); // Refresh ukuran peta
-        
-        // Sembunyikan kontrol yang tidak penting di mobile
-        const measureControl = document.querySelector('.leaflet-control-measure');
-        if (measureControl) {
-            measureControl.style.display = 'none';
-        }
-        
-        // Zoom yang lebih sesuai untuk mobile
-        if (map.getZoom() > 15) {
-            map.setZoom(15);
-        }
-    }
+        <nav class="nav">
+            <a href="../" class="nav-link" data-page="beranda"><i class="fas fa-home"></i> Beranda</a>
+            <a href="../Kecamatan/" class="nav-link active" data-page="kecamatan"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
+            <a href="../teluk/" class="nav-link" data-page="desa"><i class="fas fa-water"></i> Peta Desa Teluk</a>
+            <a href="../tentang/" class="nav-link" data-page="tentang"><i class="fas fa-user-circle"></i> Tentang Kami</a>
+        </nav>
+    </header>
 
-}
-
-// Jalankan saat load dan resize
-window.addEventListener('load', optimizeForMobile);
-window.addEventListener('resize', optimizeForMobile);
-setTimeout(optimizeForMobile, 1000); // Juga setelah peta selesai load
-</script>
-  <div class="main-container">
-            <!-- Judul halaman -->
-            <div class="page-header">
-                <h1><i class="fas fa-map-marked-alt"></i> Peta Kecamatan Purwokerto Selatan</h1>
-                <p>Visualisasi lengkap wilayah beserta 7 desa di dalamnya</p>
-            </div>
-            
-            <!-- Grid untuk konten -->
-            <div class="content-grid">
-                <!-- Panel informasi -->
-                <div class="info-card">
-                    <div class="card-header">
-						<div class="map-section">
-
-						  <!-- PANEL KIRI -->
-						  <div class="map-side-panel">
-						 <div class="info-box">
-                        <h2><i class="fas fa-list"></i> Desa di Kecamatan</h2>
-                        <span class="badge">7 Desa</span>
-                    </div>
-                    <div class="card-body">
-                        <ul class="desa-list">
-                            <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)</li>
-                            <li><strong>Tanjung</strong> -  Wilayah permukiman dan perkantoran lokal</li>
-                            <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas</li>
-                            <li><strong>Purwokerto Kidul</strong> -  Kawasan permukiman dan pusat aktivitas sosial masyarakat</li>
-                            <li><strong>Teluk</strong> - Taman Andhang Pangrenan & Bukit Cinta</li>
-                            <li><strong>Karangklesem</strong> - Area perbukitan</li>
-                            <li><strong>KarangPucung</strong> - Pertanian & perbukitan</li>
-                        </ul>
-                        
-                        <div class="info-box">
-                            <h3><i class="fas fa-info-circle"></i> Informasi Kecamatan</h3>
-                            <p>• Luas Wilayah: 2.145 Ha</p>
-                            <p>• Jumlah Penduduk: ± 85.000 jiwa</p>
-                            <p>• Pusat Pemerintahan: Purwokerto Kulon</p>
-                        </div>
-                        
-                        <div class="legend-card">
-                            <h3><i class="fas fa-layer-group"></i> Legenda Peta</h3>
-                            <div class="legend-item">
-                                <span class="legend-color" style="background-color: rgba(53,121,177,1.0);"></span>
-                                <span>Batas Kecamatan</span>
-                            </div>
-							<div class="legend-item">
-						        <span class="legend-color" style="background-color: #1f77b4;"></span>
-						        <span>Nama Desa Berkoh</span>
-						    </div>
-							<div class="legend-item">
-						        <span class="legend-color" style="background-color: #ff7f0e;"></span>
-						        <span>Nama Desa Tanjung</span>
-						    </div>
-							<div class="legend-item">
-						        <span class="legend-color" style="background-color: #2ca02c;"></span>
-						        <span>Nama Desa Pwt Kulon</span>
-						    </div>
-							<div class="legend-item">
-						        <span class="legend-color" style="background-color: #d62728;"></span>
-						        <span>Nama Desa Pwt Kidul</span>
-						    </div>
-                            <div class="legend-item">
-                                <span class="legend-color" style="background-color: #9467bd;"></span>
-       							 <span>Nama Desa Teluk</span>
-                            </div>
-                            <div class="legend-item">
-                               <span class="legend-color" style="background-color: #8c564b;"></span>
-      						 	<span>Nama Desa Karangklasem</span>
-                            </div>
-							 <div class="legend-item">
-						        <span class="legend-color" style="background-color: #e377c2;"></span>
-						        <span>Nama Desa Karangpucung</span>
-						    </div>
-                            <!-- Tambahkan legend item lainnya sesuai layer peta -->
-                        </div>
-                    </div>
+    <!-- MAIN CONTENT -->
+    <div class="main-container">
+        <!-- JUDUL HALAMAN -->
+        <div class="page-header">
+            <h1><i class="fas fa-map-marked-alt"></i> Peta Kecamatan Purwokerto Selatan</h1>
+            <p>Visualisasi lengkap wilayah beserta 7 desa di dalamnya</p>
+        </div>
+        
+        <!-- GRID UNTUK KONTEN UTAMA -->
+        <div class="content-grid">
+            <!-- PANEL INFORMASI (KIRI) -->
+            <div class="info-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-list"></i> Desa di Kecamatan</h2>
+                    <span class="badge">7 Desa</span>
                 </div>
-				</div>
-                
-                <!-- Card untuk peta -->
-                <div class="map-card">
-                    <div class="card-header">
-                        <h2><i class="fas fa-map"></i> Peta Interaktif</h2>
-                        <div class="map-controls">
-                            <button class="btn-control" onclick="map.zoomIn()" title="Zoom In">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                            <button class="btn-control" onclick="map.zoomOut()" title="Zoom Out">
-                                <i class="fas fa-minus"></i>
-                            </button>
+                <div class="card-body">
+                    <ul class="desa-list">
+                        <li><strong>Berkoh</strong> - Taman Satria Purwokerto & Kawasan Pendidikan (UNSOED)</li>
+                        <li><strong>Tanjung</strong> - Wilayah permukiman dan perkantoran lokal</li>
+                        <li><strong>Purwokerto Kulon</strong> - Pusat pemerintahan Kabupaten Banyumas</li>
+                        <li><strong>Purwokerto Kidul</strong> - Kawasan permukiman dan pusat aktivitas sosial masyarakat</li>
+                        <li><strong>Teluk</strong> - Taman Andhang Pangrenan & Bukit Cinta</li>
+                        <li><strong>Karangklesem</strong> - Area perbukitan</li>
+                        <li><strong>Karangpucung</strong> - Pertanian & perbukitan</li>
+                    </ul>
+                    
+                    <div class="info-box">
+                        <h3><i class="fas fa-info-circle"></i> Informasi Kecamatan</h3>
+                        <p>• Luas Wilayah: 2.145 Ha</p>
+                        <p>• Jumlah Penduduk: ± 85.000 jiwa</p>
+                        <p>• Pusat Pemerintahan: Purwokerto Kulon</p>
+                    </div>
+                    
+                    <div class="legend-card">
+                        <h3><i class="fas fa-layer-group"></i> Legenda Peta</h3>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: rgba(53,121,177,1.0);"></span>
+                            <span>Batas Kecamatan</span>
                         </div>
-                    </div>
-                    <div class="card-body ">
-						   <div id="map"></div>
-                    </div>
-                    <div class="card-footer">
-                        <p><i class="fas fa-mouse-pointer"></i> Klik pada area berwarna untuk info detail</p>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #1f77b4;"></span>
+                            <span>Nama Desa Berkoh</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #ff7f0e;"></span>
+                            <span>Nama Desa Tanjung</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #2ca02c;"></span>
+                            <span>Nama Desa Pwt Kulon</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #d62728;"></span>
+                            <span>Nama Desa Pwt Kidul</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #9467bd;"></span>
+                            <span>Nama Desa Teluk</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #8c564b;"></span>
+                            <span>Nama Desa Karangklasem</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color" style="background-color: #e377c2;"></span>
+                            <span>Nama Desa Karangpucung</span>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Card statistik -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #3498db;">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>7 Desa</h3>
-                        <p>Wilayah Administratif</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #2ecc71;">
-                        <i class="fas fa-road"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>3 Jenis Jalan</h3>
-                        <p>Provinsi, Kabupaten, Kecamatan</p>
+            <!-- PANEL PETA (KANAN) -->
+            <div class="map-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-map"></i> Peta Interaktif</h2>
+                    <div class="map-controls">
+                        <button class="btn-control" onclick="map.zoomIn()" title="Zoom In">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button class="btn-control" onclick="map.zoomOut()" title="Zoom Out">
+                            <i class="fas fa-minus"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #9b59b6;">
-                        <i class="fas fa-water"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Sungai</h3>
-                        <p>Jaringan perairan</p>
-                    </div>
+                <div class="card-body">
+                    <div id="map"></div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-icon" style="background-color: #e74c3c;">
-                        <i class="fas fa-layer-group"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>14 Layer</h3>
-                        <p>Data spasial lengkap</p>
-                    </div>
+                <div class="card-footer">
+                    <p><i class="fas fa-mouse-pointer"></i> Klik pada area berwarna untuk info detail</p>
                 </div>
             </div>
-	             <!-- ===== PETA DESA DALAM KECAMATAN ===== -->
-<div class="desa-maps-section">
-  <div class="section-header">
-    <h2><i class="fas fa-map-marked-alt"></i> Peta Detail Desa</h2>
-    <p>Klik untuk melihat peta detail masing-masing desa</p>
-  </div>
-
-  <div class="desa-maps-grid">
-
-    <!-- Desa Berkoh -->
-    <div class="desa-map-card">
-      <div class="desa-map-header" style="background: linear-gradient(135deg,#1f77b4,#2c8fd6);">
-        <div class="desa-map-icon"><i class="fas fa-university"></i></div>
-        <div class="desa-map-title">
-          <h3>Desa Berkoh</h3>
-          <p>Taman Satria & Kawasan Pendidikan</p>
         </div>
-      </div>
-
-      <div class="desa-map-preview">
-        <img src="../img/Berkoh.png"
-             onerror="this.src='https://via.placeholder.com/400x200/1f77b4/ffffff?text=Peta+Berkoh'">
-      </div>
-
-      <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Kawasan pendidikan dan permukiman padat</p>
-        <div class="desa-map-stats">
-          <span><i class="fas fa-road"></i> Jalan: 45 km</span>
-          <span><i class="fas fa-home"></i> RT: 15</span>
+        
+        <!-- CARD STATISTIK -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #3498db;">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>7 Desa</h3>
+                    <p>Wilayah Administratif</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #2ecc71;">
+                    <i class="fas fa-road"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>3 Jenis Jalan</h3>
+                    <p>Provinsi, Kabupaten, Kecamatan</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #9b59b6;">
+                    <i class="fas fa-water"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Sungai</h3>
+                    <p>Jaringan perairan</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background-color: #e74c3c;">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>14 Layer</h3>
+                    <p>Data spasial lengkap</p>
+                </div>
+            </div>
         </div>
-      </div>
+        
+        <!-- PETA DESA DALAM KECAMATAN -->
+        <div class="desa-maps-section">
+            <div class="section-header">
+                <h2><i class="fas fa-map-marked-alt"></i> Peta Detail Desa</h2>
+                <p>Klik untuk melihat peta detail masing-masing desa</p>
+            </div>
 
-      <div class="map-links">
-        <a href="../Berkoh/" class="desa-map-button">
-          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-        </a>
-      </div>
+            <div class="desa-maps-grid">
+                <!-- Desa Berkoh -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#1f77b4,#2c8fd6);">
+                        <div class="desa-map-icon"><i class="fas fa-university"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Berkoh</h3>
+                            <p>Taman Satria & Kawasan Pendidikan</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/Berkoh.png" onerror="this.src='https://via.placeholder.com/400x200/1f77b4/ffffff?text=Peta+Berkoh'" alt="Peta Desa Berkoh">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Kawasan pendidikan dan permukiman padat</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 45 km</span>
+                            <span><i class="fas fa-home"></i> RT: 15</span>
+                        </div>
+                    </div>
+                    <a href="../Berkoh/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+
+                <!-- Purwokerto Kidul -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#d62728,#e74c3c);">
+                        <div class="desa-map-icon"><i class="fas fa-city"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Purwokerto Kidul</h3>
+                            <p>Permukiman & Aktivitas Sosial</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/PwtKidul.png" onerror="this.src='https://via.placeholder.com/400x200/d62728/ffffff?text=Pwt+Kidul'" alt="Peta Desa Purwokerto Kidul">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Pusat aktivitas masyarakat</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 38 km</span>
+                            <span><i class="fas fa-home"></i> RT: 12</span>
+                        </div>
+                    </div>
+                    <a href="../PwtKidul/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+
+                <!-- Tanjung -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#ff7f0e,#f39c12);">
+                        <div class="desa-map-icon"><i class="fas fa-building"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Tanjung</h3>
+                            <p>Permukiman & Perkantoran Lokal</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/Tanjung.png" onerror="this.src='https://via.placeholder.com/400x200/ff7f0e/ffffff?text=Tanjung'" alt="Peta Desa Tanjung">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Permukiman dan perkantoran</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 42 km</span>
+                            <span><i class="fas fa-home"></i> RT: 10</span>
+                        </div>
+                    </div>
+                    <a href="../Tanjung/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+
+                <!-- Purwokerto Kulon -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#2ca02c,#27ae60);">
+                        <div class="desa-map-icon"><i class="fas fa-landmark"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Purwokerto Kulon</h3>
+                            <p>Pusat Pemerintahan Kabupaten</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/PwtKulon.png" onerror="this.src='https://via.placeholder.com/400x200/2ca02c/ffffff?text=Pwt+Kulon'" alt="Peta Desa Purwokerto Kulon">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Pusat pemerintahan Banyumas</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 50 km</span>
+                            <span><i class="fas fa-home"></i> RT: 20</span>
+                        </div>
+                    </div>
+                    <a href="../PwtKulon/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+
+                <!-- Teluk -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#9467bd,#9b59b6);">
+                        <div class="desa-map-icon"><i class="fas fa-water"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Teluk</h3>
+                            <p>Taman Andhang & Bukit Cinta</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/Teluk.png" onerror="this.src='https://via.placeholder.com/400x200/9467bd/ffffff?text=Teluk'" alt="Peta Desa Teluk">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Wisata dan ruang hijau</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 35 km</span>
+                            <span><i class="fas fa-home"></i> RT: 8</span>
+                        </div>
+                    </div>
+                    <a href="../Teluk/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+
+                <!-- Karangklesem -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#8c564b,#a35c3a);">
+                        <div class="desa-map-icon"><i class="fas fa-mountain"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Karangklesem</h3>
+                            <p>Area Perbukitan</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/Karangklesem.png" onerror="this.src='https://via.placeholder.com/400x200/8c564b/ffffff?text=Karangklesem'" alt="Peta Desa Karangklesem">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Perbukitan dengan panorama alam</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 40 km</span>
+                            <span><i class="fas fa-home"></i> RT: 9</span>
+                        </div>
+                    </div>
+                    <a href="../Karangklesem/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+
+                <!-- Karangpucung -->
+                <div class="desa-map-card">
+                    <div class="desa-map-header" style="background: linear-gradient(135deg,#e377c2,#e84393);">
+                        <div class="desa-map-icon"><i class="fas fa-tractor"></i></div>
+                        <div class="desa-map-title">
+                            <h3>Desa Karangpucung</h3>
+                            <p>Pertanian & Perbukitan</p>
+                        </div>
+                    </div>
+                    <div class="desa-map-preview">
+                        <img src="../img/Karangpucung.png" onerror="this.src='https://via.placeholder.com/400x200/e377c2/ffffff?text=Karangpucung'" alt="Peta Desa Karangpucung">
+                    </div>
+                    <div class="desa-map-info">
+                        <p><i class="fas fa-info-circle"></i> Kawasan pertanian dan perbukitan</p>
+                        <div class="desa-map-stats">
+                            <span><i class="fas fa-road"></i> Jalan: 30 km</span>
+                            <span><i class="fas fa-home"></i> RT: 7</span>
+                        </div>
+                    </div>
+                    <a href="../Karangpucung/" class="desa-map-button">
+                        <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <!-- Purwokerto Kidul -->
-    <div class="desa-map-card">
-      <div class="desa-map-header" style="background: linear-gradient(135deg,#d62728,#e74c3c);">
-        <div class="desa-map-icon"><i class="fas fa-city"></i></div>
-        <div class="desa-map-title">
-          <h3>Desa Purwokerto Kidul</h3>
-          <p>Permukiman & Aktivitas Sosial</p>
-        </div>
-      </div>
-
-      <div class="desa-map-preview">
-        <img src="../img/PwtKidul.png"
-             onerror="this.src='https://via.placeholder.com/400x200/d62728/ffffff?text=Pwt+Kidul'">
-      </div>
-
-      <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Pusat aktivitas masyarakat</p>
-        <div class="desa-map-stats">
-          <span><i class="fas fa-road"></i> Jalan: 38 km</span>
-          <span><i class="fas fa-home"></i> RT: 12</span>
-        </div>
-      </div>
-
-      <div class="map-links">
-        <a href="../PwtKidul/" class="desa-map-button">
-          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-        </a>
-      </div>
-    </div>
-
-    <!-- Tanjung -->
-    <div class="desa-map-card">
-      <div class="desa-map-header" style="background: linear-gradient(135deg,#ff7f0e,#f39c12);">
-        <div class="desa-map-icon"><i class="fas fa-building"></i></div>
-        <div class="desa-map-title">
-          <h3>Desa Tanjung</h3>
-          <p>Permukiman & Perkantoran Lokal</p>
-        </div>
-      </div>
-
-      <div class="desa-map-preview">
-        <img src="../img/Tanjung.png"
-             onerror="this.src='https://via.placeholder.com/400x200/ff7f0e/ffffff?text=Tanjung'">
-      </div>
-
-      <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Permukiman dan perkantoran</p>
-        <div class="desa-map-stats">
-          <span><i class="fas fa-road"></i> Jalan: 42 km</span>
-          <span><i class="fas fa-home"></i> RT: 10</span>
-        </div>
-      </div>
-
-      <div class="map-links">
-        <a href="../Tanjung/" class="desa-map-button">
-          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-        </a>
-      </div>
-    </div>
-
-    <!-- Purwokerto Kulon -->
-    <div class="desa-map-card">
-      <div class="desa-map-header" style="background: linear-gradient(135deg,#2ca02c,#27ae60);">
-        <div class="desa-map-icon"><i class="fas fa-landmark"></i></div>
-        <div class="desa-map-title">
-          <h3>Desa Purwokerto Kulon</h3>
-          <p>Pusat Pemerintahan Kabupaten</p>
-        </div>
-      </div>
-
-      <div class="desa-map-preview">
-        <img src="../img/PwtKulon.png"
-             onerror="this.src='https://via.placeholder.com/400x200/2ca02c/ffffff?text=Pwt+Kulon'">
-      </div>
-
-      <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Pusat pemerintahan Banyumas</p>
-        <div class="desa-map-stats">
-          <span><i class="fas fa-road"></i> Jalan: 50 km</span>
-          <span><i class="fas fa-home"></i> RT: 20</span>
-        </div>
-      </div>
-
-      <div class="map-links">
-        <a href="../PwtKulon/" class="desa-map-button">
-          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-        </a>
-      </div>
-    </div>
-
-    <!-- Teluk -->
-    <div class="desa-map-card">
-      <div class="desa-map-header" style="background: linear-gradient(135deg,#9467bd,#9b59b6);">
-        <div class="desa-map-icon"><i class="fas fa-water"></i></div>
-        <div class="desa-map-title">
-          <h3>Desa Teluk</h3>
-          <p>Taman Andhang & Bukit Cinta</p>
-        </div>
-      </div>
-
-      <div class="desa-map-preview">
-        <img src="../img/Teluk.png"
-             onerror="this.src='https://via.placeholder.com/400x200/9467bd/ffffff?text=Teluk'">
-      </div>
-
-      <div class="desa-map-info">
-        <p><i class="fas fa-info-circle"></i> Wisata dan ruang hijau</p>
-        <div class="desa-map-stats">
-          <span><i class="fas fa-road"></i> Jalan: 35 km</span>
-          <span><i class="fas fa-home"></i> RT: 8</span>
-        </div>
-      </div>
-
-      <div class="map-links">
-        <a href="../Teluk/" class="desa-map-button">
-          <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-        </a>
-      </div>
-    </div>
-<!-- Karangklesem -->
-<div class="desa-map-card">
-  <div class="desa-map-header" style="background: linear-gradient(135deg,#8c564b,#a35c3a);">
-    <div class="desa-map-icon"><i class="fas fa-mountain"></i></div>
-    <div class="desa-map-title">
-      <h3>Desa Karangklesem</h3>
-      <p>Area Perbukitan</p>
-    </div>
-  </div>
-
-  <div class="desa-map-preview">
-    <img src="../img/Karangklesem.png"
-         onerror="this.src='https://via.placeholder.com/400x200/8c564b/ffffff?text=Karangklesem'">
-  </div>
-
-  <div class="desa-map-info">
-    <p><i class="fas fa-info-circle"></i> Perbukitan dengan panorama alam</p>
-    <div class="desa-map-stats">
-      <span><i class="fas fa-road"></i> Jalan: 40 km</span>
-      <span><i class="fas fa-home"></i> RT: 9</span>
-    </div>
-  </div>
-
-  <div class="map-links">
-    <a href="../Karangklesem/" class="desa-map-button">
-      <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-    </a>
-  </div>
-</div>
-
-<!-- Karangpucung -->
-<div class="desa-map-card">
-  <div class="desa-map-header" style="background: linear-gradient(135deg,#e377c2,#e84393);">
-    <div class="desa-map-icon"><i class="fas fa-tractor"></i></div>
-    <div class="desa-map-title">
-      <h3>Desa Karangpucung</h3>
-      <p>Pertanian & Perbukitan</p>
-    </div>
-  </div>
-
-  <div class="desa-map-preview">
-    <img src="../img/Karangpucung.png"
-         onerror="this.src='https://via.placeholder.com/400x200/e377c2/ffffff?text=Karangpucung'">
-  </div>
-
-  <div class="desa-map-info">
-    <p><i class="fas fa-info-circle"></i> Kawasan pertanian dan perbukitan</p>
-    <div class="desa-map-stats">
-      <span><i class="fas fa-road"></i> Jalan: 30 km</span>
-      <span><i class="fas fa-home"></i> RT: 7</span>
-    </div>
-  </div>
-
-  <div class="map-links">
-    <a href="../Karangpucung/" class="desa-map-button">
-      <i class="fas fa-external-link-alt"></i> Buka Peta Lengkap
-    </a>
-  </div>
-</div>
-
-  </div>
-</div>
 
 		
         <script src="js/qgis2web_expressions.js"></script>

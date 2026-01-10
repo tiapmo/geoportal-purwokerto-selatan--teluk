@@ -85,11 +85,48 @@ body.has-navbar #map {
         height: calc(100vh - 80px); /* Kurangi tinggi navbar */
     }
 }
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0.8rem;
+    }
+    
+    .logo-kecamatan {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+    }
+    
+    .logo-title {
+        font-size: 1.5rem;
+    }
+    
+    .nav-link {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+/* Tablet (≤ 1024px) */
+@media (max-width: 1024px) {
+    .header-container {
+        padding: 0 1.5rem;
+    }
+    
+    .nav-link {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.95rem;
+    }
+}
 
 /* Untuk mobile */
 @media (max-width: 768px) {
-    .header {
-        position: relative;
+    .header-container {
+        flex-direction: column;
+        padding: 1rem;
     }
     
     #map {

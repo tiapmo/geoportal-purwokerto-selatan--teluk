@@ -67,6 +67,126 @@
             align-items: center;
             gap: 20px;
         }
+        /* ===== DROPDOWN MENU STYLES ===== */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-icon {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 220px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    padding: 10px 0;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    border: 1px solid #e1e8ed;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
+    color: #2C3E50;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #1A5276;
+    border-left-color: #3498DB;
+    padding-left: 25px;
+}
+
+.dropdown-item i {
+    width: 20px;
+    text-align: center;
+    color: #7F8C8D;
+}
+
+.dropdown-item:hover i {
+    color: #3498DB;
+}
+
+/* Active state untuk dropdown item */
+.dropdown-item.active {
+    background-color: #e3f2fd;
+    color: #1A5276;
+    border-left-color: #3498DB;
+    font-weight: 600;
+}
+
+/* ===== RESPONSIVE DROPDOWN ===== */
+@media (max-width: 768px) {
+    .dropdown {
+        width: 100%;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border-radius: 0;
+        border: none;
+        border-top: 1px solid #eee;
+        background-color: #f8f9fa;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+        padding: 0;
+    }
+    
+    .dropdown.active .dropdown-menu {
+        display: block;
+    }
+    
+    .dropdown-toggle {
+        justify-content: space-between;
+    }
+    
+    .dropdown-item {
+        padding: 12px 15px;
+        border-left: none;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .dropdown-item:hover {
+        padding-left: 20px;
+    }
+}
         
         /* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */
        .logo-kecamatan {
@@ -1206,8 +1326,20 @@
         <nav class="nav">
             <a href="./" class="nav-link"><i class="fas fa-home"></i> Beranda</a>
             <a href="../Kecamatan/" class="nav-link"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
-            <a href="../teluk/" class="nav-link"><i class="fas fa-water"></i> Peta Desa Teluk</a>
-            <a href="../tentang/" class="nav-link"><i class="fas fa-user-circle"></i> Tentang Kami</a>
+ <div class="dropdown">
+        <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-page="desa">
+            <i class="fas fa-map"></i> Peta Desa <i class="fas fa-chevron-down dropdown-icon"></i>
+        </a>
+        <div class="dropdown-menu">
+            <a href="../Teluk/" class="dropdown-item"><i class="fas fa-water"></i> Desa Teluk</a>
+            <a href="../Tanjung/" class="dropdown-item"><i class="fas fa-building"></i> Desa Tanjung</a>
+            <a href="../PwtKidul/" class="dropdown-item"><i class="fas fa-city"></i> Desa Purwokerto Kidul</a>
+            <a href="../PwtKulon/" class="dropdown-item"><i class="fas fa-landmark"></i> Desa Purwokerto Kulon</a>
+            <a href="../Karangklesem/" class="dropdown-item"><i class="fas fa-mountain"></i> Desa Karangklesem</a>
+            <a href="../Karangpucung/" class="dropdown-item"><i class="fas fa-tractor"></i> Desa Karangpucung</a>
+            <a href="../Berkoh/" class="dropdown-item"><i class="fas fa-university"></i> Desa Berkoh</a>
+        </div>
+    </div>            <a href="../tentang/" class="nav-link"><i class="fas fa-user-circle"></i> Tentang Kami</a>
         </nav>
     </header>
 
@@ -1793,7 +1925,70 @@
             L.control.zoom({
                 position: 'topright'
             }).addTo(map);
-            
+             // Untuk desktop: hover
+    // Untuk mobile: click
+    const dropdowns = document.querySelectorAll('.dropdown');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+    if (window.innerWidth <= 768) {
+        // Mobile behavior
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const dropdown = this.parentElement;
+                dropdown.classList.toggle('active');
+                
+                // Close other dropdowns
+                dropdowns.forEach(other => {
+                    if (other !== dropdown) {
+                        other.classList.remove('active');
+                    }
+                });
+            });
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                dropdowns.forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    }
+    
+    // Set active dropdown item based on current page
+    setActiveDropdownItem();
+});
+
+// Fungsi untuk set dropdown item yang aktif
+function setActiveDropdownItem() {
+    const currentPath = window.location.pathname;
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    
+    // Reset all
+    dropdownItems.forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    // Set active based on path
+    if (currentPath.includes('/Teluk/') || currentPath.includes('/teluk')) {
+        document.querySelector('a[href*="Teluk"]').classList.add('active');
+    } else if (currentPath.includes('/Tanjung/') || currentPath.includes('/tanjung')) {
+        document.querySelector('a[href*="Tanjung"]').classList.add('active');
+    } else if (currentPath.includes('/PwtKidul/') || currentPath.includes('/pwtkidul')) {
+        document.querySelector('a[href*="PwtKidul"]').classList.add('active');
+    } else if (currentPath.includes('/PwtKulon/') || currentPath.includes('/pwtkulon')) {
+        document.querySelector('a[href*="PwtKulon"]').classList.add('active');
+    } else if (currentPath.includes('/Karangklesem/') || currentPath.includes('/karangklesem')) {
+        document.querySelector('a[href*="Karangklesem"]').classList.add('active');
+    } else if (currentPath.includes('/Karangpucung/') || currentPath.includes('/karangpucung')) {
+        document.querySelector('a[href*="Karangpucung"]').classList.add('active');
+    } else if (currentPath.includes('/Berkoh/') || currentPath.includes('/berkoh')) {
+        document.querySelector('a[href*="Berkoh"]').classList.add('active');
+    }
             // Tombol reset view
             document.getElementById('resetView').addEventListener('click', function() {
                 map.setView([-7.4444, 109.2390], 14);

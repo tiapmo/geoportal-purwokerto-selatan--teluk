@@ -1,0 +1,474 @@
+<!-- navbar.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* ===== NAVBAR STYLES ===== */
+        .navbar-container {
+            position: relative;
+            z-index: 1000;
+        }
+        
+        .header {
+            background-color: #FFFFFF;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-bottom: 2px solid #ECF0F1;
+            position: relative;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        /* DESKTOP: Header sticky */
+        @media (min-width: 769px) {
+            .header {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+        }
+        
+        /* MOBILE: Header non-sticky */
+        @media (max-width: 768px) {
+            .header {
+                position: relative;
+                top: auto;
+                z-index: 100;
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .logo-kecamatan {
+            width: 60px;
+            height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid #FFFFFF;
+            background-color: #FFFFFF;
+        }
+        
+        .logo-kecamatan img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+        
+        .logo-geoportal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-geoportal-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3498DB, #2ECC71);
+            border-radius: 10px;
+            color: white;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
+        }
+        
+        .logo-geoportal-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-geoportal-main {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #1A5276;
+            line-height: 1;
+        }
+        
+        .logo-geoportal-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: #7F8C8D;
+            margin-top: 2px;
+        }
+        
+        /* ===== NAV MENU ===== */
+        .nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav a {
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #2C3E50;
+            background-color: transparent;
+            border: 2px solid #BDC3C7;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .nav a:hover {
+            background-color: #3498DB;
+            color: white;
+            border-color: #3498DB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        .nav a.active {
+            background-color: #3498DB;
+            color: white;
+            border-color: #3498DB;
+        }
+        
+        /* ===== DROPDOWN MENU STYLES ===== */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .dropdown-icon {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-icon {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            border: 1px solid #e1e8ed;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #2C3E50;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #1A5276;
+            border-left-color: #3498DB;
+            padding-left: 25px;
+        }
+        
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+            color: #7F8C8D;
+        }
+        
+        .dropdown-item:hover i {
+            color: #3498DB;
+        }
+        
+        /* Active state untuk dropdown item */
+        .dropdown-item.active {
+            background-color: #e3f2fd;
+            color: #1A5276;
+            border-left-color: #3498DB;
+            font-weight: 600;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .nav a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .logo-kecamatan {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .logo-geoportal-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.6rem;
+            }
+            
+            .logo-geoportal-main {
+                font-size: 1.6rem;
+            }
+            
+            .dropdown {
+                width: 100%;
+            }
+            
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                border-radius: 0;
+                border: none;
+                border-top: 1px solid #eee;
+                background-color: #f8f9fa;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                padding: 0;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            .dropdown-toggle {
+                justify-content: space-between;
+            }
+            
+            .dropdown-item {
+                padding: 12px 15px;
+                border-left: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .dropdown-item:hover {
+                padding-left: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.8rem;
+            }
+            
+            .nav a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .logo-geoportal-main {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar-container">
+        <header class="header">
+            <div class="logo-container">
+                <!-- LOGO KECAMATAN -->
+                <div class="logo-kecamatan">
+                    <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
+                </div>
+                <!-- LOGO GEOPORTAL -->
+                <div class="logo-geoportal">
+                    <div class="logo-geoportal-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="logo-geoportal-text">
+                        <div class="logo-geoportal-main">Geoportal</div>
+                        <div class="logo-geoportal-tagline">Data Spasial Digital</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NAVIGASI -->
+            <nav class="nav">
+                <a href="../" class="nav-link" data-page="beranda">
+                    <i class="fas fa-home"></i> Beranda
+                </a>
+                <a href="../Kecamatan/" class="nav-link" data-page="kecamatan">
+                    <i class="fas fa-map-marked-alt"></i> Peta Kecamatan
+                </a>
+                
+                <!-- DROPDOWN UNTUK DESA -->
+                <div class="dropdown">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle" data-page="desa">
+                        <i class="fas fa-map"></i> Peta Desa <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../teluk/" class="dropdown-item">
+                            <i class="fas fa-water"></i> Desa Teluk
+                        </a>
+                        <a href="../Tanjung/" class="dropdown-item">
+                            <i class="fas fa-building"></i> Desa Tanjung
+                        </a>
+                        <a href="../PwtKidul/" class="dropdown-item">
+                            <i class="fas fa-city"></i> Desa Purwokerto Kidul
+                        </a>
+                        <a href="../PwtKulon/" class="dropdown-item">
+                            <i class="fas fa-landmark"></i> Desa Purwokerto Kulon
+                        </a>
+                        <a href="../Karangklesem/" class="dropdown-item">
+                            <i class="fas fa-mountain"></i> Desa Karangklesem
+                        </a>
+                        <a href="../Karangpucung/" class="dropdown-item">
+                            <i class="fas fa-tractor"></i> Desa Karangpucung
+                        </a>
+                        <a href="../Berkoh/" class="dropdown-item">
+                            <i class="fas fa-university"></i> Desa Berkoh
+                        </a>
+                    </div>
+                </div>
+                
+                <a href="../tentang/" class="nav-link" data-page="tentang">
+                    <i class="fas fa-user-circle"></i> Tentang Kami
+                </a>
+            </nav>
+        </header>
+    </div>
+    
+    <script>
+        // NAVBAR SCRIPT
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk set menu aktif
+            function setActiveNav() {
+                const currentPath = window.location.pathname;
+                const navLinks = document.querySelectorAll('.nav a');
+                
+                // Reset semua
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Set aktif berdasarkan halaman
+                if (currentPath.includes('/Kecamatan/')) {
+                    document.querySelector('.nav a[data-page="kecamatan"]').classList.add('active');
+                } else if (currentPath.includes('/teluk/') || currentPath.includes('/Teluk/')) {
+                    document.querySelector('.nav a[data-page="desa"]').classList.add('active');
+                    document.querySelector('a[href*="teluk"]').classList.add('active');
+                } else if (currentPath.includes('/tentang/')) {
+                    document.querySelector('.nav a[data-page="tentang"]').classList.add('active');
+                } else if (currentPath === '/' || currentPath.endsWith('index.html')) {
+                    document.querySelector('.nav a[data-page="beranda"]').classList.add('active');
+                }
+                
+                // Set dropdown item aktif
+                setActiveDropdownItem();
+            }
+            
+            // Fungsi untuk set dropdown item aktif
+            function setActiveDropdownItem() {
+                const currentPath = window.location.pathname;
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                
+                dropdownItems.forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (currentPath.includes('/teluk/') || currentPath.includes('/Teluk/')) {
+                    document.querySelector('a[href*="teluk"]').classList.add('active');
+                } else if (currentPath.includes('/Tanjung/')) {
+                    document.querySelector('a[href*="Tanjung"]').classList.add('active');
+                } else if (currentPath.includes('/PwtKidul/')) {
+                    document.querySelector('a[href*="PwtKidul"]').classList.add('active');
+                } else if (currentPath.includes('/PwtKulon/')) {
+                    document.querySelector('a[href*="PwtKulon"]').classList.add('active');
+                } else if (currentPath.includes('/Karangklesem/')) {
+                    document.querySelector('a[href*="Karangklesem"]').classList.add('active');
+                } else if (currentPath.includes('/Karangpucung/')) {
+                    document.querySelector('a[href*="Karangpucung"]').classList.add('active');
+                } else if (currentPath.includes('/Berkoh/')) {
+                    document.querySelector('a[href*="Berkoh"]').classList.add('active');
+                }
+            }
+            
+            // Dropdown functionality untuk mobile
+            const dropdowns = document.querySelectorAll('.dropdown');
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            if (window.innerWidth <= 768) {
+                dropdownToggles.forEach(toggle => {
+                    toggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const dropdown = this.parentElement;
+                        dropdown.classList.toggle('active');
+                        
+                        dropdowns.forEach(other => {
+                            if (other !== dropdown) {
+                                other.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+                
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.dropdown')) {
+                        dropdowns.forEach(dropdown => {
+                            dropdown.classList.remove('active');
+                        });
+                    }
+                });
+            }
+            
+            // Panggil fungsi saat load
+            setActiveNav();
+            
+            // Update saat ada perubahan URL
+            window.addEventListener('popstate', setActiveNav);
+        });
+    </script>
+</body>
+</html>

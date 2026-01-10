@@ -88,10 +88,11 @@ body.has-navbar #map {
 
 /* Untuk mobile */
 @media (max-width: 768px) {
-    .header {
-        position: relative;
+    .header-container {
+        flex-direction: column;
+        padding: 1rem;
     }
-    
+  
     #map {
         top: 0;
         height: calc(100vh - 60px); /* Kurangi tinggi navbar mobile */
@@ -174,6 +175,31 @@ body.has-navbar #map {
     font-size: 0.85rem;
     color: var(--dark-gray);
     margin-top: 2px;
+}
+			@media (max-width: 480px) {
+    .header-container {
+        padding: 0.8rem;
+    }
+    
+    .logo-kecamatan {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.6rem;
+    }
+    
+    .logo-title {
+        font-size: 1.5rem;
+    }
+    
+    .nav-link {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
 }
 
 .nav {

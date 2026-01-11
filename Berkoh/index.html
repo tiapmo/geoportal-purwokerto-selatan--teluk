@@ -15,9 +15,6 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
         <style>
         /* ===== VARIABLES ===== */
         :root {
@@ -76,6 +73,334 @@
         .logo-kecamatan {
             width: 60px;
             height: 60px;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--white);
+            background: var(--white);
+        }
+
+        .logo-kecamatan img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 5px;
+        }
+
+        .logo-geoportal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-geoportal-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 10px;
+            color: var(--white);
+            font-size: 1.8rem;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.25);
+        }
+
+        .logo-geoportal-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-geoportal-main {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .logo-geoportal-tagline {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 0.85rem;
+            color: var(--dark-gray);
+            margin-top: 2px;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav a {
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dark);
+            background: transparent;
+            border: 2px solid var(--medium-gray);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .nav a:hover {
+            background: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .nav a.active {
+            background: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+        }
+
+        /* ===== DROPDOWN ===== */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dropdown-icon {
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-icon {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            min-width: 220px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            padding: 10px 0;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-item:hover {
+            background: var(--light-gray);
+            color: var(--primary);
+            border-left-color: var(--secondary);
+            padding-left: 25px;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--dark-gray);
+        }
+
+        /* ===== MAP CONTAINER ===== */
+        .main-content {
+            flex: 1;
+            margin-top: 80px; /* Height of header */
+            width: 100%;
+            height: calc(100vh - 80px);
+            position: relative;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .header {
+                padding: 1rem 1.5rem;
+            }
+            
+            .nav a {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.95rem;
+            }
+            
+            .logo-geoportal-main {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                position: fixed;
+            }
+            
+            .logo-container {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                gap: 8px;
+            }
+            
+            .nav a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+                flex: 1;
+                min-width: 120px;
+                justify-content: center;
+            }
+            
+            /* Mobile dropdown */
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                background: var(--light-gray);
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                display: none;
+                border-radius: 8px;
+                margin-top: 5px;
+            }
+            
+            .dropdown.active .dropdown-menu {
+                display: block;
+            }
+            
+            .dropdown-toggle {
+                justify-content: space-between;
+            }
+            
+            .dropdown-item {
+                padding: 10px 15px;
+                border-left: none;
+                border-bottom: 1px solid var(--medium-gray);
+            }
+            
+            .main-content {
+                margin-top: 140px; /* Higher for mobile */
+                height: calc(100vh - 140px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.8rem;
+            }
+            
+            .logo-kecamatan {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .logo-geoportal-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 1.6rem;
+            }
+            
+            .logo-geoportal-main {
+                font-size: 1.4rem;
+            }
+            
+            .nav {
+                flex-direction: column;
+            }
+            
+            .nav a {
+                width: 100%;
+            }
+            
+            .main-content {
+                margin-top: 180px;
+                height: calc(100vh - 180px);
+            }
+        }
+        </style>
+    </head>
+    <body>
+        <!-- HEADER -->
+        <header class="header">
+            <div class="logo-container">
+                <div class="logo-kecamatan">
+                    <img src="../img/logo_pwtsel.png" alt="Logo Kecamatan Purwokerto Selatan">
+                </div>
+                <div class="logo-geoportal">
+                    <div class="logo-geoportal-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="logo-geoportal-text">
+                        <div class="logo-geoportal-main">Geoportal</div>
+                        <div class="logo-geoportal-tagline">Data Spasial Digital</div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav">
+                <a href="../" class="nav-link"><i class="fas fa-home"></i> Beranda</a>
+                <a href="../Kecamatan/" class="nav-link"><i class="fas fa-map-marked-alt"></i> Peta Kecamatan</a>
+                
+                <div class="dropdown">
+                    <a href="javascript:void(0)" class="nav-link dropdown-toggle">
+                        <i class="fas fa-map"></i> Peta Desa <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="../teluk/" class="dropdown-item"><i class="fas fa-water"></i> Desa Teluk</a>
+                        <a href="../Tanjung/" class="dropdown-item"><i class="fas fa-building"></i> Desa Tanjung</a>
+                        <a href="../PwtKidul/" class="dropdown-item active"><i class="fas fa-city"></i> Desa Purwokerto Kidul</a>
+                        <a href="../PwtKulon/" class="dropdown-item"><i class="fas fa-landmark"></i> Desa Purwokerto Kulon</a>
+                        <a href="../Karangklesem/" class="dropdown-item"><i class="fas fa-mountain"></i> Desa Karangklesem</a>
+                        <a href="../Karangpucung/" class="dropdown-item"><i class="fas fa-tractor"></i> Desa Karangpucung</a>
+                        <a href="../Berkoh/" class="dropdown-item"><i class="fas fa-university"></i> Desa Berkoh</a>
                     </div>
                 </div>
                 
@@ -87,95 +412,9 @@
         <div class="main-content">
             <div id="map"></div>
         </div>
-        <body>
+        
         <!-- JavaScript -->
         <script>
-			// ===== LEAFLET MAP INITIALIZATION =====
-let map = null;
-let mapInitialized = false;
-
-function initMap() {
-    // Pastikan map belum diinisialisasi
-    if (mapInitialized) return;
-    
-    // Inisialisasi peta dengan view ke Purwokerto Selatan
-    map = L.map('map').setView([-7.44, 109.24], 13);
-    
-    // Tambahkan tile layer (OpenStreetMap)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-        tileSize: 512,
-        zoomOffset: -1
-    }).addTo(map);
-    
-    // Tambahkan marker untuk lokasi tertentu (contoh: Kantor Kecamatan)
-    const kecamatanMarker = L.marker([-7.44, 109.24]).addTo(map);
-    kecamatanMarker.bindPopup("<b>Kecamatan Purwokerto Selatan</b><br>Lokasi Kantor Kecamatan").openPopup();
-    
-    // Tambahkan circle untuk area
-    L.circle([-7.44, 109.24], {
-        color: 'var(--secondary)',
-        fillColor: 'var(--secondary)',
-        fillOpacity: 0.2,
-        radius: 500
-    }).addTo(map);
-    
-    mapInitialized = true;
-    
-    // Tambahkan kontrol zoom
-    L.control.zoom({
-        position: 'topright'
-    }).addTo(map);
-    
-    // Tambahkan skala
-    L.control.scale({
-        imperial: false,
-        position: 'bottomleft'
-    }).addTo(map);
-    
-    console.log("Map initialized successfully");
-}
-
-// Panggil initMap ketika DOM siap
-document.addEventListener('DOMContentLoaded', function() {
-    // ... kode yang sudah ada ...
-    
-    // Inisialisasi peta
-    initMap();
-    
-    // Update map height dan invalidate size
-    setTimeout(() => {
-        updateMapHeight();
-        if (map && map.invalidateSize) {
-            map.invalidateSize();
-        }
-    }, 300);
-});
-
-// Fungsi untuk resize map
-function updateMapHeight() {
-    const header = document.querySelector('.header');
-    const mainContent = document.querySelector('.main-content');
-    
-    if (header && mainContent) {
-        const headerHeight = header.offsetHeight;
-        const mapHeight = window.innerHeight - headerHeight;
-        
-        mainContent.style.marginTop = headerHeight + 'px';
-        mainContent.style.height = mapHeight + 'px';
-        
-        // Resize Leaflet map
-        if (map && map.invalidateSize) {
-            setTimeout(() => {
-                map.invalidateSize();
-            }, 100);
-        }
-    }
-}
-
-// Handle window resize
-window.addEventListener('resize', updateMapHeight);
         // ===== NAVBAR MOBILE FUNCTION =====
         document.addEventListener('DOMContentLoaded', function() {
             const dropdowns = document.querySelectorAll('.dropdown');

@@ -265,6 +265,7 @@
     
     .dropdown-menu {
         position: static;
+		display: none;
         box-shadow: none;
         border-radius: 0;
         border: none;
@@ -277,9 +278,11 @@
         padding: 0;
     }
     
-    .dropdown.active .dropdown-menu {
-        display: block;
-    }
+   .dropdown.active .dropdown-menu {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
     
     .dropdown-toggle {
         justify-content: space-between;
@@ -293,6 +296,11 @@
     
     .dropdown-item:hover {
         padding-left: 20px;
+    }
+}
+		@media (min-width: 769px) {
+    .dropdown-menu {
+        display: block;
     }
 }
 
@@ -3118,7 +3126,40 @@ function handleFullscreenChange() {
         });
 				   console.log('Halaman peta kecamatan siap');
         });
-			 
+// SIMPLE DROPDOWN FIX
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile dropdown toggle
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+    if (dropdownToggles.length > 0) {
+        dropdownToggles.forEach(toggle => {
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const dropdown = this.closest('.dropdown');
+                
+                if (dropdown) {
+                    dropdown.classList.toggle('active');
+                    
+                    // Close other dropdowns
+                    document.querySelectorAll('.dropdown').forEach(other => {
+                        if (other !== dropdown) {
+                            other.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Close on outside click
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dropdown')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    }
+});
         </script>        
     </body>
 </html>

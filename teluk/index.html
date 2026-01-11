@@ -16,7 +16,9 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
         <style>
         /* ===== VARIABLES ===== */
         :root {
@@ -370,6 +372,7 @@
         </style>
     </head>
     <body>
+		
         <!-- HEADER -->
         <header class="header">
             <div class="logo-container">
@@ -417,6 +420,92 @@
         
         <!-- JavaScript -->
         <script>
+			// ===== LEAFLET MAP INITIALIZATION =====
+let map = null;
+let mapInitialized = false;
+
+function initMap() {
+    // Pastikan map belum diinisialisasi
+    if (mapInitialized) return;
+    
+    // Inisialisasi peta dengan view ke Purwokerto Selatan
+    map = L.map('map').setView([-7.44, 109.24], 13);
+    
+    // Tambahkan tile layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+        tileSize: 512,
+        zoomOffset: -1
+    }).addTo(map);
+    
+    // Tambahkan marker untuk lokasi tertentu (contoh: Kantor Kecamatan)
+    const kecamatanMarker = L.marker([-7.44, 109.24]).addTo(map);
+    kecamatanMarker.bindPopup("<b>Kecamatan Purwokerto Selatan</b><br>Lokasi Kantor Kecamatan").openPopup();
+    
+    // Tambahkan circle untuk area
+    L.circle([-7.44, 109.24], {
+        color: 'var(--secondary)',
+        fillColor: 'var(--secondary)',
+        fillOpacity: 0.2,
+        radius: 500
+    }).addTo(map);
+    
+    mapInitialized = true;
+    
+    // Tambahkan kontrol zoom
+    L.control.zoom({
+        position: 'topright'
+    }).addTo(map);
+    
+    // Tambahkan skala
+    L.control.scale({
+        imperial: false,
+        position: 'bottomleft'
+    }).addTo(map);
+    
+    console.log("Map initialized successfully");
+}
+
+// Panggil initMap ketika DOM siap
+document.addEventListener('DOMContentLoaded', function() {
+    // ... kode yang sudah ada ...
+    
+    // Inisialisasi peta
+    initMap();
+    
+    // Update map height dan invalidate size
+    setTimeout(() => {
+        updateMapHeight();
+        if (map && map.invalidateSize) {
+            map.invalidateSize();
+        }
+    }, 300);
+});
+
+// Fungsi untuk resize map
+function updateMapHeight() {
+    const header = document.querySelector('.header');
+    const mainContent = document.querySelector('.main-content');
+    
+    if (header && mainContent) {
+        const headerHeight = header.offsetHeight;
+        const mapHeight = window.innerHeight - headerHeight;
+        
+        mainContent.style.marginTop = headerHeight + 'px';
+        mainContent.style.height = mapHeight + 'px';
+        
+        // Resize Leaflet map
+        if (map && map.invalidateSize) {
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 100);
+        }
+    }
+}
+
+// Handle window resize
+window.addEventListener('resize', updateMapHeight);
         // ===== NAVBAR MOBILE FUNCTION =====
         document.addEventListener('DOMContentLoaded', function() {
             const dropdowns = document.querySelectorAll('.dropdown');
@@ -7785,6 +7874,9 @@
         map.on("layerremove", function(){
             resetLabels([layer_RT1_1_3,layer_RT1_10_4,layer_RT1_11_5,layer_RT1_12_6,layer_RT1_2_7,layer_RT1_3_8,layer_RT1_4_9,layer_RT1_5_10,layer_RT1_6_11,layer_RT1_7_12,layer_RT1_8_13,layer_RT1_9_14,layer_RT2_1_15,layer_RT2_10_16,layer_RT2_11_17,layer_RT2_12_18,layer_RT2_2_19,layer_RT2_3_20,layer_RT2_4_21,layer_RT2_5_22,layer_RT2_6_23,layer_RT2_7_24,layer_RT2_8_25,layer_RT2_9_26,layer_RT3_1_27,layer_RT3_10_28,layer_RT3_11_29,layer_RT3_12_30,layer_RT3_2_31,layer_RT3_3_32,layer_RT3_4_33,layer_RT3_5_34,layer_RT3_6_35,layer_RT3_7_36,layer_RT3_8_37,layer_RT3_9_38,layer_RT4_10_39,layer_RT4_11_40,layer_RT4_12_41,layer_RT4_2_42,layer_RT4_3_43,layer_RT4_4_44,layer_RT4_5_45,layer_RT4_6_46,layer_RT4_7_47,layer_RT4_8_48,layer_RT4_9_49,layer_RT5_10_50,layer_RT5_11_51,layer_RT5_12_52,layer_RT5_6_53,layer_RT5_7_54,layer_RT5_8_55,layer_RT5_9_56,layer_JalanKecamatan_58,layer_JalanRT_59,layer_JalanRW_60,layer_Kelurahan_62,layer_Teluk_Point_64]);
         });
-        </script>        
+        </script>     
+		<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
     </body>
 </html>

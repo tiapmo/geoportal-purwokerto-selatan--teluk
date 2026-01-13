@@ -2806,13 +2806,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ===== FALLBACK UNTUK BROWSER LAMA =====
 // Jika IntersectionObserver tidak didukung
+// ===== FALLBACK UNTUK BROWSER LAMA =====
+// Jika IntersectionObserver tidak didukung
 if (!('IntersectionObserver' in window)) {
     console.warn('IntersectionObserver tidak didukung, menggunakan fallback');
     
     // Animasikan counter langsung
     document.addEventListener('DOMContentLoaded', function() {
-         setTimeout(animateCounters, 500);
-    
+        setTimeout(animateCounters, 500);
+    });
+} else {
+    // IntersectionObserver DIDUKUNG, jadi bisa pakai
     // Animasikan saat scroll ke bagian stats
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -2824,7 +2828,6 @@ if (!('IntersectionObserver' in window)) {
     
     const statsSection = document.querySelector('.stats-section');
     if (statsSection) observer.observe(statsSection);
-});
 }
 </script>
 </body>

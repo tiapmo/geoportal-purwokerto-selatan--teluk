@@ -177,7 +177,6 @@
 		/* ===== DROPDOWN MENU STYLES ===== */
 .dropdown {
     position: relative;
-    display: inline-block;
 }
 
 .dropdown-toggle {
@@ -192,7 +191,7 @@
     transition: transform 0.3s ease;
 }
 
-.dropdown:hover .dropdown-icon {
+.dropdown.active .dropdown-icon {
     transform: rotate(180deg);
 }
 
@@ -213,10 +212,15 @@
     border: 1px solid #e1e8ed;
 }
 
+/* Desktop: hover behavior */
 .dropdown:hover .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+}
+
+.dropdown:hover .dropdown-icon {
+    transform: rotate(180deg);
 }
 
 .dropdown-item {
@@ -248,7 +252,6 @@
     color: #3498DB;
 }
 
-/* Active state untuk dropdown item */
 .dropdown-item.active {
     background-color: #e3f2fd;
     color: #1A5276;
@@ -256,16 +259,15 @@
     font-weight: 600;
 }
 
-
 /* ===== RESPONSIVE DROPDOWN ===== */
 @media (max-width: 768px) {
     .dropdown {
         width: 100%;
-        position: relative;
     }
     
+    /* Reset untuk mobile */
     .dropdown-menu {
-        position: static !important;
+        position: static;
         box-shadow: none;
         border-radius: 0;
         border: none;
@@ -274,31 +276,32 @@
         opacity: 1;
         visibility: visible;
         transform: none;
-        display: none; /* AWALNYA DISEMBUNYIKAN */
+        display: none; /* PENTING: disembunyikan awal */
         padding: 0;
         width: 100%;
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
-        z-index: 1000;
     }
     
     .dropdown.active .dropdown-menu {
-        display: block !important;
-        max-height: 400px; /* ANIMASI SLIDE DOWN */
+        display: block;
+        max-height: 400px;
         overflow-y: auto;
     }
     
+    /* Style untuk toggle di mobile */
     .dropdown-toggle {
         justify-content: space-between;
         width: 100%;
-        padding: 1rem !important;
-        background-color: #f0f2f5 !important;
-        border-radius: 8px !important;
+        padding: 0.8rem 1.5rem;
+        background-color: #f0f2f5;
+        border-radius: 8px;
         margin-bottom: 5px;
-        border: 2px solid #BDC3C7 !important;
+        border: 2px solid #BDC3C7;
     }
     
+    /* Tambah panah di mobile */
     .dropdown-toggle::after {
         content: '\f078';
         font-family: 'Font Awesome 6 Free';
@@ -311,23 +314,25 @@
         transform: rotate(180deg);
     }
     
+    /* Style untuk item di mobile */
     .dropdown-item {
-        padding: 12px 20px !important;
-        border-left: none !important;
+        padding: 12px 20px;
+        border-left: none;
         border-bottom: 1px solid #eee;
         width: 100%;
         box-sizing: border-box;
     }
     
     .dropdown-item:hover {
-        padding-left: 25px !important;
+        padding-left: 25px;
         background-color: #e3f2fd;
     }
     
-    .dropdown-item i {
-        width: 20px;
-        text-align: center;
-        color: #7F8C8D;
+    /* Nonaktifkan hover behavior desktop di mobile */
+    .dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
     }
 }
 
@@ -2863,14 +2868,14 @@ document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('msfullscreenchange', handleFullscreenChange);
 // Dropdown functionality
+<script>
+// DROPDOWN FUNCTIONALITY
 document.addEventListener('DOMContentLoaded', function() {
-    // Untuk desktop: hover
-    // Untuk mobile: click
     const dropdowns = document.querySelectorAll('.dropdown');
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
+    // Untuk mobile: toggle dengan click
     if (window.innerWidth <= 768) {
-        // Mobile behavior
         dropdownToggles.forEach(toggle => {
             toggle.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -2888,7 +2893,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Close dropdown when clicking outside
+        // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown')) {
                 dropdowns.forEach(dropdown => {
@@ -2897,6 +2902,28 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    // Untuk desktop: hover saja
+    if (window.innerWidth > 768) {
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', function() {
+                this.classList.add('active');
+            });
+            
+            dropdown.addEventListener('mouseleave', function() {
+                this.classList.remove('active');
+            });
+        });
+    }
+    
+    // Update on window resize
+    window.addEventListener('resize', function() {
+        // Reset semua dropdown saat resize
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
+    });
+});
     
     // Set active dropdown item based on current page
     setActiveDropdownItem();
@@ -3150,15 +3177,6 @@ function handleFullscreenChange() {
         
         console.log('Halaman peta kecamatan siap');
     }); // ← HANYA SATU PENUTUP INI
-
-// HAPUS SEMUA KODE SETELAH INI
-</script>        
-</body>
-</html>
-        
-
-// SIMPLE DROPDOWN FIX
-
         </script>        
     </body>
 </html>

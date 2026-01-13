@@ -257,15 +257,16 @@
     font-weight: 600;
 }
 
+
 /* ===== RESPONSIVE DROPDOWN ===== */
 @media (max-width: 768px) {
     .dropdown {
         width: 100%;
+        position: relative;
     }
     
     .dropdown-menu {
-        position: static;
-		display: none;
+        position: static !important;
         box-shadow: none;
         border-radius: 0;
         border: none;
@@ -274,33 +275,60 @@
         opacity: 1;
         visibility: visible;
         transform: none;
-        display: none;
+        display: none; /* AWALNYA DISEMBUNYIKAN */
         padding: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        z-index: 1000;
     }
     
-   .dropdown.active .dropdown-menu {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-}
+    .dropdown.active .dropdown-menu {
+        display: block !important;
+        max-height: 400px; /* ANIMASI SLIDE DOWN */
+        overflow-y: auto;
+    }
     
     .dropdown-toggle {
         justify-content: space-between;
+        width: 100%;
+        padding: 1rem !important;
+        background-color: #f0f2f5 !important;
+        border-radius: 8px !important;
+        margin-bottom: 5px;
+        border: 2px solid #BDC3C7 !important;
+    }
+    
+    .dropdown-toggle::after {
+        content: '\f078';
+        font-family: 'Font Awesome 6 Free';
+        font-weight: 900;
+        transition: transform 0.3s ease;
+        margin-left: auto;
+    }
+    
+    .dropdown.active .dropdown-toggle::after {
+        transform: rotate(180deg);
     }
     
     .dropdown-item {
-        padding: 12px 15px;
-        border-left: none;
+        padding: 12px 20px !important;
+        border-left: none !important;
         border-bottom: 1px solid #eee;
+        width: 100%;
+        box-sizing: border-box;
     }
     
     .dropdown-item:hover {
-        padding-left: 20px;
+        padding-left: 25px !important;
+        background-color: #e3f2fd;
     }
-}
-		@media (min-width: 769px) {
-    .dropdown-menu {
-        display: block;
+    
+    .dropdown-item i {
+        width: 20px;
+        text-align: center;
+        color: #7F8C8D;
     }
 }
 
@@ -3126,40 +3154,76 @@ function handleFullscreenChange() {
         });
 				   console.log('Halaman peta kecamatan siap');
         });
+        
+
 // SIMPLE DROPDOWN FIX
-document.addEventListener('DOMContentLoaded', function() {
-    // Mobile dropdown toggle
+// DROPDOWN MOBILE FIX
+function setupMobileDropdown() {
+    const dropdowns = document.querySelectorAll('.dropdown');
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
-    if (dropdownToggles.length > 0) {
+    // Hanya untuk mobile
+    if (window.innerWidth <= 768) {
         dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
+            // Hapus event listener lama jika ada
+            const newToggle = toggle.cloneNode(true);
+            toggle.parentNode.replaceChild(newToggle, toggle);
+            
+            // Tambah event listener baru
+            newToggle.addEventListener('click', function(e) {
                 e.preventDefault();
-                const dropdown = this.closest('.dropdown');
+                e.stopPropagation();
                 
-                if (dropdown) {
-                    dropdown.classList.toggle('active');
-                    
-                    // Close other dropdowns
-                    document.querySelectorAll('.dropdown').forEach(other => {
-                        if (other !== dropdown) {
-                            other.classList.remove('active');
-                        }
-                    });
+                const dropdown = this.closest('.dropdown');
+                const isActive = dropdown.classList.contains('active');
+                
+                // Tutup semua dropdown lainnya
+                dropdowns.forEach(other => {
+                    other.classList.remove('active');
+                });
+                
+                // Buka/tutup dropdown yang diklik
+                if (!isActive) {
+                    dropdown.classList.add('active');
+                } else {
+                    dropdown.classList.remove('active');
                 }
             });
         });
         
-        // Close on outside click
+        // Tutup dropdown saat klik di luar
         document.addEventListener('click', function(e) {
             if (!e.target.closest('.dropdown')) {
-                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdowns.forEach(dropdown => {
                     dropdown.classList.remove('active');
                 });
             }
         });
+        
+        // Tutup dropdown saat scroll (opsional)
+        window.addEventListener('scroll', function() {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        });
+    } else {
+        // Untuk desktop: hapus class active
+        dropdowns.forEach(dropdown => {
+            dropdown.classList.remove('active');
+        });
     }
+}
+
+// Panggil saat DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    setupMobileDropdown();
+    
+    // Juga panggil saat resize
+    window.addEventListener('resize', setupMobileDropdown);
 });
+
+// Juga panggil saat window load
+window.addEventListener('load', setupMobileDropdown);
         </script>        
     </body>
 </html>

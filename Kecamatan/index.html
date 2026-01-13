@@ -1302,45 +1302,7 @@
         </div>
     </div>
 </div>
-        <!-- CARD STATISTIK -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon" style="background-color: #3498db;">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>7 Desa</h3>
-                    <p>Wilayah Administratif</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon" style="background-color: #2ecc71;">
-                    <i class="fas fa-road"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>3 Jenis Jalan</h3>
-                    <p>Provinsi, Kabupaten, Kecamatan</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon" style="background-color: #9b59b6;">
-                    <i class="fas fa-water"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>Sungai</h3>
-                    <p>Jaringan perairan</p>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon" style="background-color: #e74c3c;">
-                    <i class="fas fa-layer-group"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>14 Layer</h3>
-                    <p>Data spasial lengkap</p>
-                </div>
-            </div>
-        </div>
+        
         
         <!-- PETA DESA DALAM KECAMATAN -->
         <div class="desa-maps-section">
@@ -1348,7 +1310,7 @@
                 <h2><i class="fas fa-map-marked-alt"></i> Peta Detail Desa</h2>
                 <p>Klik untuk melihat peta detail masing-masing desa</p>
             </div>
-
+		</div>
             <div class="desa-maps-grid">
                 <!-- Desa Berkoh -->
                 <div class="desa-map-card">
@@ -1520,8 +1482,9 @@
             </div>
         </div>
     </div>
-
-		
+</div>
+</div>
+</div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script>
         <script src="js/L.Control.Layers.Tree.min.js"></script>
@@ -2863,10 +2826,7 @@ function toggleFullscreen() {
     }
 }
 
-// Event listener untuk fullscreen change
-document.addEventListener('fullscreenchange', handleFullscreenChange);
-document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-document.addEventListener('msfullscreenchange', handleFullscreenChange);
+// ========== PERBAIKAN DROPDOWN ==========
 // Dropdown functionality
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
@@ -2930,8 +2890,14 @@ document.addEventListener('DOMContentLoaded', function() {
 function setActiveDropdownItem() {
     const currentPath = window.location.pathname;
     const dropdownItems = document.querySelectorAll('.dropdown-item');
+    const navLinks = document.querySelectorAll('.nav-link');
     
-    // Reset all
+    // Reset all nav links
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Reset all dropdown items
     dropdownItems.forEach(item => {
         item.classList.remove('active');
     });
@@ -2939,20 +2905,75 @@ function setActiveDropdownItem() {
     // Set active based on current URL
     dropdownItems.forEach(item => {
         const href = item.getAttribute('href');
-        if (href && currentPath.includes(href)) {
+        if (href && currentPath.includes(href.replace('../', ''))) {
             item.classList.add('active');
+            
+            // Also mark parent dropdown toggle as active
+            const parentDropdown = item.closest('.dropdown');
+            if (parentDropdown) {
+                const dropdownToggle = parentDropdown.querySelector('.dropdown-toggle');
+                if (dropdownToggle) {
+                    dropdownToggle.classList.add('active');
+                }
+            }
         }
     });
     
-    // Juga set active untuk parent dropdown jika ada item aktif
-    const activeItem = document.querySelector('.dropdown-item.active');
-    if (activeItem) {
-        const parentDropdown = activeItem.closest('.dropdown');
-        if (parentDropdown && parentDropdown.querySelector('.dropdown-toggle')) {
-            parentDropdown.querySelector('.dropdown-toggle').classList.add('active');
+    // Set active nav link
+    const currentNavLink = document.querySelector(`.nav-link[href*="${currentPath.split('/').pop()}"]`);
+    if (currentNavLink) {
+        currentNavLink.classList.add('active');
+    }
+}
+
+// ========== PERBAIKAN FULLSCREEN ==========
+function toggleFullscreen() {
+    const mapCard = document.querySelector('.map-card');
+    
+    if (!document.fullscreenElement) {
+        if (mapCard.requestFullscreen) {
+            mapCard.requestFullscreen();
+        } else if (mapCard.webkitRequestFullscreen) {
+            mapCard.webkitRequestFullscreen();
+        } else if (mapCard.msRequestFullscreen) {
+            mapCard.msRequestFullscreen();
+        }
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
         }
     }
 }
+
+function handleFullscreenChange() {
+    const mapCard = document.querySelector('.map-card');
+    const fullscreenIcon = document.querySelector('.clickable-footer i');
+    
+    if (document.fullscreenElement || 
+        document.webkitFullscreenElement || 
+        document.msFullscreenElement) {
+        mapCard.classList.add('fullscreen');
+        if (fullscreenIcon) {
+            fullscreenIcon.className = 'fas fa-compress';
+        }
+    } else {
+        mapCard.classList.remove('fullscreen');
+        if (fullscreenIcon) {
+            fullscreenIcon.className = 'fas fa-expand';
+        }
+    }
+}
+
+// Event listener untuk fullscreen
+document.addEventListener('fullscreenchange', handleFullscreenChange);
+document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+document.addEventListener('msfullscreenchange', handleFullscreenChange);
+
+console.log('Aplikasi Geoportal Kecamatan Purwokerto Selatan siap!');
     
     // Set active based on path
     if (currentPath.includes('/Teluk/') || currentPath.includes('/teluk')) {

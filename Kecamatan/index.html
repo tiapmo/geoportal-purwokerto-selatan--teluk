@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <link rel="stylesheet" href="css/leaflet.css">
-    <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+	<link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
     <link rel="stylesheet" href="css/L.Control.Locate.min.css">
     <link rel="stylesheet" href="css/qgis2web.css">
     <link rel="stylesheet" href="css/fontawesome-all.min.css">
@@ -3157,73 +3156,7 @@ function handleFullscreenChange() {
         
 
 // SIMPLE DROPDOWN FIX
-// DROPDOWN MOBILE FIX
-function setupMobileDropdown() {
-    const dropdowns = document.querySelectorAll('.dropdown');
-    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-    
-    // Hanya untuk mobile
-    if (window.innerWidth <= 768) {
-        dropdownToggles.forEach(toggle => {
-            // Hapus event listener lama jika ada
-            const newToggle = toggle.cloneNode(true);
-            toggle.parentNode.replaceChild(newToggle, toggle);
-            
-            // Tambah event listener baru
-            newToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const dropdown = this.closest('.dropdown');
-                const isActive = dropdown.classList.contains('active');
-                
-                // Tutup semua dropdown lainnya
-                dropdowns.forEach(other => {
-                    other.classList.remove('active');
-                });
-                
-                // Buka/tutup dropdown yang diklik
-                if (!isActive) {
-                    dropdown.classList.add('active');
-                } else {
-                    dropdown.classList.remove('active');
-                }
-            });
-        });
-        
-        // Tutup dropdown saat klik di luar
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        });
-        
-        // Tutup dropdown saat scroll (opsional)
-        window.addEventListener('scroll', function() {
-            dropdowns.forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
-        });
-    } else {
-        // Untuk desktop: hapus class active
-        dropdowns.forEach(dropdown => {
-            dropdown.classList.remove('active');
-        });
-    }
-}
 
-// Panggil saat DOM ready
-document.addEventListener('DOMContentLoaded', function() {
-    setupMobileDropdown();
-    
-    // Juga panggil saat resize
-    window.addEventListener('resize', setupMobileDropdown);
-});
-
-// Juga panggil saat window load
-window.addEventListener('load', setupMobileDropdown);
         </script>        
     </body>
 </html>

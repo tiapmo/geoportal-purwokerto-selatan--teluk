@@ -184,6 +184,7 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
 }
 
 .dropdown-icon {
@@ -191,10 +192,7 @@
     transition: transform 0.3s ease;
 }
 
-.dropdown.active .dropdown-icon {
-    transform: rotate(180deg);
-}
-
+/* Dropdown selalu tersembunyi kecuali aktif */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -212,14 +210,14 @@
     border: 1px solid #e1e8ed;
 }
 
-/* Desktop: hover behavior */
-.dropdown:hover .dropdown-menu {
+/* Tampilkan dropdown hanya saat aktif */
+.dropdown.active .dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
 }
 
-.dropdown:hover .dropdown-icon {
+.dropdown.active .dropdown-icon {
     transform: rotate(180deg);
 }
 
@@ -265,29 +263,25 @@
         width: 100%;
     }
     
-    /* Reset untuk mobile */
+    /* Style untuk mobile */
     .dropdown-menu {
         position: static;
+        width: 100%;
         box-shadow: none;
         border-radius: 0;
         border: none;
         border-top: 1px solid #eee;
         background-color: #f8f9fa;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
-        display: none; /* PENTING: disembunyikan awal */
-        padding: 0;
-        width: 100%;
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
+        margin-top: 0;
     }
     
     .dropdown.active .dropdown-menu {
-        display: block;
         max-height: 400px;
         overflow-y: auto;
+        margin-top: 5px;
     }
     
     /* Style untuk toggle di mobile */
@@ -295,7 +289,7 @@
         justify-content: space-between;
         width: 100%;
         padding: 0.8rem 1.5rem;
-        background-color: #f0f2f5;
+        background-color: #f8f9fa;
         border-radius: 8px;
         margin-bottom: 5px;
         border: 2px solid #BDC3C7;
@@ -328,11 +322,40 @@
         background-color: #e3f2fd;
     }
     
-    /* Nonaktifkan hover behavior desktop di mobile */
+    /* HAPUS SEMUA HOVER BEHAVIOR UNTUK DROPDOWN PARENT */
     .dropdown:hover .dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+    }
+}
+
+/* ===== DESKTOP SPECIFIC ===== */
+@media (min-width: 769px) {
+    .dropdown-menu {
+        min-width: 220px;
+    }
+    
+    /* Nonaktifkan hover untuk buka dropdown */
+    .dropdown:hover .dropdown-menu {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+    }
+    
+    /* Aktifkan dengan class .active saja */
+    .dropdown.active .dropdown-menu {
         opacity: 1;
         visibility: visible;
-        transform: none;
+        transform: translateY(0);
+    }
+    
+    /* Tapi biarkan hover untuk dropdown items */
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #1A5276;
+        border-left-color: #3498DB;
+        padding-left: 25px;
     }
 }
 
@@ -2826,56 +2849,57 @@ function toggleFullscreen() {
 }
 
 // ========== PERBAIKAN DROPDOWN ==========
-// Dropdown functionality
+// ========== DROPDOWN FUNCTIONALITY ==========
 document.addEventListener('DOMContentLoaded', function() {
     const dropdowns = document.querySelectorAll('.dropdown');
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     
-    // Untuk mobile: toggle dengan click
-    if (window.innerWidth <= 768) {
-        dropdownToggles.forEach(toggle => {
-            toggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                const dropdown = this.parentElement;
-                dropdown.classList.toggle('active');
-                
-                // Close other dropdowns
-                dropdowns.forEach(other => {
-                    if (other !== dropdown) {
-                        other.classList.remove('active');
-                    }
-                });
-            });
+    // Function untuk toggle dropdown
+    function toggleDropdown(dropdown) {
+        const isActive = dropdown.classList.contains('active');
+        
+        // Tutup semua dropdown terlebih dahulu
+        dropdowns.forEach(other => {
+            other.classList.remove('active');
         });
         
-        // Close dropdowns when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                dropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
-            }
-        });
+        // Jika dropdown ini belum aktif, buka
+        if (!isActive) {
+            dropdown.classList.add('active');
+        }
     }
     
-    // Untuk desktop: hover saja
-    if (window.innerWidth > 768) {
-        dropdowns.forEach(dropdown => {
-            dropdown.addEventListener('mouseenter', function() {
-                this.classList.add('active');
-            });
+    // Event listener untuk toggle dropdown (SEMUA DEVICE)
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             
-            dropdown.addEventListener('mouseleave', function() {
-                this.classList.remove('active');
-            });
+            const dropdown = this.parentElement;
+            toggleDropdown(dropdown);
         });
-    }
+    });
     
-    // Update on window resize
+    // Tutup dropdown ketika klik di luar
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+    
+    // Tutup dropdown saat ESC ditekan
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            dropdowns.forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+    
+    // Handle window resize
     window.addEventListener('resize', function() {
-        // Reset semua dropdown saat resize
         dropdowns.forEach(dropdown => {
             dropdown.classList.remove('active');
         });
@@ -2891,41 +2915,66 @@ function setActiveDropdownItem() {
     const dropdownItems = document.querySelectorAll('.dropdown-item');
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // Reset all nav links
+    // Reset semua nav links
     navLinks.forEach(link => {
         link.classList.remove('active');
+        // Juga hapus active dari dropdown toggle
+        if (link.classList.contains('dropdown-toggle')) {
+            link.classList.remove('active');
+        }
     });
     
-    // Reset all dropdown items
+    // Reset semua dropdown items
     dropdownItems.forEach(item => {
         item.classList.remove('active');
     });
     
-    // Set active based on current URL
+    // Set active berdasarkan URL saat ini
+    let foundActive = false;
+    
     dropdownItems.forEach(item => {
         const href = item.getAttribute('href');
-        if (href && currentPath.includes(href.replace('../', ''))) {
-            item.classList.add('active');
+        if (href) {
+            // Normalisasi path untuk perbandingan
+            const itemPath = href.replace('../', '').replace('/', '');
+            const currentPathClean = currentPath.replace(/\//g, '');
             
-            // Also mark parent dropdown toggle as active
-            const parentDropdown = item.closest('.dropdown');
-            if (parentDropdown) {
-                const dropdownToggle = parentDropdown.querySelector('.dropdown-toggle');
-                if (dropdownToggle) {
-                    dropdownToggle.classList.add('active');
+            if (currentPathClean.includes(itemPath) || currentPath.includes(href)) {
+                item.classList.add('active');
+                foundActive = true;
+                
+                // Juga tandai parent dropdown toggle sebagai active
+                const parentDropdown = item.closest('.dropdown');
+                if (parentDropdown) {
+                    const dropdownToggle = parentDropdown.querySelector('.dropdown-toggle');
+                    if (dropdownToggle) {
+                        dropdownToggle.classList.add('active');
+                    }
                 }
             }
         }
     });
     
-    // Set active nav link
-    const currentNavLink = document.querySelector(`.nav-link[href*="${currentPath.split('/').pop()}"]`);
-    if (currentNavLink) {
-        currentNavLink.classList.add('active');
+    // Set active nav link untuk halaman saat ini
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        if (href) {
+            // Cek jika link sesuai dengan halaman saat ini
+            if (href === '../' && currentPath.endsWith('/')) {
+                link.classList.add('active');
+            } else if (href !== '../' && currentPath.includes(href.replace('../', ''))) {
+                link.classList.add('active');
+            }
+        }
+    });
+    
+    // Jika di halaman kecamatan, set nav-link kecamatan sebagai active
+    if (currentPath.includes('Kecamatan') || currentPath.includes('kecamatan')) {
+        document.querySelector('.nav-link[href*="Kecamatan"]')?.classList.add('active');
     }
 }
 
-// ========== PERBAIKAN FULLSCREEN ==========
+// ========== FULLSCREEN FUNCTIONALITY ==========
 function toggleFullscreen() {
     const mapCard = document.querySelector('.map-card');
     

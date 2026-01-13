@@ -2921,7 +2921,6 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.classList.remove('active');
         });
     });
-});
     
     // Set active dropdown item based on current page
     setActiveDropdownItem();
@@ -2936,6 +2935,24 @@ function setActiveDropdownItem() {
     dropdownItems.forEach(item => {
         item.classList.remove('active');
     });
+    
+    // Set active based on current URL
+    dropdownItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href && currentPath.includes(href)) {
+            item.classList.add('active');
+        }
+    });
+    
+    // Juga set active untuk parent dropdown jika ada item aktif
+    const activeItem = document.querySelector('.dropdown-item.active');
+    if (activeItem) {
+        const parentDropdown = activeItem.closest('.dropdown');
+        if (parentDropdown && parentDropdown.querySelector('.dropdown-toggle')) {
+            parentDropdown.querySelector('.dropdown-toggle').classList.add('active');
+        }
+    }
+}
     
     // Set active based on path
     if (currentPath.includes('/Teluk/') || currentPath.includes('/teluk')) {

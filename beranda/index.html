@@ -151,8 +151,8 @@
 
 /* ===== RESPONSIVE DROPDOWN ===== */
 @media (max-width: 768px) {
-    .dropdown {
-        width: 100%;
+ .dropdown:hover .dropdown-menu {
+        display: none; /* Nonaktifkan hover di mobile */
     }
     
     .dropdown-menu {
@@ -186,6 +186,33 @@
     .dropdown-item:hover {
         padding-left: 20px;
     }
+    .dropdown:focus-within .dropdown-menu {
+        display: block;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .dropdown-toggle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+        background-color: #f0f2f5;
+        border-radius: 8px;
+        margin-bottom: 5px;
+    }
+    
+    .dropdown-toggle:after {
+        content: '▼';
+        font-size: 0.8rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .dropdown:focus-within .dropdown-toggle:after {
+        transform: rotate(180deg);
+    }
+
 }
         
         /* LOGO KECAMATAN - SIMPLE HANYA GAMBAR */

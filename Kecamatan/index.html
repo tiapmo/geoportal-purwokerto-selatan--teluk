@@ -3148,11 +3148,17 @@ function handleFullscreenChange() {
         map.on("layeradd", function(){
             resetLabels([layer_JalanKecamatan_9,layer_JalanKabupaten_10,layer_JalanProvinsi_11,layer_Kelurahan_13]);
         });
-        map.on("layerremove", function(){
+               map.on("layerremove", function(){
             resetLabels([layer_JalanKecamatan_9,layer_JalanKabupaten_10,layer_JalanProvinsi_11,layer_Kelurahan_13]);
         });
-				   console.log('Halaman peta kecamatan siap');
-        });
+        
+        console.log('Halaman peta kecamatan siap');
+    }); // ← HANYA SATU PENUTUP INI
+
+// HAPUS SEMUA KODE SETELAH INI
+</script>        
+</body>
+</html>
         
 
 // SIMPLE DROPDOWN FIX

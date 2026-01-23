@@ -174,7 +174,6 @@
             color: var(--white);
             border-color: var(--secondary);
         }
-		/* ===== DROPDOWN MENU STYLES ===== */
 /* ===== DROPDOWN MENU STYLES ===== */
 .dropdown {
       position: relative;
@@ -263,9 +262,10 @@
 @media (max-width: 768px) {
     .dropdown {
         width: 100%;
+        margin-bottom: 10px; /* Sedikit lebih */
     }
     
-    /* Style untuk mobile */
+    /* Style untuk mobile - PERBAIKAN DI SINI */
     .dropdown-menu {
         position: static;
         width: 100%;
@@ -274,67 +274,122 @@
         border: none;
         border-top: 1px solid #eee;
         background-color: #f8f9fa;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
+        /* PERUBAHAN: Ganti max-height dengan display */
+        display: none; /* Hidden by default */
+        padding: 0; /* Reset padding, akan diatur oleh items */
         margin-top: 0;
+        /* HAPUS: max-height, overflow, transition */
     }
     
     .dropdown.active .dropdown-menu {
-        max-height: 400px;
-        overflow-y: auto;
-        margin-top: 5px;
+        /* PERUBAHAN: Ganti dengan display block */
+        display: block; /* Show when active */
+        max-height: none; /* Biarkan konten menentukan tinggi */
+        overflow-y: visible; /* Tidak perlu scroll kecuali konten sangat panjang */
+        margin-top: 2px; /* Sedikit spacing */
+        padding: 5px 0; /* Padding untuk menu */
+        /* Animasi bisa ditambahkan dengan max-height jika mau */
+        /* max-height: 500px; */
+        /* transition: max-height 0.3s ease; */
     }
     
-    /* Style untuk toggle di mobile */
+    /* Style untuk toggle di mobile - TAMBAHKAN */
     .dropdown-toggle {
         justify-content: space-between;
+        align-items: center;
         width: 100%;
-        padding: 0.8rem 1.5rem;
-        background-color: #f8f9fa;
+        padding: 12px 16px; /* Sedikit lebih besar */
+        background-color: #ffffff; /* Putih bukan abu-abu */
         border-radius: 8px;
-        margin-bottom: 5px;
-        border: 2px solid #BDC3C7;
+        margin-bottom: 0; /* Hapus margin bottom */
+        border: 2px solid #e0e0e0; /* Border lebih soft */
+        font-weight: 600;
+        color: #2C3E50;
+        transition: all 0.2s ease;
     }
     
-    /* Tambah panah di mobile */
+    .dropdown-toggle:hover {
+        background-color: #f8f9fa;
+        border-color: #3498DB;
+    }
+    
+    .dropdown.active .dropdown-toggle {
+        background-color: #3498DB;
+        color: white;
+        border-color: #3498DB;
+        border-radius: 8px 8px 0 0; /* Round top corners only when open */
+        margin-bottom: 0;
+    }
+    
+    /* Tambah panah di mobile - PERBAIKAN */
     .dropdown-toggle::after {
         content: '\f078';
         font-family: 'Font Awesome 6 Free';
         font-weight: 900;
         transition: transform 0.3s ease;
-        margin-left: auto;
+        margin-left: 8px;
+        font-size: 0.9rem;
     }
     
     .dropdown.active .dropdown-toggle::after {
         transform: rotate(180deg);
+        color: white; /* Putih saat active */
     }
     
-    /* Style untuk item di mobile */
+    /* Style untuk item di mobile - PERBAIKAN */
     .dropdown-item {
-        padding: 12px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px; /* Sedikit lebih besar */
         border-left: none;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #e8e8e8;
         width: 100%;
         box-sizing: border-box;
+        color: #2C3E50;
+        text-decoration: none;
+        font-size: 0.95rem;
+        background-color: #f8f9fa;
+        transition: all 0.2s ease;
+    }
+    
+    .dropdown-item:last-child {
+        border-bottom: none;
     }
     
     .dropdown-item:hover {
-        padding-left: 25px;
         background-color: #e3f2fd;
+        color: #1A5276;
+        padding-left: 25px; /* Indent hover effect */
+    }
+    
+    .dropdown-item.active {
+        background-color: #3498DB;
+        color: white;
+        font-weight: 600;
+    }
+    
+    .dropdown-item i {
+        width: 20px;
+        text-align: center;
+        color: #7F8C8D;
+    }
+    
+    .dropdown-item:hover i,
+    .dropdown-item.active i {
+        color: white;
     }
     
     /* HAPUS SEMUA HOVER BEHAVIOR UNTUK DROPDOWN PARENT */
     .dropdown:hover .dropdown-menu {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
+        display: none; /* Mobile: hanya click, bukan hover */
     }
 }
 
 /* ===== DESKTOP SPECIFIC ===== */
 @media (min-width: 769px) {
     .dropdown-menu {
+		 display: block;
         min-width: 220px;
     }
     
@@ -2961,82 +3016,6 @@ function setActiveDropdownItem() {
             }
         }
     });
-   // ========== SIMPLE DROPDOWN FIX ==========
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Initializing dropdown fix...');
-    
-    // Get dropdown elements
-    const dropdown = document.querySelector('.dropdown');
-    const toggle = document.querySelector('.dropdown-toggle');
-    const menu = document.querySelector('.dropdown-menu');
-    
-    if (dropdown && toggle && menu) {
-        console.log('Dropdown elements found:', {dropdown, toggle, menu});
-        
-        // Toggle dropdown on click
-        toggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Dropdown toggle clicked');
-            
-            // Check if dropdown is active
-            const isActive = dropdown.classList.contains('active');
-            
-            // Remove active from all dropdowns
-            document.querySelectorAll('.dropdown').forEach(d => {
-                d.classList.remove('active');
-            });
-            
-            // Toggle active class
-            if (!isActive) {
-                dropdown.classList.add('active');
-                console.log('Dropdown opened');
-            } else {
-                console.log('Dropdown closed');
-            }
-        });
-        
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.dropdown')) {
-                dropdown.classList.remove('active');
-            }
-        });
-        
-        // Close on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                dropdown.classList.remove('active');
-            }
-        });
-        
-        console.log('Dropdown initialized successfully');
-    } else {
-        console.error('Dropdown elements not found!');
-        console.log('Dropdown:', dropdown);
-        console.log('Toggle:', toggle);
-        console.log('Menu:', menu);
-    }
-});
-	// Debug code - add this to check if elements are found
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('=== DEBUG DROPDOWN ===');
-    console.log('Dropdown elements:', document.querySelectorAll('.dropdown').length);
-    console.log('Dropdown-toggle elements:', document.querySelectorAll('.dropdown-toggle').length);
-    console.log('Dropdown-menu elements:', document.querySelectorAll('.dropdown-menu').length);
-    
-    // Test manual toggle
-    const testDropdown = document.querySelector('.dropdown');
-    const testToggle = document.querySelector('.dropdown-toggle');
-    
-    if (testToggle) {
-        console.log('Adding test click handler');
-        testToggle.addEventListener('click', function() {
-            console.log('Test click fired');
-            testDropdown.classList.toggle('active');
-        });
-    }
-});
     
     // Set active nav link untuk halaman saat ini
     navLinks.forEach(link => {

@@ -3087,24 +3087,28 @@ console.log('Aplikasi Geoportal Kecamatan Purwokerto Selatan siap!');
     
     // Set active based on path
  // GANTI dengan kode ini:
-// Set active page based on URL
+// ========== SET ACTIVE PAGE ==========
 function setActivePage() {
+    // Get current URL path
     const currentPath = window.location.pathname.toLowerCase();
-    const currentPage = currentPath.split('/').pop() || '';
+    const currentPage = currentPath.split('/').pop().replace('.html', '') || '';
+    
+    console.log('Current page:', currentPage);
+    console.log('Full path:', currentPath);
     
     // Reset all active states
     document.querySelectorAll('.nav-link, .dropdown-item').forEach(el => {
         el.classList.remove('active');
     });
     
-    // Check which page is active
-    const pageMap = {
+    // Define page mappings
+    const pageMappings = {
         '': 'beranda',
-        'index.html': 'beranda',
+        'index': 'beranda',
         'kecamatan': 'kecamatan',
         'teluk': 'teluk',
         'tanjung': 'tanjung',
-        'pwtkidul': 'pwtkidul',
+        'pwtkidul': 'pwtkidul', 
         'pwtkulon': 'pwtkulon',
         'karangklesem': 'karangklesem',
         'karangpucung': 'karangpucung',
@@ -3112,21 +3116,98 @@ function setActivePage() {
         'tentang': 'tentang'
     };
     
-    const activePage = pageMap[currentPage] || '';
+    // Get current page key
+    const currentPageKey = pageMappings[currentPage] || '';
     
-    // Set active on appropriate links
-    if (activePage === 'kecamatan') {
-        document.querySelector('a[href*="Kecamatan"]')?.classList.add('active');
-    } else if (activePage && activePage !== 'beranda') {
-        document.querySelector(`a[href*="${activePage}" i]`)?.classList.add('active');
-        // Also mark the dropdown toggle as active if it's a desa page
-        if (['teluk', 'tanjung', 'pwtkidul', 'pwtkulon', 'karangklesem', 'karangpucung', 'berkoh'].includes(activePage)) {
-            document.querySelector('.dropdown-toggle')?.classList.add('active');
+    // Set active states based on current page
+    if (currentPageKey === 'kecamatan') {
+        const kecamatanLink = document.querySelector('a[href*="Kecamatan"]');
+        if (kecamatanLink) kecamatanLink.classList.add('active');
+    }
+    else if (currentPageKey === 'beranda') {
+        const berandaLink = document.querySelector('a[href="../"]');
+        if (berandaLink) berandaLink.classList.add('active');
+    }
+    else if (currentPageKey === 'tentang') {
+        const tentangLink = document.querySelector('a[href*="tentang"]');
+        if (tentangLink) tentangLink.classList.add('active');
+    }
+    else if (['teluk', 'tanjung', 'pwtkidul', 'pwtkulon', 'karangklesem', 'karangpucung', 'berkoh'].includes(currentPageKey)) {
+        // For desa pages, activate the dropdown item
+        const desaLink = document.querySelector(`a[href*="${currentPageKey}" i]`);
+        if (desaLink) {
+            desaLink.classList.add('active');
+            // Also mark dropdown toggle as active
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            if (dropdownToggle) dropdownToggle.classList.add('active');
         }
-    } else if (activePage === 'beranda') {
-        document.querySelector('a[href="../"]')?.classList.add('active');
     }
 }
+
+// ========== SIMPLE DROPDOWN FUNCTION ==========
+function initDropdowns() {
+    console.log('Initializing dropdowns...');
+    
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('Dropdown clicked');
+            
+            const dropdown = this.closest('.dropdown');
+            if (!dropdown) return;
+            
+            const isActive = dropdown.classList.contains('active');
+            
+            // Close all other dropdowns
+            document.querySelectorAll('.dropdown').forEach(d => {
+                if (d !== dropdown) {
+                    d.classList.remove('active');
+                }
+            });
+            
+            // Toggle current dropdown
+            if (isActive) {
+                dropdown.classList.remove('active');
+            } else {
+                dropdown.classList.add('active');
+            }
+        });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+    
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.dropdown').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+        }
+    });
+}
+
+// ========== INITIALIZE EVERYTHING ==========
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded - initializing...');
+    
+    // Initialize dropdowns
+    initDropdowns();
+    
+    // Set active page
+    setActivePage();
+    
+    console.log('Initialization complete');
+});
 
 // Call this function on page load
 document.addEventListener('DOMContentLoaded', setActivePage);

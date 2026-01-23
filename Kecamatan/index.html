@@ -194,7 +194,7 @@
 
 /* Dropdown tersembunyi secara default */
 .dropdown-menu {
-    position: absolute;
+    position: relative !important;
     top: 100%;
     left: 0;
     background-color: white;
@@ -203,7 +203,7 @@
     border-radius: 10px;
     padding: 10px 0;
     z-index: 1000;
-    opacity: 0;
+    opacity: 1 !important;
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;

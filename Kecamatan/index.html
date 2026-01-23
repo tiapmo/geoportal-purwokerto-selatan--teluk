@@ -192,7 +192,7 @@
     transition: transform 0.3s ease;
 }
 
-/* Dropdown selalu tersembunyi kecuali aktif */
+/* Dropdown tersembunyi secara default */
 .dropdown-menu {
     position: absolute;
     top: 100%;
@@ -210,11 +210,12 @@
     border: 1px solid #e1e8ed;
 }
 
-/* Tampilkan dropdown hanya saat aktif */
+/* Tampilkan dropdown saat aktif */
 .dropdown.active .dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
+    display: block !important;
 }
 
 .dropdown.active .dropdown-icon {
@@ -276,12 +277,16 @@
         overflow: hidden;
         transition: max-height 0.3s ease;
         margin-top: 0;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
     }
     
     .dropdown.active .dropdown-menu {
         max-height: 400px;
         overflow-y: auto;
         margin-top: 5px;
+        display: block !important;
     }
     
     /* Style untuk toggle di mobile */
@@ -321,41 +326,12 @@
         padding-left: 25px;
         background-color: #e3f2fd;
     }
-    
-    /* HAPUS SEMUA HOVER BEHAVIOR UNTUK DROPDOWN PARENT */
-    .dropdown:hover .dropdown-menu {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-    }
 }
 
 /* ===== DESKTOP SPECIFIC ===== */
 @media (min-width: 769px) {
     .dropdown-menu {
         min-width: 220px;
-    }
-    
-    /* Nonaktifkan hover untuk buka dropdown */
-    .dropdown:hover .dropdown-menu {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-    }
-    
-    /* Aktifkan dengan class .active saja */
-    .dropdown.active .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-    }
-    
-    /* Tapi biarkan hover untuk dropdown items */
-    .dropdown-item:hover {
-        background-color: #f8f9fa;
-        color: #1A5276;
-        border-left-color: #3498DB;
-        padding-left: 25px;
     }
 }
 

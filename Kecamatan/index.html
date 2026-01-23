@@ -322,14 +322,21 @@
     }
     
     /* Tambah panah di mobile - PERBAIKAN */
-    .dropdown-toggle::after {
-        content: '\f078';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        transition: transform 0.3s ease;
-        margin-left: 8px;
-        font-size: 0.9rem;
-    }
+	.dropdown-toggle::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* PASTIKAN HANYA SATU PANAH YANG TAMPIL */
+.dropdown-toggle .dropdown-icon {
+    display: inline-block;
+    margin-left: 5px;
+}
+
+/* Optional: sembunyikan jika ada icon lain */
+.dropdown-toggle i.fa-chevron-down:not(.dropdown-icon) {
+    display: none;
+}
     
     .dropdown.active .dropdown-toggle::after {
         transform: rotate(180deg);

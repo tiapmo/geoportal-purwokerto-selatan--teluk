@@ -2996,6 +2996,25 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('Dropdown initialization complete');
 });
+	// Debug code - add this to check if elements are found
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== DEBUG DROPDOWN ===');
+    console.log('Dropdown elements:', document.querySelectorAll('.dropdown').length);
+    console.log('Dropdown-toggle elements:', document.querySelectorAll('.dropdown-toggle').length);
+    console.log('Dropdown-menu elements:', document.querySelectorAll('.dropdown-menu').length);
+    
+    // Test manual toggle
+    const testDropdown = document.querySelector('.dropdown');
+    const testToggle = document.querySelector('.dropdown-toggle');
+    
+    if (testToggle) {
+        console.log('Adding test click handler');
+        testToggle.addEventListener('click', function() {
+            console.log('Test click fired');
+            testDropdown.classList.toggle('active');
+        });
+    }
+});
     
     // Set active nav link untuk halaman saat ini
     navLinks.forEach(link => {

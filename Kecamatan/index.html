@@ -2849,34 +2849,36 @@ function toggleFullscreen() {
 }
 
 // ========== PERBAIKAN  ==========
-// ========== SIMPLE DROPDOWN FIX ==========
-// ==========  FUNCTIONALITY ==========
 document.addEventListener('DOMContentLoaded', function() {
-    const s = document.querySelectorAll('.');
-    constToggles = document.querySelectorAll('.dropdown-toggle');
+    const dropdowns = document.querySelectorAll('.dropdown'); // FIX: '.dropdown'
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle'); // FIX: tambah 'const'
     
-    // Function untuk toggle
+    // Function untuk toggle dropdown
     function toggleDropdown(dropdown) {
-        const isActive =.classList.contains('active');
+        const isActive = dropdown.classList.contains('active'); // FIX: 'dropdown.'
         
         // Tutup semua dropdown terlebih dahulu
         dropdowns.forEach(other => {
-            other.classList.remove('active');
+            if (other !== dropdown) {
+                other.classList.remove('active');
+            }
         });
         
-        // Jika dropdown ini belum aktif, buka
-        if (!isActive) {
+        // Toggle dropdown ini
+        if (isActive) {
+            dropdown.classList.remove('active');
+        } else {
             dropdown.classList.add('active');
         }
     }
     
-    // Event listener untuk toggle dropdown (SEMUA DEVICE)
+    // Event listener untuk toggle dropdown
     dropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
             
-            const dropdown = this.parentElement;
+            const dropdown = this.closest('.dropdown');
             toggleDropdown(dropdown);
         });
     });
@@ -2912,17 +2914,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Fungsi untuk set dropdown item yang aktif
 function setActiveDropdownItem() {
-    const currentPath = window.location.pathname;
+    const currentPath = window.location.pathname.toLowerCase();
     const dropdownItems = document.querySelectorAll('.dropdown-item');
     const navLinks = document.querySelectorAll('.nav-link');
     
     // Reset semua nav links
     navLinks.forEach(link => {
         link.classList.remove('active');
-        // Juga hapus active dari dropdown toggle
-        if (link.classList.contains('dropdown-toggle')) {
-            link.classList.remove('active');
-        }
     });
     
     // Reset semua dropdown items
@@ -2931,30 +2929,22 @@ function setActiveDropdownItem() {
     });
     
     // Set active berdasarkan URL saat ini
-    let foundActive = false;
-    
     dropdownItems.forEach(item => {
         const href = item.getAttribute('href');
-        if (href) {
-            // Normalisasi path untuk perbandingan
-            const itemPath = href.replace('../', '').replace('/', '');
-            const currentPathClean = currentPath.replace(/\//g, '');
+        if (href && currentPath.includes(href.replace('../', '').replace('/', '').toLowerCase())) {
+            item.classList.add('active');
             
-            if (currentPathClean.includes(itemPath) || currentPath.includes(href)) {
-                item.classList.add('active');
-                foundActive = true;
-                
-                // Juga tandai parent dropdown toggle sebagai active
-                const parentDropdown = item.closest('.dropdown');
-                if (parentDropdown) {
-                    const dropdownToggle = parentDropdown.querySelector('.dropdown-toggle');
-                    if (dropdownToggle) {
-                        dropdownToggle.classList.add('active');
-                    }
+            // Juga tandai parent dropdown toggle sebagai active
+            const parentDropdown = item.closest('.dropdown');
+            if (parentDropdown) {
+                const dropdownToggle = parentDropdown.querySelector('.dropdown-toggle');
+                if (dropdownToggle) {
+                    dropdownToggle.classList.add('active');
                 }
             }
         }
     });
+    
     
     // Set active nav link untuk halaman saat ini
     navLinks.forEach(link => {
